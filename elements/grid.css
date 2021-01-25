@@ -1,0 +1,76 @@
+.scill-personal-challenges .scill-challenges-list {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.scill-personal-challenge {
+  display: block;
+}
+
+.scill-personal-challenges-list-item {
+  border: 1px solid gray;
+  padding: 30px 10px;
+  border-radius: 10px;
+  background-color: white;
+  width: 200px;
+  position: relative;
+}
+
+.scill-personal-challenge-name {
+  float: none;
+}
+
+.scill-personal-challenges-list-item[data-challenge-type='in-progress'] .scill-personal-challenge-actions {
+  display: none;
+}
+
+.scill-personal-challenge-xp {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: #51b6c8;
+  font-size: smaller;
+}
+
+.scill-personal-challenge-xp:after {
+  content: 'XP';
+}
+
+.scill-personal-challenge-actions {
+  padding-left: 0px;
+  padding-top: 10px;
+}
+
+.scill-personal-challenges-progress-goal {
+  font-size: smaller;
+  color: black;
+}
+
+.scill-personal-challenge-time-remaining {
+  color: #555;
+}
+
+.scill-personal-challenge-name {
+  color: #51b6c8;
+}
+
+.scill-personal-challenges-progress-bar-fill {
+  background-color: #51b6c8;
+}
+
+button {
+  border-radius: 5px;
+  border: 1px solid #51b6c8;
+  background-color: #51b6c8;
+  padding: 7px 14px;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  border: 1px solid #51b6c8;
+  background-color: white;
+  padding: 7px 14px;
+  color: #51b6c8;
+}

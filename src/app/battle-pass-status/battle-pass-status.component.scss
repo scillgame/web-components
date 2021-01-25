@@ -1,0 +1,23 @@
+@import "../../styles";
+
+.battle-pass {
+  border: 1px solid $borderColor;
+  padding: $padding;
+  border-radius: $borderRadius;
+  background-color: $backgroundColor;
+}
+
+.battle-pass-level {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.battle-pass-level-reward-image {
+  height: 100px;
+}
+
+.battle-pass-level-content {
+  width: 100%;
+}

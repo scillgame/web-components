@@ -1,0 +1,24 @@
+<div class="battle-pass" *ngIf="(battlePass$ | async) as battlePass">
+  <div class="battle-pass-levels" *ngFor="let level of levels; let i=index; trackBy: levelById">
+    <ng-container *ngIf="level.activated_at !== null && level.level_completed === false">
+      <div class="battle-pass-level">
+        <div class="battle-pass-level-reward">
+          <img class="battle-pass-level-reward-image" src="{{level.reward_amount}}">
+        </div>
+        <div class="battle-pass-level-content">
+          <h2 class="battle-pass-level-header">Level {{i+1}}</h2>
+          <div class="battle-pass-level-challenges">
+            <div class="battle-pass-level-challenge" *ngFor="let challenge of level.challenges; trackBy: challengeById">
+              <div *ngIf="level.activated_at !== null" class="battle-pass-level-challenge-progress">
+                <div class="battle-pass-level-challenge-progress-bar-background">
+                  <div class="battle-pass-level-challenge-progress-bar-fill" style.width="{{challenge | progress}}%"></div>
+                </div>
+                <span class="battle-pass-level-challenge-progress-goal">{{challenge.user_challenge_current_score}}/{{challenge.challenge_goal}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

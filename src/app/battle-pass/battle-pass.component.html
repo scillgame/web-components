@@ -1,0 +1,42 @@
+<div class="battle-pass" *ngIf="(battlePass$ | async) as battlePass">
+  <div>
+    <div>
+      <div>
+        <div>
+          <h3>{{battlePass.battle_pass_name}}</h3>
+          <div class="battle-pass-levels">
+            <div class="battle-pass-level" *ngFor="let level of levels; let i=index; trackBy: levelById"  [class.battle-pass-level-activated]="level.activated_at !== null && level.level_completed" [class.battle-pass-level-complete]="level.activated_at !== null && !level.level_completed">
+              <h2 class="battle-pass-level-header">Level {{i+1}}</h2>
+              <div class="battle-pass-level-content">
+                <div class="battle-pass-level-challenges">
+                  <div class="battle-pass-level-challenge" *ngFor="let challenge of level.challenges; trackBy: challengeById">
+                    <h3 class="battle-pass-level-challenge-name" [class.locked]="!level.activated_at">{{challenge.challenge_name}}</h3>
+                    <div *ngIf="level.activated_at !== null" class="battle-pass-level-challenge-progress">
+                      <div class="battle-pass-level-challenge-progress-bar-background">
+                        <div class="battle-pass-level-challenge-progress-bar-fill" style.width="{{challenge | progress}}%"></div>
+                      </div>
+                      <span class="battle-pass-level-challenge-progress-goal">{{challenge.user_challenge_current_score}}/{{challenge.challenge_goal}}</span>
+                    </div>
+                    <div *ngIf="level.activated_at !== null">
+                      <div class="battle-pass-level-challenge-complete-icon" *ngIf="challenge.type === 'finished'"></div>
+                      <div class="battle-pass-level-challenge-in-progress-icon" *ngIf="challenge.type !== 'finished'"></div>
+                    </div>
+                    <div *ngIf="!level.activated_at">
+                      <div class="battle-pass-level-challenge-locked-icon"></div>
+                    </div>
+                  </div>
+                  <button *ngIf="!i && !level.activated_at" (click)="unlockLevel(level)"><span translate>Unlock</span></button>
+                </div>
+                <div class="battle-pass-level-reward">
+                </div>
+              </div>
+              <div class="battle-pass-level-claim-reward" *ngIf="level.level_completed && !level.reward_claimed">
+                <button (click)="claimLevelReward(level)"><span translate>Collect Reward</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
