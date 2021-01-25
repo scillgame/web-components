@@ -45,6 +45,7 @@ export class BattlePassComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.scillService.getAccessToken(this.apiKey, this.userId).pipe(
+      filter(isNotNullOrUndefined),
       map(accessToken => {
         if (this.monitorBattlePass) {
           this.monitorBattlePass.stop();

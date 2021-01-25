@@ -11,6 +11,7 @@ import {
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
+import {SCILLService} from '../scill.service';
 
 @Component({
   selector: 'scill-personal-challenges',
@@ -33,16 +34,17 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
   @ContentChild('challengeTemplate', { static: false })
   challengeTemplateRef: TemplateRef<any>;
 
-  constructor() { }
+  constructor(private scillService: SCILLService) { }
 
   get challengesApi(): ChallengesApi {
     return this.challengesApi$.getValue();
   }
 
   ngOnInit(): void {
-    const authApi = getAuthApi(this.apiKey);
-    authApi.generateAccessToken({user_id: this.userId}).then(result => {
-      this.accessToken$.next(result.token);
+    this.scillService.getAccessToken(this.apiKey, this.userId).subscribe(result => {
+      if (result) {
+        this.accessToken$.next(result);
+      }
     });
 
     this.accessToken$.pipe(
