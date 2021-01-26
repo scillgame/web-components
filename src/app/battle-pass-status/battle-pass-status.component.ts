@@ -23,6 +23,7 @@ export class BattlePassStatusComponent implements OnInit, OnDestroy {
   @Input() userId: string;
 
   levels: BattlePassLevel[] = [];
+  battlePass: BattlePass;
 
   monitorBattlePass: UserBattlePassUpdateMonitor;
 
