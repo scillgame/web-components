@@ -1,0 +1,69 @@
+@import "../../styles";
+
+$height: 16px;
+
+.battle-pass {
+  border: 1px solid $borderColor;
+  padding: 0;
+  border-radius: $borderRadius;
+  background-color: $backgroundColor;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  height: ($height);
+}
+
+.battle-pass-level {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+}
+
+.battle-pass-level-reward {
+  left: 10px;
+  position: absolute;
+}
+
+.battle-pass-level-name {
+  text-align: center;
+  width: 100%;
+  line-height:$height;
+  color: white;
+  font-weight: bold;
+  overflow: visible;
+  white-space: nowrap;
+  text-shadow: 0px 0px 1px black;
+}
+
+.battle-pass-level-reward-image {
+  height: 30px;
+}
+
+.battle-pass-level-content {
+  width: 100%;
+}
+
+.battle-pass-level-challenge-progress {
+
+}
+
+.battle-pass-level-challenge-progress-bar-background {
+  border-top-left-radius: ($height / 2);
+  border-bottom-left-radius: ($height / 2);
+  height: $height;
+  width: 100%;
+  background-color: $progressBarBackgroundColor;
+}
+
+.battle-pass-level-challenge-progress-bar-fill {
+  border-top-left-radius: ($height / 2);
+  border-bottom-left-radius: ($height / 2);
+  height: 100%;
+  background-color: $progressBarFillColor;
+  transition: all 2s;
+}
+
+.battle-pass-level-challenge-progress-goal {
+  padding-left: 5px;
+}

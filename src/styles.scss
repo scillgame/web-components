@@ -201,34 +201,63 @@ body {
   }
 }
 
-.battle-pass-level-challenge-progress {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  clear: both;
+.battle-pass-status {
+  border: 1px solid $borderColor;
+  padding: $padding;
+  border-radius: $borderRadius;
+  background-color: $backgroundColor;
+
+  .battle-pass-level-challenge-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    clear: both;
+  }
+
+  .battle-pass-level-challenge-progress-bar-background {
+    height: 10px;
+    width: 100%;
+    background-color: $progressBarBackgroundColor;
+  }
+
+  .battle-pass-level-challenge-progress-bar-fill {
+    height: 100%;
+    background-color: $progressBarFillColor;
+    transition: all 2s;
+  }
+
+  .battle-pass-level-challenge-progress-goal {
+    padding-left: 5px;
+  }
+
+  .battle-pass-level-challenge-name {
+    margin: 0px;
+    padding-right: 10px;
+  }
+
+  .battle-pass-level-challenge {
+    clear: both;
+  }
+
+  .battle-pass-level {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  .battle-pass-level-reward-image {
+    height: 100px;
+  }
+
+  .battle-pass-level-content {
+    width: 100%;
+  }
+
 }
 
-.battle-pass-level-challenge-progress-bar-background {
-  height: 10px;
-  width: 100%;
-  background-color: $progressBarBackgroundColor;
-}
 
-.battle-pass-level-challenge-progress-bar-fill {
-  height: 100%;
-  background-color: $progressBarFillColor;
-  transition: all 2s;
-}
 
-.battle-pass-level-challenge-progress-goal {
-  padding-left: 5px;
-}
-
-.battle-pass-level-challenge-name {
-  margin: 0px;
-  padding-right: 10px;
-}
-
-.battle-pass-level-challenge {
-  clear: both;
+.scill-category[data-category-id="627580586588340237"] .scill-personal-challenge-time-remaining {
+  display: none;
 }
