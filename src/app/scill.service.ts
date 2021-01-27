@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {getAuthApi} from '../../../../gaas/scill-javascript';
+import {getAuthApi} from '@scillgame/scill-js';
 import {fromPromise} from 'rxjs/internal-compatibility';
 
 @Injectable({
