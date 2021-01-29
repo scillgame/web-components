@@ -39,6 +39,10 @@ body {
   padding-left: 5px;
 }
 
+.scill-personal-challenge-image {
+  width: 64px;
+}
+
 .scill-personal-challenges-list {
   background-color: $backgroundColor;
   border-radius: $borderRadius;
@@ -140,6 +144,7 @@ body {
     background-color: white;
     width: 200px;
     position: relative;
+    background-size: cover;
   }
 
   .scill-personal-challenge-name {
@@ -148,6 +153,14 @@ body {
 
   .scill-personal-challenges-list-item[data-challenge-type='in-progress'] .scill-personal-challenge-actions {
     display: none;
+  }
+
+  .scill-personal-challenge-reward {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: black;
+    font-size: smaller;
   }
 
   .scill-personal-challenge-xp {
