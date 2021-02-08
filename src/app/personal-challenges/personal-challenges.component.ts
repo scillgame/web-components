@@ -144,4 +144,8 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
     });
   }
 
+  challengeById(index: number, item: Challenge): string {
+    return item.challenge_id;
+  }
+
 }

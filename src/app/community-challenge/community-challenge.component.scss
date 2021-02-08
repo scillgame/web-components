@@ -143,6 +143,7 @@ $textMutedColor: gray;
 
   .personal-challenge-name {
     float: none;
+    margin-top: 0px;
   }
 
   .personal-challenge-name.finished {
@@ -176,6 +177,10 @@ $textMutedColor: gray;
   .personal-challenge-actions {
     padding-left: 0px;
     padding-top: 10px;
+  }
+
+  .personal-challenges-progress {
+    margin-bottom: 10px;
   }
 
   .personal-challenges-progress-goal {

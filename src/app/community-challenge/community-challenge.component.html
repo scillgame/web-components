@@ -9,7 +9,7 @@
         </p>
         <div class="personal-challenges-progress" *ngIf="challenge.type === 'in-progress'">
           <div class="personal-challenges-progress-bar-background">
-            <div class="personal-challenges-progress-bar-fill" style.width="{{challenge | progress}}%" [style.background-color></div>
+            <div class="personal-challenges-progress-bar-fill" style.width="{{challenge | progress}}%" [style.backgroundColor]="primaryColor"></div>
           </div>
           <span class="personal-challenges-progress-goal" [style.color]="textColor">{{challenge.user_challenge_current_score}}/{{challenge.challenge_goal}}</span>
         </div>
@@ -20,10 +20,10 @@
         <button class="personal-challenge-button scill-color-primary" *ngIf="challenge.type === 'unclaimed'" (click)="claimChallenge(challenge)"><span translate>Claim your reward</span></button>
         <button class="personal-challenge-button scill-color-warn" *ngIf="challenge.type === 'in-progress'" (click)="cancelChallenge(challenge)">Cancel</button>
       </div>
-      <div *ngIf="challenge.challenge_xp" class="personal-challenge-xp" [style.color]="textColor">
+      <div *ngIf="challenge.challenge_xp" class="personal-challenge-xp" [style.color]="primaryColor">
         {{challenge.challenge_xp}}
       </div>
-      <div *ngIf="challenge.challenge_reward && challenge.challenge_reward_type !== 'Nothing'" class="personal-challenge-reward" [style.color]="textColor">
+      <div *ngIf="challenge.challenge_reward && challenge.challenge_reward_type !== 'Nothing'" class="personal-challenge-reward" [style.color]="primaryColor">
         {{challenge.challenge_reward}}
       </div>
     </div>

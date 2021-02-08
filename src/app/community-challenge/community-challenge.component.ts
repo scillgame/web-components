@@ -17,7 +17,9 @@ export class CommunityChallengeComponent extends PersonalChallengesComponent {
   challenge: Challenge;
 
   updateChallenges(): void {
+    console.log("Loading challenges: ", this.challengeId);
     this.challengesApi?.getAllPersonalChallenges(this.appId).then(categories => {
+      this.categories = categories;
       for (const category of categories) {
         for (const challenge of category.challenges) {
           if (challenge.challenge_id === this.challengeId) {
@@ -27,6 +29,15 @@ export class CommunityChallengeComponent extends PersonalChallengesComponent {
         }
       }
     });
+  }
+
+  updateChallenge(newChallenge: Challenge): void {
+    if (newChallenge.challenge_id === this.challengeId) {
+      const updatedChallenge = {};
+      Object.assign(updatedChallenge, this.challenge);
+      Object.assign(updatedChallenge, newChallenge);
+      this.challenge = updatedChallenge;
+    }
   }
 
 }

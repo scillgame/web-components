@@ -4,7 +4,7 @@
       {{category.category_name}}
     </h2>
     <div class="scill-challenges-list">
-      <div class="scill-personal-challenges-list-item" *ngFor="let challenge of category.challenges; let i = index" attr.data-challenge-id="{{challenge.challenge_id}}" attr.data-challenge-type="{{challenge.type}}" [style.background-image]="challenge.challenge_icon_hd ? 'url(' + challenge.challenge_icon_hd + ')': 'none'">
+      <div class="scill-personal-challenges-list-item" *ngFor="let challenge of category.challenges; let i = index; trackBy: challengeById" attr.data-challenge-id="{{challenge.challenge_id}}" attr.data-challenge-type="{{challenge.type}}" [style.background-image]="challenge.challenge_icon_hd ? 'url(' + challenge.challenge_icon_hd + ')': 'none'">
         <div class="scill-personal-challenge">
           <img *ngIf="challenge.challenge_icon && challenge.challenge_icon.substr(0,4) === 'http'" class="scill-personal-challenge-image" src="{{challenge.challenge_icon}}">
           <div class="scill-personal-challenge-info">

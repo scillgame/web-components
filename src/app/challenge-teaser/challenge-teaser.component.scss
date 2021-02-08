@@ -1,0 +1,31 @@
+.challenge-teaser {
+  border: 1px solid gray;
+  padding: 10px 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 5px;
+  gap: 10px;
+}
+
+.challenge-image {
+  height: 36px;
+}
+
+.challenge-name {
+  margin: 0px;
+}
+
+.challenge-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.challenge-checkbox {
+  width: 16px;
+  height: 16px;
+  border: 2px solid black;
+  border-radius: 2px;
+}

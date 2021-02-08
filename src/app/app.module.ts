@@ -14,6 +14,7 @@ import { BattlePassStatusComponent } from './battle-pass-status/battle-pass-stat
 import { TaskListComponent } from './task-list/task-list.component';
 import { BattlePassMiniStatusComponent } from './battle-pass-mini-status/battle-pass-mini-status.component';
 import { CommunityChallengeComponent } from './community-challenge/community-challenge.component';
+import { ChallengeTeaserComponent } from './challenge-teaser/challenge-teaser.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CommunityChallengeComponent } from './community-challenge/community-cha
     BattlePassStatusComponent,
     TaskListComponent,
     BattlePassMiniStatusComponent,
-    CommunityChallengeComponent
+    CommunityChallengeComponent,
+    ChallengeTeaserComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,8 @@ import { CommunityChallengeComponent } from './community-challenge/community-cha
     BattlePassStatusComponent,
     TaskListComponent,
     BattlePassMiniStatusComponent,
-    CommunityChallengeComponent
+    CommunityChallengeComponent,
+    ChallengeTeaserComponent
   ]
 })
 export class AppModule {
@@ -79,5 +82,8 @@ export class AppModule {
 
     const communityChallenge = createCustomElement(CommunityChallengeComponent, { injector: this.injector });
     customElements.define('scill-community-challenge', communityChallenge);
+
+    const challengeTeaser = createCustomElement(ChallengeTeaserComponent, { injector: this.injector });
+    customElements.define('scill-challenge-teaser', challengeTeaser);
   }
 }
