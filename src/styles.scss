@@ -146,6 +146,10 @@ body {
     float: none;
   }
 
+  .scill-personal-challenge-name.finished {
+    text-decoration: line-through;
+  }
+
   .scill-personal-challenges-list-item[data-challenge-type='in-progress'] .scill-personal-challenge-actions {
     display: none;
   }
