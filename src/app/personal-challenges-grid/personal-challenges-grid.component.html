@@ -8,7 +8,7 @@
         <div class="scill-personal-challenge">
           <img *ngIf="challenge.challenge_icon && challenge.challenge_icon.substr(0,4) === 'http'" class="scill-personal-challenge-image" src="{{challenge.challenge_icon}}">
           <div class="scill-personal-challenge-info">
-            <h3 class="scill-personal-challenge-name"> {{challenge.challenge_name}}</h3>
+            <h3 class="scill-personal-challenge-name" [class.finished]="challenge.type === 'finished'"> {{challenge.challenge_name}}</h3>
             <p *ngIf="challenge.type == 'in-progress'" class="scill-personal-challenge-time-remaining">
               <span *ngIf="challenge.type === 'in-progress'"><span class="scill-personal-challenge-time-remaining-label">Time remaining: </span><app-time-remaining class="scill-personal-challenge-time-remaining-counter" [challenge]="challenge"></app-time-remaining></span>
             </p>

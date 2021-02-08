@@ -86,7 +86,7 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
   }
 
   updateChallenges(): void {
-    this.challengesApi?.getPersonalChallenges(this.appId).then(categories => {
+    this.challengesApi?.getAllPersonalChallenges(this.appId).then(categories => {
       console.log(categories);
       this.categories = categories;
     });
