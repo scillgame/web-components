@@ -27,7 +27,7 @@ export class TimeRemainingComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.timeRemaining$ = timer(0, 1000).pipe(
       map(result => {
-        const timeRemaining = timeLeft(this.challenge);
+        const timeRemaining = timeLeft(this.challenge, true);
         return timeRemaining;
       })
     );

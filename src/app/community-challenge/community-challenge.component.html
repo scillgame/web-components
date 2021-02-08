@@ -1,0 +1,32 @@
+<div class="personal-challenges-grid">
+  <div class="personal-challenges-list-item" *ngIf="challenge" attr.data-challenge-id="{{challenge.challenge_id}}" attr.data-challenge-type="{{challenge.type}}" [style.background-image]="challenge.challenge_icon_hd ? 'url(' + challenge.challenge_icon_hd + ')': 'none'">
+    <div class="personal-challenge">
+      <img *ngIf="challenge.challenge_icon && challenge.challenge_icon.substr(0,4) === 'http'" class="personal-challenge-image" src="{{challenge.challenge_icon}}">
+      <div class="personal-challenge-info">
+        <h3 class="personal-challenge-name" [class.finished]="challenge.type === 'finished'" [style.color]="primaryColor"> {{challenge.challenge_name}}</h3>
+        <p *ngIf="challenge.type == 'in-progress'" class="personal-challenge-time-remaining">
+          <span *ngIf="challenge.type === 'in-progress'"><span class="personal-challenge-time-remaining-label" [style.color]="textColor">Time remaining: </span><app-time-remaining class="personal-challenge-time-remaining-counter" [challenge]="challenge" [style.color]="textColor"></app-time-remaining></span>
+        </p>
+        <div class="personal-challenges-progress" *ngIf="challenge.type === 'in-progress'">
+          <div class="personal-challenges-progress-bar-background">
+            <div class="personal-challenges-progress-bar-fill" style.width="{{challenge | progress}}%" [style.background-color></div>
+          </div>
+          <span class="personal-challenges-progress-goal" [style.color]="textColor">{{challenge.user_challenge_current_score}}/{{challenge.challenge_goal}}</span>
+        </div>
+      </div>
+      <div class="personal-challenge-actions">
+        <button class="personal-challenge-button scill-color-accent" *ngIf="challenge.type === 'unlocked'" (click)="activateChallenge(challenge)"><span translate>Activate</span></button>
+        <button class="personal-challenge-button scill-color-primary" *ngIf="challenge.type === 'unlock'" (click)="unlockChallenge(challenge)"><span translate>Unlock</span></button>
+        <button class="personal-challenge-button scill-color-primary" *ngIf="challenge.type === 'unclaimed'" (click)="claimChallenge(challenge)"><span translate>Claim your reward</span></button>
+        <button class="personal-challenge-button scill-color-warn" *ngIf="challenge.type === 'in-progress'" (click)="cancelChallenge(challenge)">Cancel</button>
+      </div>
+      <div *ngIf="challenge.challenge_xp" class="personal-challenge-xp" [style.color]="textColor">
+        {{challenge.challenge_xp}}
+      </div>
+      <div *ngIf="challenge.challenge_reward && challenge.challenge_reward_type !== 'Nothing'" class="personal-challenge-reward" [style.color]="textColor">
+        {{challenge.challenge_reward}}
+      </div>
+    </div>
+    <div class="divider"></div>
+  </div>
+</div>
