@@ -1,0 +1,108 @@
+@import "../../theme";
+
+.scill-personal-challenges-list {
+  background-color: $backgroundColor;
+  border-radius: $borderRadius;
+  border: $border;
+  font-family: $font;
+  color: $textColor;
+
+  .scill-divider {
+    height: 1px;
+    width: 100%;
+    background-color: $borderColor;
+  }
+
+  .scill-personal-challenges {
+
+  }
+
+  .scill-category {
+
+  }
+
+  .scill-category-header {
+    padding: $padding;
+    margin: 0px;
+    background-color: $invertedBackgroundColor;
+  }
+
+  .scill-challenges-list {
+    padding: $padding;
+  }
+
+  .scill-personal-challenges-list-item .scill-divider {
+    margin-left: -$padding;
+    margin-right: -$padding;
+    width: calc(100% + #{$padding * 2});
+  }
+
+  .scill-personal-challenges-list-item:last-child .scill-divider {
+    display: none;
+  }
+
+  .scill-personal-challenges-list-item .scill-personal-challenge {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .scill-personal-challenges-list-item .scill-personal-challenge-info {
+    width: 100%;
+  }
+
+  .scill-personal-challenges-list-item .scill-personal-challenge-name {
+    margin: 0px;
+    float: left;
+    padding-right: 10px;
+  }
+
+  .scill-personal-challenges-list-item .scill-personal-challenge-time-remaining {
+    margin: 0px;
+    line-height: 24px;
+    font-size: smaller;
+    color: $textMutedColor;
+  }
+
+  .scill-personal-challenges-list-item .scill-personal-challenge-actions {
+    padding-left: 10px;
+  }
+
+  .scill-personal-challenge-xp {
+    color: $primary;
+    font-size: smaller;
+  }
+
+  .scill-personal-challenge-xp:after {
+    content: ' XP';
+  }
+
+  .scill-personal-challenges-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    clear: both;
+  }
+
+  .scill-personal-challenges-progress-bar-background {
+    height: 5px;
+    width: 100%;
+    background-color: $progressBarBackgroundColor;
+  }
+
+  .scill-personal-challenges-progress-bar-fill {
+    height: 5px;
+    background-color: $progressBarFillColor;
+  }
+
+  .scill-personal-challenges-progress-goal {
+    padding-left: 5px;
+  }
+
+  .scill-personal-challenge-image {
+    width: 64px;
+  }
+
+}

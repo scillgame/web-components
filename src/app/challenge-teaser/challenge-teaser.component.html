@@ -1,7 +1,7 @@
 <div class="challenge-teaser" *ngIf="challenge && challenge.type !== 'finished'">
   <img *ngIf="challenge.challenge_icon && challenge.challenge_icon.substr(0,4) === 'http'" class="challenge-image" src="{{challenge.challenge_icon}}">
-  <div class="challenge-details">
-    <h3 class="challenge-name">{{challenge.challenge_name}}</h3>
-      <div class="challenge-checkbox"></div>
+  <div class="challenge-teaser-details">
+    <h3 class="challenge-teaser-name">{{challenge.challenge_name}}</h3>
+      <div class="challenge-teaser-checkbox"></div>
   </div>
 </div>

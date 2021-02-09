@@ -6,13 +6,11 @@ import {Challenge} from '@scillgame/scill-js';
   selector: 'community-challenge',
   templateUrl: './community-challenge.component.html',
   styleUrls: ['./community-challenge.component.scss'],
-  encapsulation: ViewEncapsulation.ShadowDom
+  encapsulation: ViewEncapsulation.None
 })
 export class CommunityChallengeComponent extends PersonalChallengesComponent {
 
   @Input() challengeId: string;
-  @Input() primaryColor = '#51b6c8';
-  @Input() textColor = 'black';
 
   challenge: Challenge;
 

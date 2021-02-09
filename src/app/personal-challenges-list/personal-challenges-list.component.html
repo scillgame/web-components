@@ -1,6 +1,6 @@
 <div class="scill-personal-challenges-list">
   <div class="scill-category" *ngFor="let category of categories" attr.data-category-id="{{category.category_id}}">
-    <h2 class="scill-category-header">
+    <h2 class="scill-category-header scill-color-primary">
       {{category.category_name}}
     </h2>
     <div class="scill-challenges-list">
@@ -13,8 +13,8 @@
               <span *ngIf="challenge.type === 'in-progress'"><span class="scill-personal-challenge-time-remaining-label">Time remaining: </span><app-time-remaining class="scill-personal-challenge-time-remaining-counter" [challenge]="challenge"></app-time-remaining></span>
             </p>
             <div class="scill-personal-challenges-progress" *ngIf="challenge.type === 'in-progress'">
-              <div class="scill-personal-challenges-progress-bar-background">
-                <div class="scill-personal-challenges-progress-bar-fill" style.width="{{challenge | progress}}%"></div>
+              <div class="scill-progress-bar-background">
+                <div class="scill-progress-bar-fill" style.width="{{challenge | progress}}%"></div>
               </div>
               <span class="scill-personal-challenges-progress-goal">{{challenge.user_challenge_current_score}}/{{challenge.challenge_goal}}</span>
             </div>

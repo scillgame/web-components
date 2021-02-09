@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 $primary: #51b6c8;
+$accent: #B49FD4;
 
 $backgroundColor: white;
 $borderColor: gray;
@@ -13,268 +14,51 @@ $progressBarFillColor: $primary;
 $textColor: black;
 $textMutedColor: gray;
 
-body {
-  font-family: $font;
-}
-
-.scill-personal-challenges-progress {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  clear: both;
-}
-
-.scill-personal-challenges-progress-bar-background {
+.scill-progress-bar-background {
   height: 5px;
   width: 100%;
   background-color: $progressBarBackgroundColor;
 }
 
-.scill-personal-challenges-progress-bar-fill {
+.scill-progress-bar-fill {
   height: 5px;
   background-color: $progressBarFillColor;
 }
 
-.scill-personal-challenges-progress-goal {
-  padding-left: 5px;
+.scill-button {
+  border-radius: 5px;
+  border: 1px solid $primary;
+  background-color: $primary;
+  padding: 7px 14px;
+  color: white;
+  cursor: pointer;
 }
 
-.scill-personal-challenge-image {
-  width: 64px;
+.scill-button:hover {
+  border: 1px solid $primary;
+  background-color: white;
+  padding: 7px 14px;
+  color: $primary;
 }
 
-.scill-personal-challenges-list {
-  background-color: $backgroundColor;
-  border-radius: $borderRadius;
-  border: $border;
-  font-family: $font;
+.scill-color-accent {
+  color: $accent;
+}
+
+.scill-background-color-accent {
+  background-color: $accent;
+}
+
+.scill-color-primary {
+  color: $primary;
+}
+
+.scill-background-color-primary {
+  background-color: $primary;
+}
+
+.scill-text-color {
   color: $textColor;
-
-  .scill-divider {
-    height: 1px;
-    width: 100%;
-    background-color: $borderColor;
-  }
-
-  .scill-personal-challenges {
-
-  }
-
-  .scill-category {
-
-  }
-
-  .scill-category-header {
-    padding: $padding;
-    margin: 0px;
-    background-color: $invertedBackgroundColor;
-  }
-
-  .scill-challenges-list {
-    padding: $padding;
-  }
-
-  .scill-personal-challenges-list-item .scill-divider {
-    margin-left: -$padding;
-    margin-right: -$padding;
-    width: calc(100% + #{$padding * 2});
-  }
-
-  .scill-personal-challenges-list-item:last-child .scill-divider {
-    display: none;
-  }
-
-  .scill-personal-challenges-list-item .scill-personal-challenge {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-
-  .scill-personal-challenges-list-item .scill-personal-challenge-info {
-    width: 100%;
-  }
-
-  .scill-personal-challenges-list-item .scill-personal-challenge-name {
-    margin: 0px;
-    float: left;
-    padding-right: 10px;
-  }
-
-  .scill-personal-challenges-list-item .scill-personal-challenge-time-remaining {
-    margin: 0px;
-    line-height: 24px;
-    font-size: smaller;
-    color: $textMutedColor;
-  }
-
-  .scill-personal-challenges-list-item .scill-personal-challenge-actions {
-    padding-left: 10px;
-  }
-
-  .scill-personal-challenge-xp {
-    color: $primary;
-    font-size: smaller;
-  }
-
-  .scill-personal-challenge-xp:after {
-    content: ' XP';
-  }
-
 }
 
 
-.scill-personal-challenges-grid {
-
-  .scill-challenges-list {
-    display: flex;
-    justify-content: flex-start;
-    gap: 20px;
-  }
-
-  .scill-personal-challenge {
-    display: block;
-  }
-
-  .scill-personal-challenges-list-item {
-    border: 1px solid gray;
-    padding: 30px 10px;
-    border-radius: 10px;
-    background-color: white;
-    width: 200px;
-    position: relative;
-    background-size: cover;
-  }
-
-  .scill-personal-challenge-name {
-    float: none;
-  }
-
-  .scill-personal-challenge-name.finished {
-    text-decoration: line-through;
-  }
-
-  .scill-personal-challenges-list-item[data-challenge-type='in-progress'] .scill-personal-challenge-actions {
-    display: none;
-  }
-
-  .scill-personal-challenge-reward {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    color: black;
-    font-size: smaller;
-  }
-
-  .scill-personal-challenge-xp {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    color: $primary;
-    font-size: smaller;
-  }
-
-  .scill-personal-challenge-xp:after {
-    content: 'XP';
-  }
-
-  .scill-personal-challenge-actions {
-    padding-left: 0px;
-    padding-top: 10px;
-  }
-
-  .scill-personal-challenges-progress-goal {
-    font-size: smaller;
-    color: black;
-  }
-
-  .scill-personal-challenge-time-remaining {
-    color: #555;
-  }
-
-  .scill-personal-challenge-name {
-    color: $primary;
-  }
-
-  .scill-personal-challenges-progress-bar-fill {
-    background-color: $primary;
-  }
-
-  button {
-    border-radius: 5px;
-    border: 1px solid $primary;
-    background-color: $primary;
-    padding: 7px 14px;
-    color: white;
-    cursor: pointer;
-  }
-
-  button:hover {
-    border: 1px solid $primary;
-    background-color: white;
-    padding: 7px 14px;
-    color: $primary;
-  }
-}
-
-.battle-pass-status {
-  border: 1px solid $borderColor;
-  padding: $padding;
-  border-radius: $borderRadius;
-  background-color: $backgroundColor;
-
-  .battle-pass-level-challenge-progress {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    clear: both;
-  }
-
-  .battle-pass-level-challenge-progress-bar-background {
-    height: 10px;
-    width: 100%;
-    background-color: $progressBarBackgroundColor;
-  }
-
-  .battle-pass-level-challenge-progress-bar-fill {
-    height: 100%;
-    background-color: $progressBarFillColor;
-    transition: all 2s;
-  }
-
-  .battle-pass-level-challenge-progress-goal {
-    padding-left: 5px;
-  }
-
-  .battle-pass-level-challenge-name {
-    margin: 0px;
-    padding-right: 10px;
-  }
-
-  .battle-pass-level-challenge {
-    clear: both;
-  }
-
-  .battle-pass-level {
-    display: flex;
-    justify-content: flex-start;
-    align-items: stretch;
-    gap: 20px;
-  }
-
-  .battle-pass-level-reward-image {
-    height: 100px;
-  }
-
-  .battle-pass-level-content {
-    width: 100%;
-  }
-
-}
-
-
-
-.scill-category[data-category-id="627580586588340237"] .scill-personal-challenge-time-remaining {
-  display: none;
-}
