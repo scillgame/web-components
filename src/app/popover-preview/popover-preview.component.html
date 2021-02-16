@@ -1,0 +1,37 @@
+<div class="popover-preview-container">
+    <button (click)="togglePopoverPreview()" class="popover-preview-btn">
+        User#1234
+        <div class="btn-user-lvl">
+            3
+        </div>
+    </button>
+    <div class="popover-preview" *ngIf="!isPopoverPreviewVisible ">
+        <div class="popover-preview-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="user">User#094</div>
+                <div class="d-flex align-items-center">
+                    <div class="lvl-badge">
+                        <img src="../../assets/images/badges/badge_rare_gempost_big.png" alt="">
+                    </div>
+                    <div class="user-lvl">3</div>
+                </div>
+            </div>
+            <div class="progress">
+                <div>2/12</div>
+                <scill-progress-bar background="#fff" fill-background="#009BED" [progress]="2/12"></scill-progress-bar>
+            </div>
+        </div>
+       <div class="battlepass">
+           <div class="progress" style="color:#CF0E00;">
+               <div class="d-flex justify-content-between">
+                   <div>Battlepass 1/7</div>
+                   <div> > </div>
+               </div>
+               <!--<div class="progress-bar" style="background: #00466A;">-->
+                   <!--<div class="progress-bar-fill"></div>-->
+               <!--</div>-->
+               <scill-progress-bar background="#00466A" fill-background="#CF0E00" [progress]="1/7"></scill-progress-bar>
+           </div>
+       </div>
+    </div>
+</div>
