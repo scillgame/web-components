@@ -8,10 +8,11 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TaskItemComponent implements OnInit {
   @Input('task') task: object;
   @Input('background') background: string;
+  @Input('badge') badge: string;
   constructor() { }
 
   ngOnInit(): void {
-      console.log('%c progress', 'color:gold;', this.task);
+      // console.log('%c progress', 'color:gold;', this.task);
   }
 
 }

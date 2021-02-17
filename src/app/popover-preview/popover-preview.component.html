@@ -1,12 +1,15 @@
 <div class="popover-preview-container">
-    <button (click)="togglePopoverPreview()" class="popover-preview-btn">
-        User#1234
-        <div class="btn-user-lvl">
-            3
-        </div>
-    </button>
+    <div class="d-flex justify-content-end">
+        <button (click)="togglePopoverPreview()" class="popover-preview-btn">
+            User#1234
+            <div class="btn-user-lvl">
+                3
+            </div>
+        </button>
+    </div>
     <div class="popover-preview" *ngIf="!isPopoverPreviewVisible ">
         <div class="popover-preview-header">
+            <div class="header-triangle"></div>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="user">User#094</div>
                 <div class="d-flex align-items-center">
@@ -31,11 +34,28 @@
                    <!--<div class="progress-bar-fill"></div>-->
                <!--</div>-->
                <scill-progress-bar background="#00466A" fill-background="#CF0E00" [progress]="1/7"></scill-progress-bar>
-               <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A"></scill-task-item>
-               <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A"></scill-task-item>
-               <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A"></scill-task-item>
-               <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A"></scill-task-item>
+               <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+               <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+               <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+               <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
            </div>
        </div>
+
+        <div class="battlepass">
+            <div class="progress" style="color:green;">
+                <div class="d-flex justify-content-between">
+                    <div>Normal challenges 1/5</div>
+                    <div> > </div>
+                </div>
+                <!--<div class="progress-bar" style="background: #00466A;">-->
+                <!--<div class="progress-bar-fill"></div>-->
+                <!--</div>-->
+                <scill-progress-bar background="darkgreen" fill-background="green" [progress]="1/5"></scill-progress-bar>
+                <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+                <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+                <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+                <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,15 +1,15 @@
 $gold: #F5A622;
-*{
-  font-family: Helvetica, Sans-serif;
-}
 
 .popover-preview-container{
+  min-width:300px;
+  max-width:350px;
   .popover-preview-btn {
     display: flex;
     justify-content: space-around;
     align-items: center;
     height:28px;
     width:126px;
+    margin-bottom:22px;
     background: transparent linear-gradient(180deg, #0AE3ED 0%, #009BED 100%) 0% 0% no-repeat padding-box;
     border-radius: 5px;
     border:0;
@@ -35,16 +35,23 @@ $gold: #F5A622;
     .popover-preview{
       background: #fff;
       color:#fff;
-      min-width:300px;
-      max-width:350px;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
       .popover-preview-header{
+        position: relative;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
         padding:20px 10px;
         background:transparent linear-gradient(180deg, #0AE3ED 0%, #009BED 100%) 0% 0% no-repeat padding-box;
-        //box-shadow: 0px 12px 60px #00000038;
+        .header-triangle{
+          width:23px;
+          height:23px;
+          transform:rotate(45deg);
+          background:#08E0EC;
+          position:absolute;
+          top:-11px;
+          right:15px;
+        }
         .user{
           font-family:Helvetica, Sans-serif;
           font-size:27px;
