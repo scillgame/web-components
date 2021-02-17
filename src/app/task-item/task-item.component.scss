@@ -1,0 +1,42 @@
+.task-container{
+  position: relative;
+  background:#fff;
+  color:#fff;
+  margin:15px 0px;
+  border-radius:6px;
+  .badge{
+    img{
+      width:26px;
+      height:29px;
+      padding:10px 8px;
+      margin-right:10px;
+    }
+  }
+  .task-status{
+    position:absolute;
+    top:-8px;
+    right:-9px;
+    width:20px;
+    height:20px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    //background:#003049;
+    background:#07DDEC;
+    border-radius:50%;
+    border:3px solid #00466A;
+    color:#00466A;
+  }
+  .task-title{
+    font-size:12px;
+    color:#fff;
+  }
+  .task-description{
+    color:#C3C3C3;
+    font-size:12px;
+  }
+  .task-xp-progress{
+    color:#C3C3C3;
+    font-size:12px;
+  }
+}

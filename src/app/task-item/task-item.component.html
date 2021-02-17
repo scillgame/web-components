@@ -1,0 +1,21 @@
+<div class="task-container" [ngStyle]="{'background':background}">
+    <div class="d-flex align-items-center">
+        <div class="task-status">C</div>
+        <div class="badge">
+            <img src="../../assets/images/badges/badge_bronze_cup_big.png" alt="">
+        </div>
+        <div class="task-info-container">
+            <div class="task-title"> > SCILL - What exactly do you do? </div>
+            <div class="task-description">This is collapsed desc....</div>
+            <div class="task-xp-progress">630/1500 XP</div>
+        </div>
+    </div>
+    <scill-progress-bar
+            border-radius="0 0 6px 6px"
+            padding="0"
+            transform="skewY(0deg)"
+            [progress]="630/1500"
+            background="#00466A"
+            fill-background="#009BED">
+    </scill-progress-bar>
+</div>

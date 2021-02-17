@@ -9,16 +9,17 @@ export class ProgressBarComponent implements OnInit {
     @Input('background') progressBackground: string;
     @Input('fill-background') progressFillBackground: string;
     @Input('progress') progressPercentage: any;
+    @Input('transform') transform: string;
+    @Input('padding') padding: string;
+    @Input('border-radius') borderRadius: string;
 
     constructor() {
 
     }
 
     ngOnInit(): void {
-        this.progressPercentage =this.progressPercentage * 100 + '%';
-        console.log('%c progress', 'color:gold;', this.progressPercentage);
-        // console.log('%c BACKGROUND', 'color:gold;', this.progressBackground);
-        // console.log('%c FILL', 'color:gold;', this.progressFillBackground);
+        // divided number into percentage
+        this.progressPercentage = this.progressPercentage * 100 + '%';
     }
 
 }
