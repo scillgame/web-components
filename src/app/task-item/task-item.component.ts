@@ -8,6 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TaskItemComponent implements OnInit {
   @Input('task') task: object;
   @Input('background') background: string;
+  @Input('progress-fill') progressFill: string;
+  @Input('progress-background') progressBackground: string;
   @Input('badge') badge: string;
   constructor() { }
 
