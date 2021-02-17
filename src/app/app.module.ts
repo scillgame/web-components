@@ -18,6 +18,7 @@ import {ChallengeTeaserComponent}        from './challenge-teaser/challenge-teas
 import {PopoverPreviewComponent}         from './popover-preview/popover-preview.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { TaskItemComponent } from './task-item/task-item.component';
+import { PopoverPreviewSectionComponent } from './popover-preview-section/popover-preview-section.component';
 
 @NgModule({
     declarations   : [
@@ -36,7 +37,8 @@ import { TaskItemComponent } from './task-item/task-item.component';
         ChallengeTeaserComponent,
         PopoverPreviewComponent,
         ProgressBarComponent,
-        TaskItemComponent
+        TaskItemComponent,
+        PopoverPreviewSectionComponent
     ],
     imports        : [
         BrowserModule,

@@ -56,7 +56,7 @@ export class BattlePassComponent implements OnInit, OnDestroy {
           this.refresh$.next(true);
         }));
 
-        console.log("BATTLE PASS MONITOR", this.monitorBattlePass);
+        console.log("BATTLE PASS MONITOR", this.battlePassApi$);
 
         return getBattlePassApi(accessToken);
       })
