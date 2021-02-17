@@ -12,6 +12,10 @@ export class TaskItemComponent implements OnInit {
   @Input('progress-fill') progressFill: string;
   @Input('progress-background') progressBackground: string;
   @Input('badge') badge: string;
+  @Input('state-finished-color') stateFinishedColor: string;
+  @Input('state-in-progress-color') tateInProgressColor: string;
+  @Input('state-border-color') stateBorderColor: string;
+  @Input('state-icon-color') stateIconColor: string;
   constructor() { }
 
   ngOnInit(): void {

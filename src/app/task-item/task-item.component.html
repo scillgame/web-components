@@ -1,7 +1,11 @@
 <div class="task-container" [ngStyle]="{'background':background}">
     <div class="d-flex align-items-center">
-        <div class="task-status">
-            <!--<span class="oi oi-check"></span>-->
+        <div class="task-state" [ngStyle]="{
+        'background':task.state === 'finished' ? stateFinishedColor : tateInProgressColor,
+        'border-color':stateBorderColor,
+        'color':stateIconColor
+        }">
+            <!--<span class="oi oi-check"></span>-->3
         </div>
         <div class="badge">
             <img src="../../assets/images/badges/badge_bronze_cup_big.png" alt="">

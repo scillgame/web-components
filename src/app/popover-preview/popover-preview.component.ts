@@ -26,6 +26,10 @@ export class PopoverPreviewComponent implements OnInit, OnDestroy{
     @Input() userId: string;
     @Input() appId: string;
     @Input('title') popoverPreviewSectionTitle: string;
+    @Input('state-in-progress-color') stateInProgressColor: string;
+    @Input('state-finished-color') stateFinishedColor: string;
+    @Input('state-border-color') stateBorderColor: string;
+    @Input('state-icon-color') stateIconColor: string;
     @Input() challenges: Challenge[];
     accessToken$ = new BehaviorSubject<string>(null);
     challengesApi$ = new BehaviorSubject<ChallengesApi>(null);

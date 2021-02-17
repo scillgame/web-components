@@ -12,7 +12,7 @@
       margin-right:10px;
     }
   }
-  .task-status{
+  .task-state{
     position:absolute;
     top:-8px;
     right:-9px;
@@ -21,11 +21,8 @@
     display:flex;
     justify-content: center;
     align-items: center;
-    //background:#003049;
-    background:#07DDEC;
     border-radius:50%;
-    border:3px solid #00466A;
-    color:#00466A;
+    border:3px solid;
   }
   .task-title{
     font-size:12px;
