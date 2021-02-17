@@ -7,18 +7,19 @@
             <img src="../../assets/images/badges/badge_bronze_cup_big.png" alt="">
         </div>
         <div class="task-info-container">
-            <div class="task-title"> > SCILL - What exactly do you do? </div>
-            <div class="task-description">This is collapsed desc....</div>
-            <div class="task-xp-progress">630/1500 XP</div>
+            <div class="task-title"> {{task.challenge_name}} </div>
+            <div class="task-description">{{task.challenge_description }} {{task.state}}</div>
+            <div class="task-current-score">{{task.user_challenge_current_score}}/{{task.challenge_goal}}</div>
         </div>
     </div>
     <scill-progress-bar
             border-radius="0 0 0px 6px"
             padding="0"
             transform="skewY(0deg)"
-            [progress]="630/1500"
+            [progress]="task.user_challenge_current_score/task.challenge_goal"
             [fill-background]="progressFill"
             [background]="progressBackground"
+            [task-state]="task.state"
     >
     </scill-progress-bar>
 </div>

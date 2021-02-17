@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {Challenge}                  from '@scillgame/scill-js';
 
 @Component({
   selector: 'scill-task-item',
@@ -6,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./task-item.component.scss']
 })
 export class TaskItemComponent implements OnInit {
-  @Input('task') task: object;
+  @Input('task') task: any;   // this need to be Challenge interface but some props are not defined at Challenge interface @scillgame/scill-js SDK
   @Input('background') background: string;
   @Input('progress-fill') progressFill: string;
   @Input('progress-background') progressBackground: string;

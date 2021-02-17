@@ -1,5 +1,5 @@
 <div class="popover-preview-section" >
-    <div class="progress" style="color:#CF0E00;">
+    <div class="progress" style="color:#5FB44B;">
         <div class="d-flex justify-content-between pointer" (click)="toggleSection('isCollapsed')">
             <div>{{popoverPreviewSectionTitle}}</div>
             <div> > </div>
@@ -7,12 +7,15 @@
         <!--<div class="progress-bar" style="background: #00466A;">-->
         <!--<div class="progress-bar-fill"></div>-->
         <!--</div>-->
-        <scill-progress-bar background="#00466A" fill-background="#CF0E00" [progress]="1/7"></scill-progress-bar>
+        <scill-progress-bar background="#1D4913" fill-background="#5FB44B" [progress]="1/7"></scill-progress-bar>
         <div *ngIf="isCollapsed">
-            <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
-            <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
-            <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
-            <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+            <scill-task-item *ngFor="let challenge of challenges;"
+                             [task]="challenge"
+                             background="#1D4913"
+                             progress-fill="#5FB44B"
+                             progress-background="#1D4913"
+                             badge="badge-path">
+            </scill-task-item>`
         </div>
     </div>
 </div>
