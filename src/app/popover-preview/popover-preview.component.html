@@ -26,7 +26,7 @@
         </div>
        <div class="battlepass">
            <div class="progress" style="color:#CF0E00;">
-               <div class="d-flex justify-content-between">
+               <div class="d-flex justify-content-between pointer" (click)="toggleSection('isBattlepassCollapsed')">
                    <div>Battlepass 1/7</div>
                    <div> > </div>
                </div>
@@ -34,16 +34,18 @@
                    <!--<div class="progress-bar-fill"></div>-->
                <!--</div>-->
                <scill-progress-bar background="#00466A" fill-background="#CF0E00" [progress]="1/7"></scill-progress-bar>
-               <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
-               <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
-               <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
-               <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+               <div *ngIf="isBattlepassCollapsed">
+                   <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+                   <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+                   <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+                   <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+               </div>
            </div>
        </div>
 
         <div class="battlepass">
             <div class="progress" style="color:green;">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between pointer" (click)="toggleSection('isChallengesCollapsed')">
                     <div>Normal challenges 1/5</div>
                     <div> > </div>
                 </div>
@@ -51,10 +53,12 @@
                 <!--<div class="progress-bar-fill"></div>-->
                 <!--</div>-->
                 <scill-progress-bar background="darkgreen" fill-background="green" [progress]="1/5"></scill-progress-bar>
-                <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
-                <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
-                <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
-                <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+                <div *ngIf="isChallengesCollapsed">
+                    <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+                    <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+                    <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+                    <scill-task-item [task]="{challenge_id:1231231, challenge_name:'napravi ovo do u jutro'}" background="#00466A" badge="badge-path"></scill-task-item>
+                </div>
             </div>
         </div>
     </div>

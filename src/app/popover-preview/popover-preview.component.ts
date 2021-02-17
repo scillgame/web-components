@@ -10,6 +10,9 @@ export class PopoverPreviewComponent implements OnInit {
 
     @Input('access-token') accessToken: string;
     isPopoverPreviewVisible: boolean;
+    isBattlepassCollapsed: boolean = true;
+    isChallengesCollapsed: boolean;
+
     constructor() {
     }
 
@@ -19,5 +22,7 @@ export class PopoverPreviewComponent implements OnInit {
     togglePopoverPreview(): void {
         this.isPopoverPreviewVisible = !this.isPopoverPreviewVisible;
     }
-
+    toggleSection(section: string): void {
+        this[section] = !this[section];
+    }
 }
