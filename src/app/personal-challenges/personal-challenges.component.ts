@@ -25,11 +25,11 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
   @Input() appId: string;
   @Input() userId: string;
   @Input('access-token') accessToken: string;
-  @Input('title') popoverPreviewSectionTitle: string;
-  isPopoverPreviewVisible: boolean;
-  isCollapsed: boolean;
-  isBattlepassExpanded: boolean = true;
-  isChallengesExpanded: boolean = true;
+  // @Input('title') popoverPreviewSectionTitle: string;
+  // isPopoverPreviewVisible: boolean;
+  // isCollapsed: boolean;
+  // isBattlepassExpanded: boolean = true;
+  // isChallengesExpanded: boolean = true;
   accessToken$ = new BehaviorSubject<string>(null);
   challengesApi$ = new BehaviorSubject<ChallengesApi>(null);
   subscriptions: Subscription = new Subscription();
@@ -46,7 +46,6 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('%c THIS ACCESS TOKEN', 'color:cyan;', this.accessToken);
     this.scillService.getAccessToken(this.apiKey, this.userId).subscribe(result => {
       if (result) {
         this.accessToken$.next(result);
@@ -152,14 +151,5 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
 
   challengeById(index: number, item: Challenge): string {
     return item.challenge_id;
-  }
-  /*** COLLAPSE/EXPAND POPOVER PREVIEW ***/
-  togglePopoverPreview(): void {
-        this.isPopoverPreviewVisible = !this.isPopoverPreviewVisible;
-  }
-
-    /*** COLLAPSE/EXPAND SECTION in POPOVER PREVIEW ***/
-  toggleSection(section: string): void {
-        this[section] = !this[section];
   }
 }

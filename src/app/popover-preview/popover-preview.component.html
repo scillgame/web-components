@@ -1,13 +1,13 @@
 <div class="popover-preview-container">
     <div class="d-flex justify-content-end">
-        <button (click)="togglePopoverPreview()" class="popover-preview-btn">
+        <button (click)="toggleSection('isPopoverPreviewVisible')" class="popover-preview-btn">
             User#1234
             <div class="btn-user-lvl">
                 3
             </div>
         </button>
     </div>
-    <div class="popover-preview" *ngIf="!isPopoverPreviewVisible ">
+    <div class="popover-preview" *ngIf="isPopoverPreviewVisible ">
         <div class="popover-preview-header">
             <div class="header-triangle"></div>
             <div class="d-flex justify-content-between align-items-center">
@@ -56,7 +56,7 @@
                                      progress-fill="#009BED"
                                      progress-background="#00466A"
                     ></scill-task-item>
-                    
+
                 </div>
             </div>
         </div>
