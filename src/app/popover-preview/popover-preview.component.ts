@@ -25,13 +25,14 @@ export class PopoverPreviewComponent implements OnInit, OnDestroy{
     @Input() apiKey: string;
     @Input() userId: string;
     @Input() appId: string;
+    @Input() category: ChallengeCategory;
+    @Input() challenges: Challenge[];
     @Input() username: string = 'User#';
     @Input('title') popoverPreviewSectionTitle: string;
     @Input('state-in-progress-color') stateInProgressColor: string;
     @Input('state-finished-color') stateFinishedColor: string;
     @Input('state-border-color') stateBorderColor: string;
     @Input('state-icon-color') stateIconColor: string;
-    @Input() challenges: Challenge[];
     @Input('task') task: any;   // this need to be Challenge interface but some props are not defined at Challenge interface @scillgame/scill-js SDK
     @Input('background') background: string;
     @Input('progress-fill') progressFill: string;
@@ -108,8 +109,18 @@ export class PopoverPreviewComponent implements OnInit, OnDestroy{
 
     updateChallenges(): void {
         this.challengesApi?.getAllPersonalChallenges(this.appId).then(categories => {
-            console.log(categories);
+            // categories.map(ctg => {
+            //     ctg.finishedChallenges = 0;
+            //     ctg.challenges.map( ch => {
+            //         if(ch.state === 'finished'){
+            //             ctg.finishedChallenges++;
+            //         }
+            //         return ch;
+            //     })
+            //     return ctg;
+            // })
             this.categories = categories;
+            console.log('%c CATEGORIES => ', 'color:gold;', this.categories);
         });
     }
     challengeById(index: number, item: Challenge): string {

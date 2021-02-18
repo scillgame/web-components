@@ -1,7 +1,7 @@
 <div class="popover-preview-container">
     <div class="d-flex justify-content-end">
         <button (click)="toggleSection('isPopoverPreviewVisible')" class="popover-preview-btn">
-            User#1234
+            {{username}}
             <div class="btn-battlepass-lvl">
                 3
             </div>
@@ -29,6 +29,7 @@
             <scill-popover-preview-section *ngFor="let category of categories;"
                                            [title]="category.category_name"
                                            [challenges]="category.challenges"
+                                           [category]="category"
                                            state-in-progress-color="#00f"
                                            state-finished-color="#5FB44B"
                                            state-border-color="gold"
