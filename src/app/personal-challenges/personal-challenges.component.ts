@@ -24,17 +24,29 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
   @Input() apiKey: string;
   @Input() appId: string;
   @Input() userId: string;
+  @Input() battlePassId: string;
   @Input('access-token') accessToken: string;
-  // @Input('title') popoverPreviewSectionTitle: string;
-  // isPopoverPreviewVisible: boolean;
-  // isCollapsed: boolean;
-  // isBattlepassExpanded: boolean = true;
-  // isChallengesExpanded: boolean = true;
+  @Input() category: ChallengeCategory;
+  @Input() challenges: Challenge[];
+  @Input() username: string;
+  @Input('title') popoverPreviewSectionTitle: string;
+  @Input('state-in-progress-color') stateInProgressColor: string;
+  @Input('state-finished-color') stateFinishedColor: string;
+  @Input('state-border-color') stateBorderColor: string;
+  @Input('state-icon-color') stateIconColor: string;
+  // this need to be Challenge interface but some props are not defined at Challenge interface @scillgame/scill-js SDK
+  @Input() task: any;
+  @Input('background') background: string;
+  @Input('progress-fill') progressFill: string;
+  @Input('progress-background') progressBackground: string;
+  @Input('badge') badge: string;
   accessToken$ = new BehaviorSubject<string>(null);
   challengesApi$ = new BehaviorSubject<ChallengesApi>(null);
   subscriptions: Subscription = new Subscription();
   categories: ChallengeCategory[] = [];
   challengeMonitor: ChallengeUpdateMonitor;
+  isExpanded: boolean;
+  isPopoverPreviewVisible: boolean = true;
 
   @ContentChild('challengeTemplate', { static: false })
   challengeTemplateRef: TemplateRef<any>;
@@ -92,7 +104,17 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
 
   updateChallenges(): void {
     this.challengesApi?.getAllPersonalChallenges(this.appId).then(categories => {
-      console.log(categories);
+      // console.log(categories);
+        // categories.map(ctg => {
+        //     ctg.finishedChallenges = 0;
+        //     ctg.challenges.map( ch => {
+        //         if(ch.state === 'finished'){
+        //             ctg.finishedChallenges++;
+        //         }
+        //         return ch;
+        //     })
+        //     return ctg;
+        // })
       this.categories = categories;
     });
   }
@@ -152,4 +174,8 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
   challengeById(index: number, item: Challenge): string {
     return item.challenge_id;
   }
+
+    toggleSection(section: string): void {
+        this[section] = !this[section];
+    }
 }
