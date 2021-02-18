@@ -14,7 +14,7 @@
                             fill-background="#5FB44B"
                             [progress]="1/category.challenges.length">
         </scill-progress-bar>
-        <div *ngIf="isCollapsed">
+        <div *ngIf="isExpanded">
             <scill-task-item *ngFor="let challenge of challenges;"
                              [task]="challenge"
                              background="#1D4913"

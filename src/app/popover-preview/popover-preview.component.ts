@@ -46,9 +46,7 @@ export class PopoverPreviewComponent implements OnInit, OnDestroy{
     challengeMonitor: ChallengeUpdateMonitor;
     categories: ChallengeCategory[] = [];
     isPopoverPreviewVisible = true;
-    isBattlepassExpanded = true;
-    isChallengesExpanded: boolean;
-    isCollapsed = true;
+    isExpanded = false;
 
     constructor(private scillService: SCILLService) { }
 
