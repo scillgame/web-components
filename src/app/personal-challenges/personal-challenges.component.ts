@@ -13,6 +13,7 @@ import {filter, map} from 'rxjs/operators';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {SCILLService} from '../scill.service';
 
+
 @Component({
   selector: 'scill-personal-challenges',
   templateUrl: './personal-challenges.component.html',

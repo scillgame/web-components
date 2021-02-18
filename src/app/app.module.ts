@@ -19,6 +19,7 @@ import {PopoverPreviewComponent}         from './popover-preview/popover-preview
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { TaskItemComponent } from './task-item/task-item.component';
 import { PopoverPreviewSectionComponent } from './popover-preview-section/popover-preview-section.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     declarations   : [
@@ -42,7 +43,8 @@ import { PopoverPreviewSectionComponent } from './popover-preview-section/popove
     ],
     imports        : [
         BrowserModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        FontAwesomeModule
     ],
     providers      : [],
     entryComponents: [
