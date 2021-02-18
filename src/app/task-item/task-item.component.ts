@@ -1,25 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {Challenge}                  from '@scillgame/scill-js';
+import {PopoverPreviewComponent}    from '../popover-preview/popover-preview.component';
 
 @Component({
   selector: 'scill-task-item',
   templateUrl: './task-item.component.html',
   styleUrls: ['./task-item.component.scss']
 })
-export class TaskItemComponent implements OnInit {
-  @Input('task') task: any;   // this need to be Challenge interface but some props are not defined at Challenge interface @scillgame/scill-js SDK
-  @Input('background') background: string;
-  @Input('progress-fill') progressFill: string;
-  @Input('progress-background') progressBackground: string;
-  @Input('badge') badge: string;
-  @Input('state-finished-color') stateFinishedColor: string;
-  @Input('state-in-progress-color') tateInProgressColor: string;
-  @Input('state-border-color') stateBorderColor: string;
-  @Input('state-icon-color') stateIconColor: string;
-  constructor() { }
-
-  ngOnInit(): void {
-      // console.log('%c progress', 'color:gold;', this.task);
-  }
-
-}
+export class TaskItemComponent extends PopoverPreviewComponent{}

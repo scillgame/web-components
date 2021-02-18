@@ -31,6 +31,11 @@ export class PopoverPreviewComponent implements OnInit, OnDestroy{
     @Input('state-border-color') stateBorderColor: string;
     @Input('state-icon-color') stateIconColor: string;
     @Input() challenges: Challenge[];
+    @Input('task') task: any;   // this need to be Challenge interface but some props are not defined at Challenge interface @scillgame/scill-js SDK
+    @Input('background') background: string;
+    @Input('progress-fill') progressFill: string;
+    @Input('progress-background') progressBackground: string;
+    @Input('badge') badge: string;
     accessToken$ = new BehaviorSubject<string>(null);
     challengesApi$ = new BehaviorSubject<ChallengesApi>(null);
     subscriptions: Subscription = new Subscription();
