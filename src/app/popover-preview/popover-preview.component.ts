@@ -25,6 +25,7 @@ export class PopoverPreviewComponent implements OnInit, OnDestroy{
     @Input() apiKey: string;
     @Input() userId: string;
     @Input() appId: string;
+    @Input() username: string = 'User#';
     @Input('title') popoverPreviewSectionTitle: string;
     @Input('state-in-progress-color') stateInProgressColor: string;
     @Input('state-finished-color') stateFinishedColor: string;
@@ -36,6 +37,7 @@ export class PopoverPreviewComponent implements OnInit, OnDestroy{
     @Input('progress-fill') progressFill: string;
     @Input('progress-background') progressBackground: string;
     @Input('badge') badge: string;
+
     accessToken$ = new BehaviorSubject<string>(null);
     challengesApi$ = new BehaviorSubject<ChallengesApi>(null);
     subscriptions: Subscription = new Subscription();
