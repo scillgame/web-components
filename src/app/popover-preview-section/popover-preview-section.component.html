@@ -7,10 +7,13 @@
             </div>
             <div> > </div>
         </div>
-        <!--<div class="progress-bar" style="background: #00466A;">-->
-        <!--<div class="progress-bar-fill"></div>-->
-        <!--</div>-->
-        <scill-progress-bar background="#1D4913" fill-background="#5FB44B" [progress]="1/7"></scill-progress-bar>
+        <!-- Finished challenges does not exist in CategoryChallenge interface and throwing error -->
+        <!-- Once this missing field is resolved switch [proggress] attribute with next line-->
+        <!--[progress]="category.finishedChallenges/category.challenges.length"-->
+        <scill-progress-bar background="#1D4913"
+                            fill-background="#5FB44B"
+                            [progress]="1/category.challenges.length">
+        </scill-progress-bar>
         <div *ngIf="isCollapsed">
             <scill-task-item *ngFor="let challenge of challenges;"
                              [task]="challenge"
