@@ -1,5 +1,5 @@
 <div class="popover-preview-container">
-    <div class="d-flex justify-content-end">
+    <div class="sc-d-flex sc-justify-content-end">
         <button (click)="toggleSection('isPopoverPreviewVisible')" class="popover-preview-btn">
             {{username}}
             <div class="btn-battlepass-lvl">
@@ -10,16 +10,16 @@
     <div class="popover-preview" *ngIf="isPopoverPreviewVisible ">
         <div class="popover-preview-header">
             <div class="header-triangle"></div>
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="sc-d-flex sc-justify-content-between sc-align-items-center">
                 <div class="user">{{username}}</div>
-                <div class="d-flex align-items-center">
+                <div class="sc-d-flex sc-align-items-center">
                     <div class="lvl-badge">
                         <img src="../../assets/images/badges/badge_rare_gempost_big.png" alt="">
                     </div>
                     <div class="battlepass-lvl">3</div>
                 </div>
             </div>
-            <div class="progress">
+            <div class="scill-progress">
                 <!--<div>-->
                     <scill-battle-pass-status   [app-id]="appId" api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*," user-id="1234" battle-pass-id="627086321190174723"></scill-battle-pass-status>
                 <!--</div>-->

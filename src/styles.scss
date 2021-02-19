@@ -67,22 +67,22 @@ $textMutedColor: gray;
 
 
 // flexbox global rules
-.d-flex{
+.sc-d-flex{
   display:flex;
 }
-.flex-column{
+.sc-flex-column{
   flex-direction: column;
 }
-.justify-content-center{
+.sc-justify-content-center{
   justify-content: center;
 }
-.justify-content-between{
+.sc-justify-content-between{
   justify-content:space-between;
 }
-.justify-content-end{
+.sc-justify-content-end{
   justify-content: flex-end;
 }
-.align-items-center{
+.sc-align-items-center{
   align-items:center;
 }
 

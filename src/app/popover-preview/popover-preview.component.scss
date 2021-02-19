@@ -1,6 +1,7 @@
 $gold: #F5A622;
 
 .popover-preview-container{
+  position:relative;
   min-width:300px;
   max-width:350px;
   .popover-preview-btn {
@@ -33,6 +34,9 @@ $gold: #F5A622;
     }
   }
     .popover-preview{
+      padding-bottom:15px;
+      position:absolute;
+      width:100%;
       background: #fff;
       color:#fff;
       border-top-left-radius: 5px;
@@ -43,6 +47,7 @@ $gold: #F5A622;
         border-top-right-radius: 5px;
         padding:20px 10px;
         background:transparent linear-gradient(180deg, #0AE3ED 0%, #009BED 100%) 0% 0% no-repeat padding-box;
+        margin-bottom:15px;
         .header-triangle{
           width:23px;
           height:23px;
@@ -77,7 +82,7 @@ $gold: #F5A622;
         }
       }
     }
-  .progress{
+  .scill-progress{
     padding:0 10px;
   }
   .battlepass{
