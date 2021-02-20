@@ -20,7 +20,7 @@ export class ProgressBarComponent implements OnInit {
 
     ngOnInit(): void {
         // divided number into percentage
-        this.progressPercentage = this.progressPercentage * 100 + '%';
+        this.progressPercentage = this.progressPercentage + '%';
     }
 
 }

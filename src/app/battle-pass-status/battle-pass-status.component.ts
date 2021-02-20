@@ -17,10 +17,10 @@ import {
 })
 export class BattlePassStatusComponent implements OnInit, OnDestroy {
 
-  @Input() battlePassId: string;
-  @Input() apiKey: string;
-  @Input() appId: string;
-  @Input() userId: string;
+  @Input('battle-pass-id') battlePassId: string;
+  @Input('api-key') apiKey: string;
+  @Input('app-id') appId: string;
+  @Input('user-id') userId: string;
 
   levels: BattlePassLevel[] = [];
   battlePass: BattlePass;
@@ -38,6 +38,7 @@ export class BattlePassStatusComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('%c BATTLE PASS STATUS COMPONENT', 'color:gold;', this);
     if (!this.apiKey || !this.userId || !this.battlePassId || !this.appId) {
       return;
     }

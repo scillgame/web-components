@@ -1,4 +1,5 @@
 <div class="popover-preview-section" >
+
     <div class="scill-progress" style="color:#5FB44B;">
         <div class="sc-d-flex sc-justify-content-between pointer" (click)="toggleSection('isExpanded')">
             <div>
@@ -15,8 +16,10 @@
         <!--[progress]="category.finishedChallenges/category.challenges.length"-->
         <scill-progress-bar background="#1D4913"
                             fill-background="#5FB44B"
-                            [progress]="1/category.challenges.length">
+                            [progress]="1/category.challenges.length*100">
         </scill-progress-bar>
+
+
         <div *ngIf="isExpanded">
             <scill-task-item *ngFor="let challenge of challenges;"
                              [task]="challenge"

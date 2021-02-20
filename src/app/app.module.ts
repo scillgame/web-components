@@ -20,6 +20,7 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { TaskItemComponent } from './task-item/task-item.component';
 import { PopoverPreviewSectionComponent } from './popover-preview-section/popover-preview-section.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PopoverPreviewHeaderComponent } from './popover-preview-header/popover-preview-header.component';
 
 @NgModule({
     declarations   : [
@@ -39,7 +40,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         PopoverPreviewComponent,
         ProgressBarComponent,
         TaskItemComponent,
-        PopoverPreviewSectionComponent
+        PopoverPreviewSectionComponent,
+        PopoverPreviewHeaderComponent
     ],
     imports        : [
         BrowserModule,
@@ -54,8 +56,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         PersonalChallengesGridComponent,
         BattlePassComponent,
         BattlePassStatusComponent,
-        TaskListComponent,
         BattlePassMiniStatusComponent,
+        TaskListComponent,
         CommunityChallengeComponent,
         ChallengeTeaserComponent,
         PopoverPreviewComponent

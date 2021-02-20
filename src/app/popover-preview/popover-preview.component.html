@@ -8,32 +8,16 @@
         </button>
     </div>
     <div class="popover-preview" *ngIf="isPopoverPreviewVisible ">
-        <div class="popover-preview-header">
-            <div class="header-triangle"></div>
-            <div class="sc-d-flex sc-justify-content-between sc-align-items-center">
-                <div class="user">{{username}}</div>
-                <div class="sc-d-flex sc-align-items-center">
-                    <div class="lvl-badge">
-                        <img src="../../assets/images/badges/badge_rare_gempost_big.png" alt="">
-                    </div>
-                    <div class="battlepass-lvl">3</div>
-                </div>
-            </div>
-            <div class="scill-progress">
-                <!--<div>-->
-                    <scill-battle-pass-status   [app-id]="appId" api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*," user-id="1234" battle-pass-id="627086321190174723"></scill-battle-pass-status>
-                <!--</div>-->
-              <!--  app-id="593776232582742019" challenge-id="627581542241501194"
-                api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,"
-                user-id="1234"
-                username="franjoeric"
-                battle-pass-id="627086321190174723" -->
-                <div>2/12</div>
-                <scill-progress-bar background="#fff" fill-background="#009BED" [progress]="2/12"></scill-progress-bar>
-            </div>
-        </div>
-
+            <scill-popover-preview-header username="franjoeric" access-token="my-access-token"
+                                          app-id="593776232582742019"
+                                          challenge-id="627581542241501194"
+                                          api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,"
+                                          user-id="1234"
+                                          username="franjoeric"
+                                          battle-pass-id="627086321190174723">
+            </scill-popover-preview-header>
         <!--<scill-popover-preview-section title="Battlepass"></scill-popover-preview-section>-->
+
             <scill-popover-preview-section *ngFor="let category of categories;"
                                            [title]="category.category_name"
                                            [challenges]="category.challenges"

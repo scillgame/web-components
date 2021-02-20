@@ -1,0 +1,24 @@
+<div class="popover-preview-header" *ngIf="(battlePass$ | async) as battlePass">
+    <div  *ngFor="let level of levels; let i=index; trackBy: levelById">
+        <div  *ngIf="level.activated_at !== null && level.level_completed === false">
+            <div class="header-triangle"></div>
+            <div class="sc-d-flex sc-justify-content-between sc-align-items-center">
+                <div class="user">{{username}}</div>
+                <div class="sc-d-flex sc-align-items-center">
+                    <div class="lvl-badge">
+                        <img src="../../assets/images/badges/badge_rare_gempost_big.png" alt="">
+                    </div>
+                    <div class="battlepass-lvl">
+                        {{level.level_priority}}
+                    </div>
+                </div>
+            </div>
+            <div class="scill-progress"
+                 *ngFor="let challenge of level.challenges; trackBy: challengeById">
+                <div *ngIf="level.activated_at !== null">
+                    <scill-progress-bar background="#fff" fill-background="#009BED" [progress]="challenge | progress"></scill-progress-bar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

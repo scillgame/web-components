@@ -44,6 +44,7 @@ export class BattlePassComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('%c BATTLE PASS COMPONENT', 'color:gold;', this);
     this.scillService.getAccessToken(this.apiKey, this.userId).pipe(
       filter(isNotNullOrUndefined),
       map(accessToken => {
@@ -102,6 +103,7 @@ export class BattlePassComponent implements OnInit, OnDestroy {
         console.log(levelProgress);
         this.progress += levelProgress / levels.length;
       }
+      console.log('%c PROGRESS', 'color:cyan;', this.progress);
       this.progress *= 100;
     }));
   }

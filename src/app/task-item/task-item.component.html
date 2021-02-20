@@ -20,7 +20,7 @@
             border-radius="0 0 0px 6px"
             padding="0"
             transform="skewY(0deg)"
-            [progress]="task.user_challenge_current_score/task.challenge_goal"
+            [progress]="task.user_challenge_current_score/task.challenge_goal*100"
             [fill-background]="progressFill"
             [background]="progressBackground"
             [task-state]="task.state"
