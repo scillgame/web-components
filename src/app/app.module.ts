@@ -21,6 +21,7 @@ import { TaskItemComponent } from './task-item/task-item.component';
 import { PopoverPreviewSectionComponent } from './popover-preview-section/popover-preview-section.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PopoverPreviewHeaderComponent } from './popover-preview-header/popover-preview-header.component';
+import { PopoverPreviewBpSectionComponent } from './popover-preview-bp-section/popover-preview-bp-section.component';
 
 @NgModule({
     declarations   : [
@@ -41,7 +42,8 @@ import { PopoverPreviewHeaderComponent } from './popover-preview-header/popover-
         ProgressBarComponent,
         TaskItemComponent,
         PopoverPreviewSectionComponent,
-        PopoverPreviewHeaderComponent
+        PopoverPreviewHeaderComponent,
+        PopoverPreviewBpSectionComponent
     ],
     imports        : [
         BrowserModule,

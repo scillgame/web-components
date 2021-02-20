@@ -36,7 +36,6 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
   @Input('state-border-color') stateBorderColor: string;
   @Input('state-icon-color') stateIconColor: string;
   // this need to be Challenge interface but some props are not defined at Challenge interface @scillgame/scill-js SDK
-  @Input() task: any;
   @Input('background') background: string;
   @Input('progress-fill') progressFill: string;
   @Input('progress-background') progressBackground: string;
@@ -46,8 +45,8 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
   subscriptions: Subscription = new Subscription();
   categories: ChallengeCategory[] = [];
   challengeMonitor: ChallengeUpdateMonitor;
-  isExpanded: boolean;
-  isPopoverPreviewVisible: boolean = true;
+  isExpanded: boolean = true;
+
 
   @ContentChild('challengeTemplate', { static: false })
   challengeTemplateRef: TemplateRef<any>;
@@ -59,6 +58,7 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('%c BREAKPOINT 1', 'color:blueviolet');
     this.scillService.getAccessToken(this.apiKey, this.userId).subscribe(result => {
       if (result) {
         this.accessToken$.next(result);
@@ -175,8 +175,20 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
   challengeById(index: number, item: Challenge): string {
     return item.challenge_id;
   }
-
     toggleSection(section: string): void {
         this[section] = !this[section];
+    }
+
+    // return number of completed challenges inside challenge category
+    // pipe is not neccessary for this because this is not common/reusable component
+    calculateCompletedChallenges(category: ChallengeCategory): number{
+        let counter = 0;
+        category.challenges.map( ch => {
+            if (ch.type === 'finished'){
+                counter++;
+            }
+            return ch;
+        });
+        return counter;
     }
 }

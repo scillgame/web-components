@@ -4,19 +4,17 @@
         <div class="sc-d-flex sc-justify-content-between pointer" (click)="toggleSection('isExpanded')">
             <div>
                 {{popoverPreviewSectionTitle}}
-                <!--{{category.finishedChallenges}} / {{category.challenges.length}}-->
+                {{calculateCompletedChallenges(category)}} / {{category.challenges.length}}
             </div>
             <div>
                 <fa-icon [icon]="faCaretLeft" *ngIf="!isExpanded"></fa-icon>
                 <fa-icon [icon]="faCaretDown" *ngIf="isExpanded"></fa-icon>
             </div>
         </div>
-        <!-- Finished challenges does not exist in CategoryChallenge interface and throwing error -->
-        <!-- Once this missing field is resolved switch [proggress] attribute with next line-->
-        <!--[progress]="category.finishedChallenges/category.challenges.length"-->
         <scill-progress-bar background="#1D4913"
                             fill-background="#5FB44B"
-                            [progress]="1/category.challenges.length*100">
+                            [progress]="calculateCompletedChallenges(category)/category.challenges.length"
+        >
         </scill-progress-bar>
 
 

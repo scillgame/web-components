@@ -8,15 +8,14 @@
         </button>
     </div>
     <div class="popover-preview" *ngIf="isPopoverPreviewVisible ">
-            <scill-popover-preview-header username="franjoeric" access-token="my-access-token"
+            <scill-popover-preview-header username="franjoeric"
+                                          access-token="my-access-token"
                                           app-id="593776232582742019"
                                           challenge-id="627581542241501194"
                                           api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,"
                                           user-id="1234"
-                                          username="franjoeric"
                                           battle-pass-id="627086321190174723">
             </scill-popover-preview-header>
-        <!--<scill-popover-preview-section title="Battlepass"></scill-popover-preview-section>-->
 
             <scill-popover-preview-section *ngFor="let category of categories;"
                                            [title]="category.category_name"
@@ -29,5 +28,15 @@
                                            [app-id]="appId"
             >
             </scill-popover-preview-section>
+
+        <!--<scill-popover-preview-bp-section title="category.category_name"-->
+                                           <!--category="category"-->
+                                           <!--state-in-progress-color="#00f"-->
+                                           <!--state-finished-color="#5FB44B"-->
+                                           <!--state-border-color="gold"-->
+                                           <!--state-icon-color="gold"-->
+                                           <!--[app-id]="appId"-->
+            <!--&gt;-->
+            <!--</scill-popover-preview-bp-section>-->
     </div>
 </div>

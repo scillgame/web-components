@@ -26,7 +26,7 @@ export class BattlePassComponent implements OnInit, OnDestroy {
   @Input() apiKey: string;
   @Input() appId: string;
   @Input() userId: string;
-
+  @Input('title') popoverPreviewSectionTitle: string;
   battlePassApi$ = new BehaviorSubject<BattlePassesApi>(null);
   battlePass$ = new BehaviorSubject<BattlePass>(null);
   levels$: Observable<BattlePassLevel[]>;
@@ -151,4 +151,7 @@ export class BattlePassComponent implements OnInit, OnDestroy {
       }
     });
   }
+    toggleSection(section: string): void {
+        this[section] = !this[section];
+    }
 }
