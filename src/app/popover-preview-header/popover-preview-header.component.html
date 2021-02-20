@@ -16,7 +16,7 @@
             <div class="scill-progress"
                  *ngFor="let challenge of level.challenges; trackBy: challengeById">
                 <div *ngIf="level.activated_at !== null">
-                    <scill-progress-bar background="#fff" fill-background="#009BED" [progress]="challenge | progress"></scill-progress-bar>
+                    <scill-progress-bar background="#fff" fill-background="#009BED" progress="{{challenge | progress}}%"></scill-progress-bar>
                 </div>
             </div>
         </div>

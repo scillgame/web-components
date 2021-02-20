@@ -55,7 +55,6 @@ export class BattlePassStatusComponent implements OnInit, OnDestroy {
   loadBattlePassLevels(): void {
     this.battlePassApi.getBattlePassLevels(this.appId, this.battlePassId).then(levels => {
       this.levels = levels;
-
       this.levels = levels;
       this.progress = 0;
       for (const level of levels) {
@@ -66,7 +65,6 @@ export class BattlePassStatusComponent implements OnInit, OnDestroy {
           totalCounter += challenge.user_challenge_current_score;
         }
         const levelProgress = (totalGoal > 0) ? totalCounter / totalGoal : 0;
-        console.log(levelProgress);
         this.progress += levelProgress / levels.length;
       }
       this.progress *= 100;

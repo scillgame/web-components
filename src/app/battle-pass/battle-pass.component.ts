@@ -53,11 +53,11 @@ export class BattlePassComponent implements OnInit, OnDestroy {
         }
 
         this.monitorBattlePass = startMonitorBattlePassUpdates(accessToken, this.battlePassId, (payload => {
-          console.log("UPDATED BATTLE PASS", payload);
+          console.log('UPDATED BATTLE PASS', payload);
           this.refresh$.next(true);
         }));
 
-        console.log("BATTLE PASS MONITOR", this.battlePassApi$);
+        console.log('BATTLE PASS MONITOR', this.battlePassApi$);
 
         return getBattlePassApi(accessToken);
       })
@@ -70,7 +70,7 @@ export class BattlePassComponent implements OnInit, OnDestroy {
           map(battlePasses => {
             console.log(battlePasses);
             const foundBattlePass = battlePasses.filter(battlePass => battlePass.battle_pass_id === this.battlePassId)[0];
-            console.log("FOUD", foundBattlePass);
+            console.log('FOUD', foundBattlePass);
             return foundBattlePass;
           }
         ));
@@ -103,7 +103,6 @@ export class BattlePassComponent implements OnInit, OnDestroy {
         console.log(levelProgress);
         this.progress += levelProgress / levels.length;
       }
-      console.log('%c PROGRESS', 'color:cyan;', this.progress);
       this.progress *= 100;
     }));
   }
