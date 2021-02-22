@@ -58,7 +58,6 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('%c BREAKPOINT 1', 'color:blueviolet');
     this.scillService.getAccessToken(this.apiKey, this.userId).subscribe(result => {
       if (result) {
         this.accessToken$.next(result);

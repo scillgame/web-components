@@ -34,7 +34,7 @@
                                          progress-fill="#5FB44B"
                                          progress-background="#1D4913"
                                          badge="badge-path"
-                                         [progress-percentage]="calculateCompletedChallenges(level.challenges) | percent"
+                                         [progress-percentage]="challenge.user_challenge_current_score / challenge.challenge_goal | percent"
                                          [type-in-progress-color]="typeInProgressColor"
                                          [type-finished-color]="typeFinishedColor"
                                          [type-border-color]="typeBorderColor"

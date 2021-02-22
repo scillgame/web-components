@@ -19,7 +19,6 @@ export class ProgressBarComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log('%c PROGRESS', 'color:gold;', this.progressPercentage);
     }
 
 }

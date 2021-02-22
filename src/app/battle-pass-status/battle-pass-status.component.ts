@@ -38,7 +38,6 @@ export class BattlePassStatusComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('%c BATTLE PASS STATUS COMPONENT', 'color:gold;', this);
     if (!this.apiKey || !this.userId || !this.battlePassId || !this.appId) {
       return;
     }

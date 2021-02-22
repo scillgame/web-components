@@ -47,7 +47,6 @@ export class BattlePassComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('%c BATTLE PASS COMPONENT', 'color:gold;', this);
     this.scillService.getAccessToken(this.apiKey, this.userId).pipe(
       filter(isNotNullOrUndefined),
       map(accessToken => {
@@ -56,11 +55,9 @@ export class BattlePassComponent implements OnInit, OnDestroy {
         }
 
         this.monitorBattlePass = startMonitorBattlePassUpdates(accessToken, this.battlePassId, (payload => {
-          console.log('UPDATED BATTLE PASS', payload);
           this.refresh$.next(true);
         }));
 
-        console.log('BATTLE PASS MONITOR', this.battlePassApi$);
 
         return getBattlePassApi(accessToken);
       })
@@ -179,6 +176,7 @@ export class BattlePassComponent implements OnInit, OnDestroy {
         }
         challenges.map( ch => {
             if (ch.type === 'finished'){
+
                 counter++;
             }
             return ch;
