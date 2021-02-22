@@ -165,7 +165,7 @@ export class BattlePassComponent implements OnInit, OnDestroy {
                 totalCounter += ch.user_challenge_current_score;
             });
             const levelProgress = (totalGoal > 0) ? totalCounter / totalGoal : 0;
-            totalProgress += levelProgress / levels.length;
+            totalProgress += levelProgress;
         });
         return totalProgress;
     }

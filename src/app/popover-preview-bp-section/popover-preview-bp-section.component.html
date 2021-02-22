@@ -18,10 +18,14 @@
         <!-- Finished challenges does not exist in CategoryChallenge interface and throwing error -->
         <!-- Once this missing field is resolved switch [proggress] attribute with next line-->
         <!--[progress]="category.finishedChallenges/category.challenges.length"-->
-        <scill-progress-bar background="#1D4913"
-                            fill-background="#00f"
-                            [progress]="calculateBattlePassLevelProgress(levels) | percent">
-        </scill-progress-bar>
+        <div *ngFor="let level of levels">
+            <div *ngIf="level.activated_at !== null && !level.level_completed">
+                <scill-progress-bar background="#1D4913"
+                                    fill-background="#00f"
+                                    [progress]="calculateCompletedChallenges(level.challenges) / level.challenges.length | percent">
+                </scill-progress-bar>
+            </div>
+        </div>
 
 
         <div *ngIf="isExpanded">
