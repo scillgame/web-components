@@ -31,10 +31,10 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
   @Input() challenges: Challenge[];
   @Input() username: string;
   @Input('title') popoverPreviewSectionTitle: string;
-  @Input('state-in-progress-color') stateInProgressColor: string;
-  @Input('state-finished-color') stateFinishedColor: string;
-  @Input('state-border-color') stateBorderColor: string;
-  @Input('state-icon-color') stateIconColor: string;
+  @Input('type-in-progress-color') typeInProgressColor: string;
+  @Input('type-finished-color') typeFinishedColor: string;
+  @Input('type-border-color') typeBorderColor: string;
+  @Input('type-icon-color') typeIconColor: string;
   // this need to be Challenge interface but some props are not defined at Challenge interface @scillgame/scill-js SDK
   @Input('background') background: string;
   @Input('progress-fill') progressFill: string;

@@ -10,33 +10,34 @@
     <div class="popover-preview" *ngIf="isPopoverPreviewVisible ">
             <scill-popover-preview-header username="franjoeric"
                                           access-token="my-access-token"
-                                          app-id="593776232582742019"
-                                          challenge-id="627581542241501194"
-                                          api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,"
-                                          user-id="1234"
-                                          battle-pass-id="627086321190174723">
+                                          [app-id]="appId"
+                                          [api-key]="apiKey"
+                                          [user-id]="userId"
+                                          [battle-pass-id]="battlePassId">
             </scill-popover-preview-header>
+
+        <scill-popover-preview-bp-section  [type-in-progress-color]="typeInProgressColor"
+                                           [type-finished-color]="typeFinishedColor"
+                                           [type-border-color]="typeBorderColor"
+                                           [type-icon-color]="typeIconColor"
+                                           [app-id]="appId"
+                                           [api-key]="apiKey"
+                                           [user-id]="userId"
+                                           [battle-pass-id]="battlePassId"
+            >
+            </scill-popover-preview-bp-section>
 
             <scill-popover-preview-section *ngFor="let category of categories;"
                                            [title]="category.category_name"
                                            [challenges]="category.challenges"
                                            [category]="category"
-                                           state-in-progress-color="#00f"
-                                           state-finished-color="#5FB44B"
-                                           state-border-color="gold"
-                                           state-icon-color="gold"
                                            [app-id]="appId"
+                                           [type-in-progress-color]="typeInProgressColor"
+                                           [type-finished-color]="typeFinishedColor"
+                                           [type-border-color]="typeBorderColor"
+                                           [type-icon-color]="typeIconColor"
             >
             </scill-popover-preview-section>
 
-        <!--<scill-popover-preview-bp-section title="category.category_name"-->
-                                           <!--category="category"-->
-                                           <!--state-in-progress-color="#00f"-->
-                                           <!--state-finished-color="#5FB44B"-->
-                                           <!--state-border-color="gold"-->
-                                           <!--state-icon-color="gold"-->
-                                           <!--[app-id]="appId"-->
-            <!--&gt;-->
-            <!--</scill-popover-preview-bp-section>-->
     </div>
 </div>

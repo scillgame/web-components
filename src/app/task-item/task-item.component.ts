@@ -11,10 +11,10 @@ export class TaskItemComponent implements OnInit, OnDestroy{
     faCheck = faCheck;
     @Input('task') task: any;
     @Input('title') popoverPreviewSectionTitle: string;
-    @Input('state-in-progress-color') stateInProgressColor: string;
-    @Input('state-finished-color') stateFinishedColor: string;
-    @Input('state-border-color') stateBorderColor: string;
-    @Input('state-icon-color') stateIconColor: string;
+    @Input('type-in-progress-color') typeInProgressColor: string;
+    @Input('type-finished-color') typeFinishedColor: string;
+    @Input('type-border-color') typeBorderColor: string;
+    @Input('type-icon-color') typeIconColor: string;
     // @Input() task: any;
     @Input('background') background: string;
     @Input('progress-fill') progressFill: string;

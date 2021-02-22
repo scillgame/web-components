@@ -1,9 +1,9 @@
 <div class="task-container" [ngStyle]="{'background':background}">
     <div class="sc-d-flex sc-align-items-center">
         <div class="task-state" [ngStyle]="{
-        'background':task.state === 'finished' ? stateFinishedColor : stateInProgressColor,
-        'border-color':stateBorderColor,
-        'color':stateIconColor
+        'background':task.type === 'finished' ? typeFinishedColor : typeInProgressColor,
+        'border-color':typeBorderColor,
+        'color':typeIconColor
         }">
             <fa-icon [icon]="faCheck"></fa-icon>
         </div>
@@ -20,10 +20,10 @@
             border-radius="0 0 0px 6px"
             padding="0"
             transform="skewY(0deg)"
-            [progress]="task.user_challenge_current_score/task.challenge_goal*100"
+            [progress]="task.user_challenge_current_score/task.challenge_goal | percent"
             [fill-background]="progressFill"
             [background]="progressBackground"
-            [task-state]="task.state"
+            [task-state]="task.type"
     >
     </scill-progress-bar>
 </div>

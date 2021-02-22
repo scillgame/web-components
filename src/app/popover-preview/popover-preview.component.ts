@@ -19,10 +19,10 @@ import {SCILLService}                                                           
     encapsulation: ViewEncapsulation.None
 })
 export class PopoverPreviewComponent implements OnInit, OnDestroy {
-    @Input() apiKey: string;
-    @Input() appId: string;
-    @Input() userId: string;
-    @Input() battlePassId: string;
+    @Input('api-key') apiKey: string;
+    @Input('app-id') appId: string;
+    @Input('user-id') userId: string;
+    @Input('battle-pass-id') battlePassId: string;
     @Input('access-token') accessToken: string;
     @Input('challenge-id') challengeId: string;
     @Input('username') username: string;
@@ -33,6 +33,10 @@ export class PopoverPreviewComponent implements OnInit, OnDestroy {
     accessToken$ = new BehaviorSubject<string>(null);
     subscriptions: Subscription = new Subscription();
     categories: ChallengeCategory[] = [];
+    @Input('type-in-progress-color') typeInProgressColor: string;
+    @Input('type-finished-color') typeFinishedColor: string;
+    @Input('type-border-color') typeBorderColor: string;
+    @Input('type-icon-color') typeIconColor: string;
 
     constructor(private scillService: SCILLService) { }
     get challengesApi(): ChallengesApi {

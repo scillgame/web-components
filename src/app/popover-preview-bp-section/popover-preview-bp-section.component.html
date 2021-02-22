@@ -1,10 +1,9 @@
-<div class="popover-preview-section" >
+<div class="popover-preview-section" *ngIf="(battlePass$ | async) as battlePass">
 
     <div class="scill-progress" style="color:#5FB44B;">
         <div class="sc-d-flex sc-justify-content-between pointer" (click)="toggleSection('isExpanded')">
             <div>
-                {{popoverPreviewSectionTitle}}
-                <!--{{category.finishedChallenges}} / {{category.challenges.length}}-->
+                {{battlePass.battle_pass_name}}
             </div>
             <div>
                 <fa-icon [icon]="faCaretLeft" *ngIf="!true"></fa-icon>
@@ -15,12 +14,12 @@
         <!-- Once this missing field is resolved switch [proggress] attribute with next line-->
         <!--[progress]="category.finishedChallenges/category.challenges.length"-->
         <scill-progress-bar background="#1D4913"
-                            fill-background="#5FB44B"
-                            [progress]="1/2 * 100">
+                            fill-background="#00f"
+                            [progress]="1/2 | percent">
         </scill-progress-bar>
 
 
-        <div *ngIf="true">
+        <div *ngIf="isExpanded">
             <div *ngFor="let level of levels">
                 <div *ngIf="level.unlocked_at !== null && !level.completed">
                     <scill-task-item *ngFor="let challenge of level.challenges;"
@@ -29,10 +28,10 @@
                                      progress-fill="#5FB44B"
                                      progress-background="#1D4913"
                                      badge="badge-path"
-                                     [state-in-progress-color]="stateInProgressColor"
-                                     [state-finished-color]="stateFinishedColor"
-                                     [state-border-color]="stateBorderColor"
-                                     [state-icon-color]="stateIconColor"
+                                     [type-in-progress-color]="typeInProgressColor"
+                                     [type-finished-color]="typeFinishedColor"
+                                     [type-border-color]="typeBorderColor"
+                                     [type-icon-color]="typeIconColor"
                     >
                     </scill-task-item>
                 </div>

@@ -22,11 +22,14 @@ import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 })
 export class BattlePassComponent implements OnInit, OnDestroy {
 
-  @Input() battlePassId: string;
-  @Input() apiKey: string;
-  @Input() appId: string;
-  @Input() userId: string;
-  @Input('title') popoverPreviewSectionTitle: string;
+  @Input('battle-pass-id') battlePassId: string;
+  @Input('api-key') apiKey: string;
+  @Input('app-id') appId: string;
+  @Input('user-id') userId: string;
+  @Input('type-in-progress-color') typeInProgressColor: string;
+  @Input('type-finished-color') typeFinishedColor: string;
+  @Input('type-border-color') typeBorderColor: string;
+  @Input('type-icon-color') typeIconColor: string;
   battlePassApi$ = new BehaviorSubject<BattlePassesApi>(null);
   battlePass$ = new BehaviorSubject<BattlePass>(null);
   levels$: Observable<BattlePassLevel[]>;
