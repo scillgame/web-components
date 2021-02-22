@@ -181,9 +181,12 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy {
 
     // return number of completed challenges inside challenge category
     // pipe is not neccessary for this because this is not common/reusable component
-    calculateCompletedChallenges(category: ChallengeCategory): number{
+    calculateCompletedChallenges(challenges): number{
         let counter = 0;
-        category.challenges.map( ch => {
+        if (challenges.length < 1){
+          return null;
+        }
+        challenges.map( ch => {
             if (ch.type === 'finished'){
                 counter++;
             }

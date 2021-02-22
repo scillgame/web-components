@@ -4,7 +4,7 @@
         <div class="sc-d-flex sc-justify-content-between pointer" (click)="toggleSection('isExpanded')">
             <div>
                 {{popoverPreviewSectionTitle}}
-                {{calculateCompletedChallenges(category)}} / {{category.challenges.length}}
+                {{calculateCompletedChallenges(category.challenges)}} / {{category.challenges.length}}
             </div>
             <div>
                 <fa-icon [icon]="faCaretLeft" *ngIf="!isExpanded"></fa-icon>
@@ -13,7 +13,7 @@
         </div>
         <scill-progress-bar background="#1D4913"
                             fill-background="#5FB44B"
-                            [progress]="calculateCompletedChallenges(category)/category.challenges.length | percent"
+                            [progress]="calculateCompletedChallenges(category.challenges)/category.challenges.length | percent"
         >
         </scill-progress-bar>
 

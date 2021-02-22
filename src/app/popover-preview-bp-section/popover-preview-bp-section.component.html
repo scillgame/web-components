@@ -4,6 +4,11 @@
         <div class="sc-d-flex sc-justify-content-between pointer" (click)="toggleSection('isExpanded')">
             <div>
                 {{battlePass.battle_pass_name}}
+                <span *ngFor="let level of levels">
+                    <span *ngIf="level.activated_at !== null && !level.level_completed">
+                        <span>{{calculateCompletedChallenges(level.challenges)}}/ {{level.challenges.length}}</span>
+                    </span>
+                </span>
             </div>
             <div>
                 <fa-icon [icon]="faCaretLeft" *ngIf="!true"></fa-icon>
@@ -15,13 +20,13 @@
         <!--[progress]="category.finishedChallenges/category.challenges.length"-->
         <scill-progress-bar background="#1D4913"
                             fill-background="#00f"
-                            [progress]="1/2 | percent">
+                            [progress]="calculateBattlePassLevelProgress(levels) | percent">
         </scill-progress-bar>
 
 
         <div *ngIf="isExpanded">
             <div *ngFor="let level of levels">
-                <div *ngIf="level.unlocked_at !== null && !level.level_completed">
+                <div *ngIf="level.activated_at !== null && !level.level_completed">
                     <div *ngFor="let challenge of level.challenges">
                          <scill-task-item *ngIf="challenge.type !== 'unlock'"
                                          [task]="challenge"
@@ -29,7 +34,7 @@
                                          progress-fill="#5FB44B"
                                          progress-background="#1D4913"
                                          badge="badge-path"
-                                         [progress-percentage]="0.5 | percent"
+                                         [progress-percentage]="calculateCompletedChallenges(level.challenges) | percent"
                                          [type-in-progress-color]="typeInProgressColor"
                                          [type-finished-color]="typeFinishedColor"
                                          [type-border-color]="typeBorderColor"

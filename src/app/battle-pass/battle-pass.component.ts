@@ -35,7 +35,7 @@ export class BattlePassComponent implements OnInit, OnDestroy {
   levels$: Observable<BattlePassLevel[]>;
   refresh$ = new BehaviorSubject<boolean>(false);
   levels: BattlePassLevel[] = [];
-
+  isExpanded: boolean = true;
   monitorBattlePass: UserBattlePassUpdateMonitor;
 
   progress = 0;
@@ -156,5 +156,33 @@ export class BattlePassComponent implements OnInit, OnDestroy {
   }
     toggleSection(section: string): void {
         this[section] = !this[section];
+    }
+
+    calculateBattlePassLevelProgress(levels): number {
+        let totalGoal     = 0;
+        let totalCounter  = 0;
+        let totalProgress = 0;
+        levels.map(lvl => {
+            lvl.challenges.map(ch => {
+                totalGoal += ch.challenge_goal;
+                totalCounter += ch.user_challenge_current_score;
+            });
+            const levelProgress = (totalGoal > 0) ? totalCounter / totalGoal : 0;
+            totalProgress += levelProgress / levels.length;
+        });
+        return totalProgress;
+    }
+    calculateCompletedChallenges(challenges): number{
+        let counter = 0;
+        if (challenges.length < 1){
+            return null;
+        }
+        challenges.map( ch => {
+            if (ch.type === 'finished'){
+                counter++;
+            }
+            return ch;
+        });
+        return counter;
     }
 }
