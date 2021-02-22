@@ -23,6 +23,7 @@
                              [task]="challenge"
                              background="#1D4913"
                              progress-fill="#5FB44B"
+                             [progress-percentage]="challenge.user_challenge_current_score/challenge.challenge_goal | percent"
                              progress-background="#1D4913"
                              badge="badge-path"
                              [type-in-progress-color]="typeInProgressColor"

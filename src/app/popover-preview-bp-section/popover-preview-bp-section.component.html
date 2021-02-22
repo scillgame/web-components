@@ -21,19 +21,22 @@
 
         <div *ngIf="isExpanded">
             <div *ngFor="let level of levels">
-                <div *ngIf="level.unlocked_at !== null && !level.completed">
-                    <scill-task-item *ngFor="let challenge of level.challenges;"
-                                     [task]="challenge"
-                                     background="#1D4913"
-                                     progress-fill="#5FB44B"
-                                     progress-background="#1D4913"
-                                     badge="badge-path"
-                                     [type-in-progress-color]="typeInProgressColor"
-                                     [type-finished-color]="typeFinishedColor"
-                                     [type-border-color]="typeBorderColor"
-                                     [type-icon-color]="typeIconColor"
-                    >
-                    </scill-task-item>
+                <div *ngIf="level.unlocked_at !== null && !level.level_completed">
+                    <div *ngFor="let challenge of level.challenges">
+                         <scill-task-item *ngIf="challenge.type !== 'unlock'"
+                                         [task]="challenge"
+                                         background="#1D4913"
+                                         progress-fill="#5FB44B"
+                                         progress-background="#1D4913"
+                                         badge="badge-path"
+                                         [progress-percentage]="0.5 | percent"
+                                         [type-in-progress-color]="typeInProgressColor"
+                                         [type-finished-color]="typeFinishedColor"
+                                         [type-border-color]="typeBorderColor"
+                                         [type-icon-color]="typeIconColor"
+                        >
+                        </scill-task-item>
+                    </div>
                 </div>
             </div>
         </div>

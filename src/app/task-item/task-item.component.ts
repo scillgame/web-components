@@ -17,6 +17,7 @@ export class TaskItemComponent implements OnInit, OnDestroy{
     @Input('type-icon-color') typeIconColor: string;
     // @Input() task: any;
     @Input('background') background: string;
+    @Input('progress-percentage') progressPercentage: string;
     @Input('progress-fill') progressFill: string;
     @Input('progress-background') progressBackground: string;
     @Input('badge') badge: string;
