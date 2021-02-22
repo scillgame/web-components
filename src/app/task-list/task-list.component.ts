@@ -8,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class TaskListComponent implements OnInit {
 
   @Input() battlePassId: string;
-  @Input() apiKey: string;
+  @Input() accessToken: string;
   @Input() appId: string;
   @Input() userId: string;
 

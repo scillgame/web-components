@@ -20,13 +20,13 @@ import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
   styleUrls: ['./battle-pass.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class BattlePassComponent implements OnInit, OnDestroy {
+export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() battlePassId: string;
-  @Input() apiKey: string;
+  @Input() accessToken: string;
   @Input() appId: string;
-  @Input() userId: string;
 
+  accessToken$ = new BehaviorSubject<string>(null);
   battlePassApi$ = new BehaviorSubject<BattlePassesApi>(null);
   battlePass$ = new BehaviorSubject<BattlePass>(null);
   levels$: Observable<BattlePassLevel[]>;
@@ -39,12 +39,18 @@ export class BattlePassComponent implements OnInit, OnDestroy {
 
   subscriptions = new Subscription();
 
-  constructor(private scillService: SCILLService) {
+  constructor() {
 
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['accessToken'] && changes['accessToken'].currentValue) {
+      this.accessToken$.next(changes['accessToken'].currentValue);
+    }
+  }
+
   ngOnInit(): void {
-    this.scillService.getAccessToken(this.apiKey, this.userId).pipe(
+    this.accessToken$.pipe(
       filter(isNotNullOrUndefined),
       map(accessToken => {
         if (this.monitorBattlePass) {
@@ -104,6 +110,10 @@ export class BattlePassComponent implements OnInit, OnDestroy {
       }
       this.progress *= 100;
     }));
+
+    if (this.accessToken) {
+      this.accessToken$.next(this.accessToken);
+    }
   }
 
   ngOnDestroy(): void {

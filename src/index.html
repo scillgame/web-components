@@ -11,35 +11,41 @@
       background-color: #eee;
     }
   </style>
+  <script type="text/javascript" src="https://scill-cdn.web.app/scill.js"></script>
+  <script type="text/javascript">
+    // Please note, this should not be done on client side as it exposes user ids and api keys to the client side
+    const apiKey = "3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,";
+    const userId = "1234";
+
+    const authApi = SCILL.getAuthApi(apiKey);
+    authApi.generateAccessToken({user_id: userId}).then((response) => {
+      const components = document.getElementsByClassName("scill-web-component");
+      for (let i=0;i<components.length;i++) {
+        components[i].setAttribute("access-token", response.token);
+      }
+    });
+  </script>
 </head>
 <body>
   <scill-battle-pass-mini-status
           app-id="593776232582742019"
-          api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,"
-          user-id="1234"
-          battle-pass-id="627086321190174723">
+          battle-pass-id="627086321190174723" class="scill-web-component">
   </scill-battle-pass-mini-status>
 
   <scill-community-challenge app-id="593776232582742019"
-                   api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,"
-                   user-id="1234"
                    challenge-id="628421695795232771"
                    text-color="black"
-                   primary-color="#004b6b">
+                   primary-color="#004b6b" class="scill-web-component">
   </scill-community-challenge>
 
   <scill-challenge-teaser app-id="593776232582742019"
-                   api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,"
-                   user-id="1234"
                    challenge-id="627581542241501194"
                    text-color="black"
-                   primary-color="#004b6b">
+                   primary-color="#004b6b" class="scill-web-component">
   </scill-challenge-teaser>
 
   <scill-task-list app-id="593776232582742019"
-                   api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,"
-                   user-id="1234"
-                   battle-pass-id="627086321190174723">
+                   battle-pass-id="627086321190174723" class="scill-web-component">
   </scill-task-list>
   <!--
   <scill-personal-challenges-list app-id="593776232582742019" api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*," user-id="1234"></scill-personal-challenges-list>

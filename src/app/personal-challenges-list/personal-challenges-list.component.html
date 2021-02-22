@@ -10,7 +10,7 @@
           <div class="scill-personal-challenge-info">
             <h3 class="scill-personal-challenge-name"> {{challenge.challenge_name}} <span class="scill-personal-challenge-xp">{{challenge.challenge_xp}}</span></h3>
             <p *ngIf="challenge.type == 'in-progress'" class="scill-personal-challenge-time-remaining">
-              <span *ngIf="challenge.type === 'in-progress'"><span class="scill-personal-challenge-time-remaining-label">Time remaining: </span><app-time-remaining class="scill-personal-challenge-time-remaining-counter" [challenge]="challenge"></app-time-remaining></span>
+              <span *ngIf="challenge.type === 'in-progress' && challenge.challenge_duration_time >=0 "><span class="scill-personal-challenge-time-remaining-label">Time remaining: </span><app-time-remaining class="scill-personal-challenge-time-remaining-counter" [challenge]="challenge"></app-time-remaining></span>
             </p>
             <div class="scill-personal-challenges-progress" *ngIf="challenge.type === 'in-progress'">
               <div class="scill-progress-bar-background">
