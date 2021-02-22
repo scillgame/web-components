@@ -13,7 +13,7 @@
         </div>
         <scill-progress-bar background="#1D4913"
                             fill-background="#5FB44B"
-                            [progress]="calculateCompletedChallenges(category)/category.challenges.length"
+                            [progress]="calculateCompletedChallenges(category)/category.challenges.length | percent"
         >
         </scill-progress-bar>
 
