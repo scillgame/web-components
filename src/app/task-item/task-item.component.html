@@ -1,6 +1,6 @@
 <div class="task-container" [ngStyle]="{'background':background}">
     <div class="sc-d-flex sc-align-items-center">
-        <div class="task-state" [ngStyle]="{
+        <div class="task-type" [ngStyle]="{
         'background':task.type === 'finished' ? typeFinishedColor : typeInProgressColor,
         'border-color':typeBorderColor,
         'color':typeIconColor
@@ -23,7 +23,7 @@
             [progress]="task.user_challenge_current_score/task.challenge_goal | percent"
             [fill-background]="progressFill"
             [background]="progressBackground"
-            [task-state]="task.type"
+            [task-type]="task.type"
     >
     </scill-progress-bar>
 </div>
