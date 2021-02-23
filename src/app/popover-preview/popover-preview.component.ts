@@ -37,13 +37,17 @@ export class PopoverPreviewComponent implements OnInit, OnDestroy {
     @Input('type-finished-color') typeFinishedColor: string;
     @Input('type-border-color') typeBorderColor: string;
     @Input('type-icon-color') typeIconColor: string;
+    @Input('offset-top') offsetTop = 0;
+    @Input('offset-right') offsetRight = 0;
+    @Input('offset-bottom') offsetBottom = 0;
+    @Input('offset-left') offsetLeft = 0;
+    // @Input() inset: string = '100px 0 0 0';
 
     constructor(private scillService: SCILLService) { }
     get challengesApi(): ChallengesApi {
         return this.challengesApi$.getValue();
     }
     ngOnInit(): void {
-        console.log('on init');
         this.scillService.getAccessToken(this.apiKey, this.userId).subscribe(result => {
             if (result) {
                 this.accessToken$.next(result);
@@ -99,6 +103,9 @@ export class PopoverPreviewComponent implements OnInit, OnDestroy {
         this.challengesApi?.getAllPersonalChallenges(this.appId).then(categories => {
             this.categories = categories;
         });
+    }
+    convertToPxl(position: number): string{
+        return position + 'px';
     }
 
 }

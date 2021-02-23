@@ -1,5 +1,5 @@
 <div class="popover-preview-container" >
-    <div class="sc-d-flex sc-justify-content-end">
+    <div class="sc-d-flex">
         <button (click)="toggleSection('isPopoverPreviewVisible')" class="popover-preview-btn">
             {{username}}
             <div class="btn-battlepass-lvl">
@@ -8,7 +8,13 @@
             </div>
         </button>
     </div>
-    <div class="popover-preview" *ngIf="isPopoverPreviewVisible ">
+    <div class="popover-preview" *ngIf="isPopoverPreviewVisible"
+         [ngStyle]="{
+         'top':offsetTop > 0 && convertToPxl(offsetTop),
+         'right':offsetRight > 0 && convertToPxl(offsetRight),
+         'bottom':offsetBottom > 0 && convertToPxl(offsetBottom),
+         'left': offsetLeft > 0 && convertToPxl(offsetLeft)}"
+          >
             <scill-popover-preview-header username="franjoeric"
                                           access-token="my-access-token"
                                           [app-id]="appId"

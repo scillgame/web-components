@@ -37,6 +37,7 @@ export class BattlePassComponent implements OnInit, OnDestroy {
   levels: BattlePassLevel[] = [];
   isExpanded: boolean = true;
   monitorBattlePass: UserBattlePassUpdateMonitor;
+  battlePass: BattlePass;
 
   progress = 0;
 
@@ -70,6 +71,7 @@ export class BattlePassComponent implements OnInit, OnDestroy {
           map(battlePasses => {
             console.log(battlePasses);
             const foundBattlePass = battlePasses.filter(battlePass => battlePass.battle_pass_id === this.battlePassId)[0];
+            this.battlePass = foundBattlePass;
             console.log('FOUD', foundBattlePass);
             return foundBattlePass;
           }

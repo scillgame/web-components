@@ -1,4 +1,4 @@
-<div class="popover-preview-header" *ngIf="(battlePass$ | async) as battlePass">
+<div class="popover-preview-header" *ngIf="true">
     <div  *ngFor="let level of levels; let i=index; trackBy: levelById">
         <div  *ngIf="level.activated_at !== null && level.level_completed === false">
             <div class="header-triangle"></div>
@@ -16,7 +16,6 @@
             <div class="scill-progress"
                  *ngFor="let level of levels; trackBy: challengeById">
                 <div *ngIf="level.activated_at !== null && level.level_completed === false">
-                    {{progress}}
                     <scill-progress-bar background="#fff" fill-background="#009BED" [progress]="progress + '%'"></scill-progress-bar>
                 </div>
             </div>
