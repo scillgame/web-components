@@ -16,7 +16,7 @@
          'left': offsetLeft > 0 && convertToPxl(offsetLeft)}"
           >
             <scill-popover-preview-header username="franjoeric"
-                                          access-token="my-access-token"
+                                          [access-token]="accessToken"
                                           [app-id]="appId"
                                           [api-key]="apiKey"
                                           [user-id]="userId"
@@ -31,6 +31,7 @@
                                            [api-key]="apiKey"
                                            [user-id]="userId"
                                            [battle-pass-id]="battlePassId"
+                                           [access-token]="accessToken"
             >
             </scill-popover-preview-bp-section>
 
@@ -43,6 +44,7 @@
                                            [type-finished-color]="typeFinishedColor"
                                            [type-border-color]="typeBorderColor"
                                            [type-icon-color]="typeIconColor"
+                                           [access-token]="accessToken"
             >
             </scill-popover-preview-section>
 

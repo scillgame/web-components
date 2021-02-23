@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation, OnDestroy}                                           from '@angular/core';
+import {Component, Input, ViewEncapsulation}                                           from '@angular/core';
 import {BehaviorSubject, Subscription}                                                                    from 'rxjs';
 import {
     Challenge,
@@ -7,10 +7,11 @@ import {
     ChallengeUpdateMonitor,
     getChallengesApi,
     startMonitorChallengeUpdates
-} from '@scillgame/scill-js';
-import {filter, map}                                                                                      from 'rxjs/operators';
-import {isNotNullOrUndefined}                                                                             from 'codelyzer/util/isNotNullOrUndefined';
-import {SCILLService}                                                                                     from '../scill.service';
+}                                    from '@scillgame/scill-js';
+import {filter, map}                 from 'rxjs/operators';
+import {isNotNullOrUndefined}        from 'codelyzer/util/isNotNullOrUndefined';
+import {SCILLService}                from '../scill.service';
+import {PersonalChallengesComponent} from '../personal-challenges/personal-challenges.component';
 
 @Component({
     selector     : 'scill-popover-preview',
@@ -18,7 +19,7 @@ import {SCILLService}                                                           
     styleUrls    : ['./popover-preview.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class PopoverPreviewComponent implements OnInit, OnDestroy {
+export class PopoverPreviewComponent extends PersonalChallengesComponent{
     @Input('api-key') apiKey: string;
     @Input('app-id') appId: string;
     @Input('user-id') userId: string;
@@ -42,70 +43,4 @@ export class PopoverPreviewComponent implements OnInit, OnDestroy {
     @Input('offset-bottom') offsetBottom = 0;
     @Input('offset-left') offsetLeft = 0;
     // @Input() inset: string = '100px 0 0 0';
-
-    constructor(private scillService: SCILLService) { }
-    get challengesApi(): ChallengesApi {
-        return this.challengesApi$.getValue();
-    }
-    ngOnInit(): void {
-        this.scillService.getAccessToken(this.apiKey, this.userId).subscribe(result => {
-            if (result) {
-                this.accessToken$.next(result);
-            }
-        });
-
-        this.accessToken$.pipe(
-            filter(isNotNullOrUndefined),
-            map(accessToken => {
-                if (this.challengeMonitor) {
-                    this.challengeMonitor.stop();
-                }
-                this.challengeMonitor = startMonitorChallengeUpdates(accessToken, (payload) => {
-                    // Update challenge if realtime update comes in
-                    console.log("Incoming message:", payload);
-                    this.updateChallenge(payload.new_challenge);
-                    //this.updateChallenges();
-                });
-                return getChallengesApi(accessToken);
-            })
-        ).subscribe(this.challengesApi$);
-
-        this.subscriptions.add(this.challengesApi$.pipe(filter(isNotNullOrUndefined)).subscribe(challengesApi => {
-            this.updateChallenges();
-        }));
-    }
-
-    ngOnDestroy(): void {
-        this.subscriptions.unsubscribe();
-        if (this.challengeMonitor) {
-            this.challengeMonitor.stop();
-        }
-    }
-
-    toggleSection(section: string): void {
-        this[section] = !this[section];
-    }
-    updateChallenge(newChallenge: Challenge): void {
-        for (const category of this.categories) {
-            for (let i = 0; i < category.challenges.length; i++) {
-                if (category.challenges[i].challenge_id === newChallenge.challenge_id) {
-                    // Create a copy of the original challenge and overwrite with new challenge
-                    const updatedChallenge = {};
-                    Object.assign(updatedChallenge, category.challenges[i]);
-                    Object.assign(updatedChallenge, newChallenge);
-                    category.challenges.splice(i, 1, updatedChallenge);
-                    break;
-                }
-            }
-        }
-    }
-    updateChallenges(): void {
-        this.challengesApi?.getAllPersonalChallenges(this.appId).then(categories => {
-            this.categories = categories;
-        });
-    }
-    convertToPxl(position: number): string{
-        return position + 'px';
-    }
-
 }

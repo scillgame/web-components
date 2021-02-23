@@ -11,40 +11,26 @@
       background-color: #eee;
     }
   </style>
+  <script type="text/javascript" src="https://scill-cdn.web.app/scill.js"></script>
+  <script type="text/javascript">
+    // Please note, this should not be done on client side as it exposes user ids and api keys to the client side
+    const apiKey = "3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,";
+    const userId = "1234";
+
+    const authApi = SCILL.getAuthApi(apiKey);
+    authApi.generateAccessToken({user_id: userId}).then((response) => {
+      const components = document.getElementsByClassName("scill-web-component");
+      for (let i=0;i<components.length;i++) {
+        components[i].setAttribute("access-token", response.token);
+      }
+    });
+  </script>
 </head>
 <body>
   <!--<scill-battle-pass-mini-status-->
-          <!--app-id="596601326543798275"-->
-          <!--api-key="$9SeaUecbCe3N2s[PV1Ts7a@P)09$Ki$i0TY2(H-Ys"-->
-          <!--user-id="1234"-->
-          <!--battle-pass-id="635387102020108301">-->
+          <!--app-id="593776232582742019"-->
+          <!--battle-pass-id="627086321190174723" class="scill-web-component">-->
   <!--</scill-battle-pass-mini-status>-->
-
-  <!--<scill-community-challenge app-id="593776232582742019"-->
-                   <!--api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,"-->
-                   <!--user-id="1234"-->
-                   <!--challenge-id="628421695795232771"-->
-                   <!--text-color="black"-->
-                   <!--primary-color="#004b6b">-->
-  <!--</scill-community-challenge>-->
-
-  <!--<scill-challenge-teaser app-id="593776232582742019"-->
-                   <!--api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,"-->
-                   <!--user-id="1234"-->
-                   <!--challenge-id="627581542241501194"-->
-                   <!--text-color="black"-->
-                   <!--primary-color="#004b6b">-->
-  <!--</scill-challenge-teaser>-->
-
-  <!--<scill-task-list app-id="593776232582742019"-->
-                   <!--api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,"-->
-                   <!--user-id="1234"-->
-                   <!--battle-pass-id="627086321190174723">-->
-  <!--</scill-task-list>-->
-  <!--<scill-battle-pass access-token="my-access-token" app-id="593776232582742019"-->
-                     <!--api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,"-->
-                     <!--user-id="1234"-->
-                     <!--battle-pass-id="627086321190174723">-->
 
   <!--</scill-battle-pass>-->
   <!--<scill-battle-pass-status access-token="my-access-token"-->
@@ -55,19 +41,31 @@
                             <!--username="franjoeric"-->
                             <!--battle-pass-id="627086321190174723"></scill-battle-pass-status>-->
 
-<div style="background:#fff">
-  <scill-popover-preview access-token="my-access-token" offset-top="200" offset-right="" offset-bottom="" offset-left="300"
+  <scill-popover-preview class="scill-web-component" offset-top="200" offset-right="" offset-bottom="" offset-left="300"
                          username="franjoeric"
-                         app-id="596601326543798275"
-                         api-key="$9SeaUecbCe3N2s[PV1Ts7a@P)09$Ki$i0TY2(H-Ys"
+                         app-id="593776232582742019"
                          user-id="1234"
-                         battle-pass-id="635387102020108301"
+                         battle-pass-id="627086321190174723"
                          type-in-progress-color="green"
                          type-finished-color="darkgreen"
                          type-border-color="darkgreen"
                          type-icon-color="black">
   </scill-popover-preview>
-</div>
+  <!--<scill-community-challenge app-id="593776232582742019"-->
+                   <!--challenge-id="628421695795232771"-->
+                   <!--text-color="black"-->
+                   <!--primary-color="#004b6b" class="scill-web-component">-->
+  <!--</scill-community-challenge>-->
+
+  <!--<scill-challenge-teaser app-id="593776232582742019"-->
+                   <!--challenge-id="627581542241501194"-->
+                   <!--text-color="black"-->
+                   <!--primary-color="#004b6b" class="scill-web-component">-->
+  <!--</scill-challenge-teaser>-->
+
+  <!--<scill-task-list app-id="593776232582742019"-->
+                   <!--battle-pass-id="627086321190174723" class="scill-web-component">-->
+  <!--</scill-task-list>-->
   <!--
   <scill-personal-challenges-list app-id="593776232582742019" api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*," user-id="1234"></scill-personal-challenges-list>
   <scill-personal-challenges-grid app-id="593776232582742019" api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*," user-id="1234"></scill-personal-challenges-grid>-->

@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {BattlePassComponent} from '../battle-pass/battle-pass.component';
 import {SCILLService} from '../scill.service';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
@@ -9,46 +9,52 @@ import {
   getBattlePassApi, startMonitorBattlePassUpdates,
   UserBattlePassUpdateMonitor
 } from '@scillgame/scill-js';
+import {filter, map} from 'rxjs/operators';
+import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 
 @Component({
   selector: 'scill-battle-pass-status',
   templateUrl: './battle-pass-status.component.html',
   styleUrls: ['./battle-pass-status.component.scss']
 })
-export class BattlePassStatusComponent implements OnInit, OnDestroy {
+export class BattlePassStatusComponent implements OnDestroy, OnChanges {
 
   @Input('battle-pass-id') battlePassId: string;
   @Input('api-key') apiKey: string;
   @Input('app-id') appId: string;
   @Input('user-id') userId: string;
+  @Input('access-token') accessToken: string;
 
+  accessToken$ = new BehaviorSubject<string>(null);
   levels: BattlePassLevel[] = [];
   battlePass: BattlePass;
-
   monitorBattlePass: UserBattlePassUpdateMonitor;
-
   progress = 0;
-
   subscriptions = new Subscription();
-
   battlePassApi: BattlePassesApi;
 
-  constructor(private scillService: SCILLService) {
+  constructor() {
+    this.subscriptions.add(this.accessToken$.pipe(
+      filter(isNotNullOrUndefined)
+      ).subscribe(accessToken => {
+        this.battlePassApi = getBattlePassApi(accessToken);
+        this.monitorBattlePass = startMonitorBattlePassUpdates(accessToken, this.battlePassId, (payload) => {
+          this.loadBattlePassLevels();
+        });
+        this.loadBattlePassLevels();
+      })
+    );
 
+    if (this.accessToken) {
+      this.accessToken$.next(this.accessToken);
+    }
   }
 
-  ngOnInit(): void {
-    if (!this.apiKey || !this.userId || !this.battlePassId || !this.appId) {
-      return;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['accessToken'] && changes['accessToken'].currentValue) {
+      this.accessToken$.next(changes['accessToken'].currentValue);
+      console.log("BATTLE PASS", changes['accessToken'].currentValue);
     }
-
-    this.subscriptions.add(this.scillService.getAccessToken(this.apiKey, this.userId).subscribe(accessToken => {
-      this.battlePassApi = getBattlePassApi(accessToken);
-      this.monitorBattlePass = startMonitorBattlePassUpdates(accessToken, this.battlePassId, (payload) => {
-        this.loadBattlePassLevels();
-      });
-      this.loadBattlePassLevels();
-    }));
   }
 
   loadBattlePassLevels(): void {

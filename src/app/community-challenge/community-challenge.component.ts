@@ -17,6 +17,7 @@ export class CommunityChallengeComponent extends PersonalChallengesComponent {
   updateChallenges(): void {
     console.log("Loading challenges: ", this.challengeId);
     this.challengesApi?.getAllPersonalChallenges(this.appId).then(categories => {
+      console.log(categories);
       this.categories = categories;
       for (const category of categories) {
         for (const challenge of category.challenges) {
