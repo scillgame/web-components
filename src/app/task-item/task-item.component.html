@@ -1,7 +1,7 @@
 <div class="task-container" [ngStyle]="{'background':background}">
     <div class="sc-d-flex sc-align-items-center">
         <div class="task-type" [ngStyle]="{
-        'background':task.type === 'in-progress' ? typeFinishedColor : typeInProgressColor,
+        'background':task.type === 'finished' ? typeFinishedColor : typeInProgressColor,
         'border-color':typeBorderColor,
         'color':typeIconColor
         }">
