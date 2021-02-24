@@ -8,13 +8,14 @@
             </div>
         </button>
     </div>
-    <div class="popover-preview" *ngIf="isPopoverPreviewVisible"
-         [ngStyle]="{
+    <div class="popover-preview-overflow-helper">
+        <div class="popover-preview" *ngIf="isPopoverPreviewVisible"
+             [ngStyle]="{
          'top':offsetTop > 0 && convertToPxl(offsetTop),
          'right':offsetRight > 0 && convertToPxl(offsetRight),
          'bottom':offsetBottom > 0 && convertToPxl(offsetBottom),
          'left': offsetLeft > 0 && convertToPxl(offsetLeft)}"
-          >
+        >
             <scill-popover-preview-header [username]="username"
                                           [access-token]="accessToken"
                                           [app-id]="appId"
@@ -30,21 +31,21 @@
             >
             </scill-popover-preview-header>
 
-        <scill-popover-preview-bp-section  [app-id]="appId"
-                                           [api-key]="apiKey"
-                                           [user-id]="userId"
-                                           [battle-pass-id]="battlePassId"
-                                           [access-token]="accessToken"
-                                           [battle-pass-finished-type-bg-color]="battlePassFinishedTypeBgColor"
-                                           [battle-pass-in-progress-type-bg-color]="battlePassInProgressTypeBgColor"
-                                           [battle-pass-type-border-color]="battlePassTypeBorderColor"
-                                           [battle-pass-type-icon-color]="battlePassTypeIconColor"
-                                           [battle-pass-title-color]="battlePassTitleColor"
-                                           [battle-pass-lvl-progress-bar-background]="battlePassLvlProgressBarBackground"
-                                           [battle-pass-lvl-progress-bar-fill-background]="battlePassLvlProgressBarFillBackground"
-                                           [battle-pass-challenge-progress-background]="battlePassChallengeProgressBackground"
-                                           [battle-pass-challenge-progress-fill-background]="battlePassChallengeProgressFillBackground"
-                                           [battle-pass-challenge-background]="battlePassChallengeBackground"
+            <scill-popover-preview-bp-section  [app-id]="appId"
+                                               [api-key]="apiKey"
+                                               [user-id]="userId"
+                                               [battle-pass-id]="battlePassId"
+                                               [access-token]="accessToken"
+                                               [battle-pass-finished-type-bg-color]="battlePassFinishedTypeBgColor"
+                                               [battle-pass-in-progress-type-bg-color]="battlePassInProgressTypeBgColor"
+                                               [battle-pass-type-border-color]="battlePassTypeBorderColor"
+                                               [battle-pass-type-icon-color]="battlePassTypeIconColor"
+                                               [battle-pass-title-color]="battlePassTitleColor"
+                                               [battle-pass-lvl-progress-bar-background]="battlePassLvlProgressBarBackground"
+                                               [battle-pass-lvl-progress-bar-fill-background]="battlePassLvlProgressBarFillBackground"
+                                               [battle-pass-challenge-progress-background]="battlePassChallengeProgressBackground"
+                                               [battle-pass-challenge-progress-fill-background]="battlePassChallengeProgressFillBackground"
+                                               [battle-pass-challenge-background]="battlePassChallengeBackground"
             >
             </scill-popover-preview-bp-section>
 
@@ -67,5 +68,6 @@
             >
             </scill-popover-preview-section>
 
+        </div>
     </div>
 </div>
