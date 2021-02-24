@@ -34,8 +34,10 @@ export class PopoverPreviewComponent extends PersonalChallengesComponent{
     accessToken$ = new BehaviorSubject<string>(null);
     subscriptions: Subscription = new Subscription();
     categories: ChallengeCategory[] = [];
-    @Input('type-in-progress-color') typeInProgressColor: string;
-    @Input('type-finished-color') typeFinishedColor: string;
+    @Input('battle-pass-in-progress-type-bg-color') battlePassInProgressTypeBgColor: string;
+    @Input('battle-pass-finished-type-bg-color') battlePassFinishedTypeBgColor: string;
+    @Input('battle-pass-type-border-color') battlePassTypeBorderColor: string;
+    @Input('battle-pass-type-icon-color') battlePassTypeIconColor: string;
     @Input('type-border-color') typeBorderColor: string;
     @Input('type-icon-color') typeIconColor: string;
     @Input('offset-top') offsetTop = 0;
@@ -49,4 +51,10 @@ export class PopoverPreviewComponent extends PersonalChallengesComponent{
     @Input('header-bp-lvl-color') headerBpLvlColor: string;
     @Input('header-progress-bar-background') headerProgressBarBackground: string;
     @Input('header-progress-bar-fill-background') headerProgressBarFillBackground: string;
+    @Input('battle-pass-title-color') battlePassTitleColor: string;
+    @Input('battle-pass-lvl-progress-bar-background') battlePassLvlProgressBarBackground: string;
+    @Input('battle-pass-lvl-progress-bar-fill-background') battlePassLvlProgressBarFillBackground: string;
+    @Input('battle-pass-challenge-progress-background') battlePassChallengeProgressBackground: string;
+    @Input('battle-pass-challenge-progress-fill-background') battlePassChallengeProgressFillBackground: string;
+    @Input('battle-pass-challenge-background') battlePassChallengeBackground: string;
 }

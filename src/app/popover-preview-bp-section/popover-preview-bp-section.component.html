@@ -1,8 +1,8 @@
 <div class="popover-preview-section" *ngIf="(battlePass$ | async) as battlePass">
 
-    <div class="scill-progress" style="color:#5FB44B;">
+    <div class="scill-progress" >
         <div class="sc-d-flex sc-justify-content-between pointer" (click)="toggleSection('isExpanded')">
-            <div>
+            <div class="battle-pass-title" [ngStyle]="{'color': battlePassTitleColor}">
                 {{battlePass.battle_pass_name}}
                 <span *ngFor="let level of levels">
                     <span *ngIf="level.activated_at !== null && !level.level_completed">
@@ -15,13 +15,10 @@
                 <fa-icon [icon]="faCaretDown" *ngIf="true"></fa-icon>
             </div>
         </div>
-        <!-- Finished challenges does not exist in CategoryChallenge interface and throwing error -->
-        <!-- Once this missing field is resolved switch [proggress] attribute with next line-->
-        <!--[progress]="category.finishedChallenges/category.challenges.length"-->
         <div *ngFor="let level of levels">
             <div *ngIf="level.activated_at !== null && !level.level_completed">
-                <scill-progress-bar background="#1D4913"
-                                    fill-background="#00f"
+                <scill-progress-bar [background]="battlePassLvlProgressBarBackground"
+                                    [fill-background]="battlePassLvlProgressBarFillBackground"
                                     [progress]="calculateCompletedChallenges(level.challenges) / level.challenges.length | percent">
                 </scill-progress-bar>
             </div>
@@ -34,15 +31,15 @@
                     <div *ngFor="let challenge of level.challenges">
                          <scill-task-item *ngIf="challenge.type !== 'unlock'"
                                          [task]="challenge"
-                                         background="#1D4913"
-                                         progress-fill="#5FB44B"
-                                         progress-background="#1D4913"
+                                         [background]="battlePassChallengeBackground"
+                                         [progress-fill]="battlePassChallengeProgressFillBackground"
+                                         [progress-background]="battlePassChallengeProgressBackground"
                                          badge="badge-path"
                                          [progress-percentage]="challenge.user_challenge_current_score / challenge.challenge_goal | percent"
-                                         [type-in-progress-color]="typeInProgressColor"
-                                         [type-finished-color]="typeFinishedColor"
-                                         [type-border-color]="typeBorderColor"
-                                         [type-icon-color]="typeIconColor"
+                                         [type-in-progress-color]="battlePassInProgressTypeBgColor"
+                                         [type-finished-color]="battlePassFinishedTypeBgColor"
+                                         [type-border-color]="battlePassTypeBorderColor"
+                                         [type-icon-color]="battlePassTypeIconColor"
                         >
                         </scill-task-item>
                     </div>
