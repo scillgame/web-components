@@ -1,18 +1,18 @@
 <div class="popover-preview-section" >
 
-    <div class="scill-progress" style="color:#5FB44B;">
+    <div class="scill-progress">
         <div class="sc-d-flex sc-justify-content-between pointer" (click)="toggleSection('isExpanded')">
-            <div>
+            <div class="category-title" [ngStyle]="{'color': personalChallengesCategoryTitleColor}">
                 {{popoverPreviewSectionTitle}}
                 {{calculateCompletedChallenges(category.challenges)}} / {{category.challenges.length}}
             </div>
-            <div>
+            <div [ngStyle]="{'color': personalChallengesCategoryTitleColor}">
                 <fa-icon [icon]="faCaretLeft" *ngIf="!isExpanded"></fa-icon>
                 <fa-icon [icon]="faCaretDown" *ngIf="isExpanded"></fa-icon>
             </div>
         </div>
-        <scill-progress-bar background="#1D4913"
-                            fill-background="#5FB44B"
+        <scill-progress-bar [background]="personalChallengesCategoryProgressBarBackground"
+                            [fill-background]="personalChallengesCategoryProgressBarFillBackground"
                             [progress]="calculateCompletedChallenges(category.challenges)/category.challenges.length | percent"
         >
         </scill-progress-bar>
@@ -21,16 +21,17 @@
         <div *ngIf="isExpanded">
             <scill-task-item *ngFor="let challenge of challenges;"
                              [task]="challenge"
-                             background="#1D4913"
-                             progress-fill="#5FB44B"
+                             [background]="personalChallengesBackground"
+                             [progress-fill]="personalChallengesProgressFillBackground"
                              [progress-percentage]="challenge.user_challenge_current_score/challenge.challenge_goal | percent"
-                             progress-background="#1D4913"
+                             [progress-background]="personalChallengesProgressBackground"
                              badge="badge-path"
-                             [type-in-progress-color]="typeInProgressColor"
-                             [type-finished-color]="typeFinishedColor"
-                             [type-border-color]="typeBorderColor"
-                             [type-icon-color]="typeIconColor"
+                             [type-in-progress-color]="personalChallengesInProgressTypeBgColor"
+                             [type-finished-color]="personalChallengesFinishedTypeBgColor"
+                             [type-border-color]="personalChallengesTypeBorderColor"
+                             [type-icon-color]="personalChallengesTypeIconColor"
             >
+
             </scill-task-item>`
         </div>
     </div>

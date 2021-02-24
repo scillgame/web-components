@@ -37,17 +37,6 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy, OnChanges
   @Input('access-token') accessToken: string;
   @Input() category: ChallengeCategory;
   @Input() challenges: Challenge[];
-  @Input() username: string;
-  @Input('title') popoverPreviewSectionTitle: string;
-  @Input('type-in-progress-color') typeInProgressColor: string;
-  @Input('type-finished-color') typeFinishedColor: string;
-  @Input('type-border-color') typeBorderColor: string;
-  @Input('type-icon-color') typeIconColor: string;
-  // this need to be Challenge interface but some props are not defined at Challenge interface @scillgame/scill-js SDK
-  @Input('background') background: string;
-  @Input('progress-fill') progressFill: string;
-  @Input('progress-background') progressBackground: string;
-  @Input('badge') badge: string;
   accessToken$ = new BehaviorSubject<string>(null);
   challengesApi$ = new BehaviorSubject<ChallengesApi>(null);
   subscriptions: Subscription = new Subscription();
