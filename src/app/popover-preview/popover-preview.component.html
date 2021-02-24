@@ -1,6 +1,6 @@
 <div class="popover-preview-container" >
     <div class="sc-d-flex">
-        <button (click)="toggleSection('isPopoverPreviewVisible')" class="popover-preview-btn">
+        <button (click)="toggleSection('isPopoverPreviewVisible')" class="popover-preview-btn" [ngStyle]="{'background': btnBackground}">
             {{username}}
             <div class="btn-battlepass-lvl">
                 <!--{{battlePass.level_priority}}-->
@@ -20,7 +20,14 @@
                                           [app-id]="appId"
                                           [api-key]="apiKey"
                                           [user-id]="userId"
-                                          [battle-pass-id]="battlePassId">
+                                          [battle-pass-id]="battlePassId"
+                                          [header-background]="headerBackground"
+                                          [header-notch-absolute-right]="headerNotchAbsoluteRight"
+                                          [header-text-color]="headerTextColor"
+                                          [header-bp-lvl-color]="headerBpLvlColor"
+                                          [header-progress-bar-background]="headerProgressBarBackground"
+                                          [header-progress-bar-fill-background]="headerProgressBarFillBackground"
+            >
             </scill-popover-preview-header>
 
         <scill-popover-preview-bp-section  [type-in-progress-color]="typeInProgressColor"

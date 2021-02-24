@@ -42,5 +42,11 @@ export class PopoverPreviewComponent extends PersonalChallengesComponent{
     @Input('offset-right') offsetRight = 0;
     @Input('offset-bottom') offsetBottom = 0;
     @Input('offset-left') offsetLeft = 0;
-    // @Input() inset: string = '100px 0 0 0';
+    @Input('btn-background') btnBackground: string;
+    @Input('header-background') headerBackground: string;
+    @Input('header-notch-absolute-right') headerNotchAbsoluteRight: string;
+    @Input('header-text-color') headerTextColor: string;
+    @Input('header-bp-lvl-color') headerBpLvlColor: string;
+    @Input('header-progress-bar-background') headerProgressBarBackground: string;
+    @Input('header-progress-bar-fill-background') headerProgressBarFillBackground: string;
 }

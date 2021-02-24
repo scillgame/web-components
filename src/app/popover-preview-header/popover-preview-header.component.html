@@ -1,14 +1,26 @@
-<div class="popover-preview-header" *ngIf="true">
+<div class="popover-preview-header" *ngIf="true"
+     [ngStyle]="{
+     'background': headerBackground,
+     'color': headerTextColor
+     }"
+>
     <div  *ngFor="let level of levels; let i=index; trackBy: levelById">
         <div  *ngIf="level.activated_at !== null && level.level_completed === false">
-            <div class="header-triangle"></div>
+            <div class="header-triangle"
+                 [ngStyle]="{
+                 'background': headerBackground,
+                 'right':headerNotchAbsoluteRight + 'px'}"></div>
             <div class="sc-d-flex sc-justify-content-between sc-align-items-center">
                 <div class="user">{{username}}</div>
                 <div class="sc-d-flex sc-align-items-center">
                     <div class="lvl-badge">
                         <img src="../../assets/images/badges/badge_rare_gempost_big.png" alt="">
                     </div>
-                    <div class="battlepass-lvl">
+                    <div class="battlepass-lvl"
+                         [ngStyle]="{
+                            'color':headerBpLvlColor,
+                            'border-color':headerBpLvlColor
+                         }">
                         {{level.level_priority}}
                     </div>
                 </div>
@@ -16,7 +28,9 @@
             <div class="scill-progress"
                  *ngFor="let level of levels; trackBy: challengeById">
                 <div *ngIf="level.activated_at !== null && level.level_completed === false">
-                    <scill-progress-bar background="#fff" fill-background="#009BED" [progress]="progress + '%'"></scill-progress-bar>
+                    <scill-progress-bar
+                            [background]="headerProgressBarBackground" [fill-background]="headerProgressBarFillBackground"
+                            [progress]="progress + '%'"></scill-progress-bar>
                 </div>
             </div>
         </div>
