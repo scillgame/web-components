@@ -16,7 +16,6 @@ export class PopoverPreviewSectionComponent extends PersonalChallengesComponent{
     @Input('background') background: string;
     @Input('progress-fill') progressFill: string;
     @Input('progress-background') progressBackground: string;
-    @Input('badge') badge: string;
     @Input('personal-challenges-category-title-color') personalChallengesCategoryTitleColor: string;
     @Input('personal-challenges-category-progress-bar-background') personalChallengesCategoryProgressBarBackground: string;
     @Input('personal-challenges-category-progress-bar-fill-background') personalChallengesCategoryProgressBarFillBackground: string;
