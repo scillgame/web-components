@@ -8,14 +8,12 @@
             </div>
         </button>
     </div>
-    <div class="popover-preview-overflow-helper">
-        <div class="popover-preview" *ngIf="isPopoverPreviewVisible"
-             [ngStyle]="{
+    <div class="popover-preview-overflow-helper" [ngStyle]="{
          'top':offsetTop > 0 && convertToPxl(offsetTop),
          'right':offsetRight > 0 && convertToPxl(offsetRight),
          'bottom':offsetBottom > 0 && convertToPxl(offsetBottom),
-         'left': offsetLeft > 0 && convertToPxl(offsetLeft)}"
-        >
+         'left': offsetLeft > 0 && convertToPxl(offsetLeft)}">
+        <div class="popover-preview" *ngIf="isPopoverPreviewVisible">
             <scill-popover-preview-header [username]="username"
                                           [access-token]="accessToken"
                                           [app-id]="appId"
