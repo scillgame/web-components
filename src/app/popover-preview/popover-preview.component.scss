@@ -32,13 +32,7 @@ $gold: #F5A622;
       background: #fff;
     }
   }
-  .popover-preview-overflow-helper {
-    height: 730px;
-    background: #fff;
-    min-width: 300px;
-    max-width: 350px;
-    position: absolute;
-    z-index: auto;
+
     .popover-preview {
       min-width: 300px;
       max-width: 350px;
@@ -49,10 +43,9 @@ $gold: #F5A622;
       color: #fff;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
-      overflow-y: hidden;
       overflow-x: hidden;
-      overflow: scroll;
-      height: 700px;
+      overflow: auto;
+      max-height: 700px;
       .popover-preview-header {
         position: relative;
         border-top-left-radius: 5px;
@@ -95,6 +88,16 @@ $gold: #F5A622;
         }
       }
     }
+  .popover-preview-overflow-helper {
+    //max-height: 730px;
+    //height:400px;
+    //background: #fff;
+    //min-width: 300px;
+    //max-width: 350px;
+    //position: absolute;
+    //z-index: auto;
+    width:100%;
+    background: #000;
   }
   .scill-progress{
     padding-left:10px; padding-right:10px;
