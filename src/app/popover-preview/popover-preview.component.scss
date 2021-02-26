@@ -61,9 +61,11 @@ $gold: #F5A622;
       color: #fff;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
-      overflow-x: hidden;
-      overflow: auto;
-      max-height: 700px;
+      .popover-preview-sections-container{
+        overflow-x: hidden;
+        overflow: auto;
+        max-height: 700px;
+      }
     }
   .battlepass{
     //margin-top:30px;

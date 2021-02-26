@@ -1,5 +1,4 @@
 import {Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {faCheck}                                                from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'scill-task-item',
@@ -8,7 +7,7 @@ import {faCheck}                                                from '@fortaweso
   encapsulation: ViewEncapsulation.None
 })
 export class TaskItemComponent implements OnInit, OnDestroy{
-    faCheck = faCheck;
+    // faCheck = faCheck;
     @Input('task') task: any;
     @Input('title') popoverPreviewSectionTitle: string;
     @Input('type-in-progress-color') typeInProgressColor: string;

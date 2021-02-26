@@ -30,42 +30,44 @@
             >
             </scill-popover-preview-header>
 
-            <scill-popover-preview-bp-section  [app-id]="appId"
-                                               [api-key]="apiKey"
-                                               [user-id]="userId"
-                                               [battle-pass-id]="battlePassId"
-                                               [access-token]="accessToken"
-                                               [battle-pass-finished-type-bg-color]="battlePassFinishedTypeBgColor"
-                                               [battle-pass-in-progress-type-bg-color]="battlePassInProgressTypeBgColor"
-                                               [battle-pass-type-border-color]="battlePassTypeBorderColor"
-                                               [battle-pass-type-icon-color]="battlePassTypeIconColor"
-                                               [battle-pass-title-color]="battlePassTitleColor"
-                                               [battle-pass-lvl-progress-bar-background]="battlePassLvlProgressBarBackground"
-                                               [battle-pass-lvl-progress-bar-fill-background]="battlePassLvlProgressBarFillBackground"
-                                               [battle-pass-challenge-progress-background]="battlePassChallengeProgressBackground"
-                                               [battle-pass-challenge-progress-fill-background]="battlePassChallengeProgressFillBackground"
-                                               [battle-pass-challenge-background]="battlePassChallengeBackground"
-            >
-            </scill-popover-preview-bp-section>
+            <div class="popover-preview-sections-container">
+                <scill-popover-preview-bp-section  [app-id]="appId"
+                                                   [api-key]="apiKey"
+                                                   [user-id]="userId"
+                                                   [battle-pass-id]="battlePassId"
+                                                   [access-token]="accessToken"
+                                                   [battle-pass-finished-type-bg-color]="battlePassFinishedTypeBgColor"
+                                                   [battle-pass-in-progress-type-bg-color]="battlePassInProgressTypeBgColor"
+                                                   [battle-pass-type-border-color]="battlePassTypeBorderColor"
+                                                   [battle-pass-type-icon-color]="battlePassTypeIconColor"
+                                                   [battle-pass-title-color]="battlePassTitleColor"
+                                                   [battle-pass-lvl-progress-bar-background]="battlePassLvlProgressBarBackground"
+                                                   [battle-pass-lvl-progress-bar-fill-background]="battlePassLvlProgressBarFillBackground"
+                                                   [battle-pass-challenge-progress-background]="battlePassChallengeProgressBackground"
+                                                   [battle-pass-challenge-progress-fill-background]="battlePassChallengeProgressFillBackground"
+                                                   [battle-pass-challenge-background]="battlePassChallengeBackground"
+                >
+                </scill-popover-preview-bp-section>
 
-            <scill-popover-preview-section *ngFor="let category of categories;"
-                                           [title]="category.category_name"
-                                           [challenges]="category.challenges"
-                                           [category]="category"
-                                           [app-id]="appId"
-                                           [access-token]="accessToken"
-                                           [personal-challenges-category-title-color]="personalChallengesCategoryTitleColor"
-                                           [personal-challenges-category-progress-bar-background]="personalChallengesCategoryProgressBarBackground"
-                                           [personal-challenges-category-progress-bar-fill-background]="personalChallengesCategoryProgressBarFillBackground"
-                                           [personal-challenges-background]="personalChallengesBackground"
-                                           [personal-challenges-progress-background]="personalChallengesProgressBackground"
-                                           [personal-challenges-progress-fill-background]="personalChallengesProgressFillBackground"
-                                           [personal-challenges-in-progress-type-bg-color]="personalChallengesInProgressTypeBgColor"
-                                           [personal-challenges-finished-type-bg-color]="personalChallengesFinishedTypeBgColor"
-                                           [personal-challenges-type-border-color]="personalChallengesTypeBorderColor"
-                                           [personal-challenges-type-icon-color]="personalChallengesTypeIconColor"
-            >
-            </scill-popover-preview-section>
+                <scill-popover-preview-section *ngFor="let category of categories;"
+                                               [title]="category.category_name"
+                                               [challenges]="category.challenges"
+                                               [category]="category"
+                                               [app-id]="appId"
+                                               [access-token]="accessToken"
+                                               [personal-challenges-category-title-color]="personalChallengesCategoryTitleColor"
+                                               [personal-challenges-category-progress-bar-background]="personalChallengesCategoryProgressBarBackground"
+                                               [personal-challenges-category-progress-bar-fill-background]="personalChallengesCategoryProgressBarFillBackground"
+                                               [personal-challenges-background]="personalChallengesBackground"
+                                               [personal-challenges-progress-background]="personalChallengesProgressBackground"
+                                               [personal-challenges-progress-fill-background]="personalChallengesProgressFillBackground"
+                                               [personal-challenges-in-progress-type-bg-color]="personalChallengesInProgressTypeBgColor"
+                                               [personal-challenges-finished-type-bg-color]="personalChallengesFinishedTypeBgColor"
+                                               [personal-challenges-type-border-color]="personalChallengesTypeBorderColor"
+                                               [personal-challenges-type-icon-color]="personalChallengesTypeIconColor"
+                >
+                </scill-popover-preview-section>
+            </div>
 
         </div>
 </div>
