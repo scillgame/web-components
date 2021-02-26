@@ -1,14 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {BattlePassComponent}      from '../battle-pass/battle-pass.component';
-import {faCaretLeft, faCaretDown} from '@fortawesome/free-solid-svg-icons';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {BattlePassComponent}                 from '../battle-pass/battle-pass.component';
+
 @Component({
   selector: 'scill-popover-preview-bp-section',
   templateUrl: './popover-preview-bp-section.component.html',
-  styleUrls: ['./popover-preview-bp-section.component.scss']
+  styleUrls: ['./popover-preview-bp-section.component.scss'],
 })
 export class PopoverPreviewBpSectionComponent extends BattlePassComponent{
-    faCaretLeft = faCaretLeft;
-    faCaretDown = faCaretDown;
+    // faCaretLeft = faCaretLeft;
+    // faCaretDown = faCaretDown;
     @Input('type-in-progress-color') typeInProgressColor: string;
     @Input('type-finished-color') typeFinishedColor: string;
     @Input('type-border-color') typeBorderColor: string;

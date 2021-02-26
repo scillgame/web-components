@@ -1,5 +1,4 @@
 import { Component, OnInit, Input }  from '@angular/core';
-import { faCaretDown, faCaretLeft }  from '@fortawesome/free-solid-svg-icons';
 import {PersonalChallengesComponent} from '../personal-challenges/personal-challenges.component';
 
 @Component({
@@ -8,8 +7,8 @@ import {PersonalChallengesComponent} from '../personal-challenges/personal-chall
   styleUrls: ['./popover-preview-section.component.scss']
 })
 export class PopoverPreviewSectionComponent extends PersonalChallengesComponent{
-    faCaretDown = faCaretDown;
-    faCaretLeft = faCaretLeft;
+    // faCaretDown = faCaretDown;
+    // faCaretLeft = faCaretLeft;
     @Input() username: string;
     @Input('title') popoverPreviewSectionTitle: string;
     // this need to be Challenge interface but some props are not defined at Challenge interface @scillgame/scill-js SDK

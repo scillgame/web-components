@@ -1,5 +1,23 @@
 $gold: #F5A622;
-
+// flexbox global rules
+.sc-d-flex{
+  display:flex;
+}
+.sc-flex-column{
+  flex-direction: column;
+}
+.sc-justify-content-center{
+  justify-content: center;
+}
+.sc-justify-content-between{
+  justify-content:space-between;
+}
+.sc-justify-content-end{
+  justify-content: flex-end;
+}
+.sc-align-items-center{
+  align-items:center;
+}
 .popover-preview-container{
   position:relative;
   width:126px;
@@ -43,70 +61,17 @@ $gold: #F5A622;
       color: #fff;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
-      overflow-x: hidden;
-      overflow: auto;
-      max-height: 700px;
-      .popover-preview-header {
-        position: relative;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        padding: 20px 10px;
-        background: transparent linear-gradient(180deg, #0AE3ED 0%, #009BED 100%) 0% 0% no-repeat padding-box;
-        padding-bottom: 15px;
-        .header-triangle {
-          width: 23px;
-          height: 23px;
-          transform: rotate(45deg);
-          background: #08E0EC;
-          position: absolute;
-          top: -11px;
-          right: 15px;
-        }
-        .user {
-          font-family: Helvetica, Sans-serif;
-          font-weight: 600;
-          font-size: 27px;
-        }
-        .lvl-badge {
-          margin-right: 15px;
-          img {
-            width: 54px;
-            //height:54px;
-          }
-        }
-        .battlepass-lvl {
-          display: flex;
-          width: 44px;
-          height: 44px;
-          justify-content: center;
-          align-items: center;
-          color: goldenrod;
-          border-radius: 50%;
-          border: 4px solid $gold;
-          font-size: 23px;
-          background: #fff;
-        }
+      .popover-preview-sections-container{
+        overflow-x: hidden;
+        overflow: auto;
+        max-height: 700px;
       }
     }
-  .popover-preview-overflow-helper {
-    //max-height: 730px;
-    //height:400px;
-    //background: #fff;
-    //min-width: 300px;
-    //max-width: 350px;
-    //position: absolute;
-    //z-index: auto;
-    width:100%;
-    background: #000;
-  }
-  .scill-progress{
-    padding-left:10px; padding-right:10px;
-    padding-top:15px;
-  }
   .battlepass{
     //margin-top:30px;
     padding:20px 10px;
     //background:#fff;
   }
+
 }
 

@@ -17,7 +17,7 @@ import {PersonalChallengesComponent} from '../personal-challenges/personal-chall
     selector     : 'scill-popover-preview',
     templateUrl  : './popover-preview.component.html',
     styleUrls    : ['./popover-preview.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.ShadowDom
 })
 export class PopoverPreviewComponent extends PersonalChallengesComponent{
     @Input('api-key') apiKey: string;
