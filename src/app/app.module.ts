@@ -22,6 +22,7 @@ import { PopoverPreviewSectionComponent } from './popover-preview-section/popove
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PopoverPreviewHeaderComponent } from './popover-preview-header/popover-preview-header.component';
 import { PopoverPreviewBpSectionComponent } from './popover-preview-bp-section/popover-preview-bp-section.component';
+import { ProfileButtonComponent } from './profile-button/profile-button.component';
 
 @NgModule({
     declarations   : [
@@ -43,7 +44,8 @@ import { PopoverPreviewBpSectionComponent } from './popover-preview-bp-section/p
         TaskItemComponent,
         PopoverPreviewSectionComponent,
         PopoverPreviewHeaderComponent,
-        PopoverPreviewBpSectionComponent
+        PopoverPreviewBpSectionComponent,
+        ProfileButtonComponent
     ],
     imports        : [
         BrowserModule,
@@ -103,5 +105,8 @@ export class AppModule {
 
         const popoverPreview = createCustomElement(PopoverPreviewComponent, {injector: this.injector});
         customElements.define('scill-popover-preview', popoverPreview);
+
+        const profileButton = createCustomElement(ProfileButtonComponent, {injector: this.injector});
+        customElements.define('scill-profile-button', profileButton);
     }
 }

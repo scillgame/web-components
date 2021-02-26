@@ -43,6 +43,7 @@ export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
   battlePass: BattlePass;
 
   progress = 0;
+  currentLevel = 1;
 
   subscriptions = new Subscription();
 
@@ -113,6 +114,10 @@ export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
         const levelProgress = (totalGoal > 0) ? totalCounter / totalGoal : 0;
         console.log(levelProgress);
         this.progress += levelProgress / levels.length;
+
+        if (level.activated_at !== null && level.level_completed) {
+          this.currentLevel = level.level_priority;
+        }
       }
       this.progress *= 100;
     }));

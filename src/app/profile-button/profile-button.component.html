@@ -1,0 +1,24 @@
+<div class="scill-profile-button-container">
+  <div class="scill-profile-button-name" [style.background-color]="buttonBackground">
+    <h3>{{username}}</h3>
+    <scill-progress-bar
+      border-radius="0 0 0px 6px"
+      padding="0"
+      height="5px"
+      transform="none"
+      [progress]="levelProgress"
+      [fill-background]="progressFill"
+      background="transparent"
+      class="scill-progress-bar"
+    >
+    </scill-progress-bar>
+  </div>
+  <div class="scill-profile-button-score">
+    {{levelStats}}
+  </div>
+  <div class="scill-profile-ranking" [style.background-image]="'url(' + avatarUrl + ')'" [style.border-color]="buttonBackground">
+    <div class="scill-profile-ranking-level" [style.background-color]="progressFill" [style.border-color]="buttonBackground">
+      {{currentLevel}}
+    </div>
+  </div>
+</div>

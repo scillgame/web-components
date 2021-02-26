@@ -30,6 +30,9 @@ export class BattlePassStatusComponent implements OnDestroy, OnChanges {
   battlePass: BattlePass;
   monitorBattlePass: UserBattlePassUpdateMonitor;
   progress = 0;
+  levelProgress = 0;
+  levelStats = '';
+  currentLevel = 1;
   subscriptions = new Subscription();
   battlePassApi: BattlePassesApi;
 
@@ -60,7 +63,6 @@ export class BattlePassStatusComponent implements OnDestroy, OnChanges {
   loadBattlePassLevels(): void {
     this.battlePassApi.getBattlePassLevels(this.appId, this.battlePassId).then(levels => {
       this.levels = levels;
-      this.levels = levels;
       this.progress = 0;
       for (const level of levels) {
         let totalGoal = 0;
@@ -71,6 +73,12 @@ export class BattlePassStatusComponent implements OnDestroy, OnChanges {
         }
         const levelProgress = (totalGoal > 0) ? totalCounter / totalGoal : 0;
         this.progress += levelProgress / levels.length;
+
+        if (level.activated_at !== null) {
+          this.currentLevel = level.level_priority;
+          this.levelProgress = levelProgress * 100;
+          this.levelStats = `${totalCounter} / ${totalGoal}`;
+        }
       }
       this.progress *= 100;
     });
