@@ -27,6 +27,7 @@
             </div>
             <div *ngFor="let level of levels; trackBy: challengeById">
                 <div *ngIf="level.activated_at !== null && level.level_completed === false">
+                    {{calculateCompletedLevels(levels)}}/{{levels.length}}
                     <scill-progress-bar
                             [background]="headerProgressBarBackground" [fill-background]="headerProgressBarFillBackground"
                             [progress]="progress + '%'"></scill-progress-bar>
