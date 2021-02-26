@@ -1,11 +1,11 @@
 <div class="task-container" [ngStyle]="{'background':background}">
     <div class="sc-d-flex sc-align-items-center">
         <div class="task-type" [ngStyle]="{
-        'background':task.type === 'finished' ? typeFinishedColor : typeInProgressColor,
-        'border-color':typeBorderColor,
-        'color':typeIconColor
+            'background':task.type === 'finished' ? typeFinishedColor : typeInProgressColor,
+            'border-color':typeBorderColor,
+            'color':typeIconColor
         }">
-            <fa-icon [icon]="faCheck"></fa-icon>
+            <fa-icon [icon]="faCheck" ></fa-icon>
         </div>
         <div class="sc-badge">
             <img [src]="task.challenge_icon" alt="">

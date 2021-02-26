@@ -1,0 +1,43 @@
+$gold: #F5A622;
+
+.popover-preview-header {
+  position: relative;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 20px 10px;
+  background: transparent linear-gradient(180deg, #0AE3ED 0%, #009BED 100%) 0% 0% no-repeat padding-box;
+  padding-bottom: 15px;
+  .header-triangle {
+    width: 23px;
+    height: 23px;
+    transform: rotate(45deg);
+    background: #08E0EC;
+    position: absolute;
+    top: -11px;
+    right: 15px;
+  }
+  .user {
+    font-family: Helvetica, Sans-serif;
+    font-weight: 600;
+    font-size: 27px;
+  }
+  .lvl-badge {
+    margin-right: 15px;
+    img {
+      width: 54px;
+      //height:54px;
+    }
+  }
+  .battlepass-lvl {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+    color: goldenrod;
+    border-radius: 50%;
+    border: 4px solid $gold;
+    font-size: 23px;
+    background: #fff;
+  }
+}

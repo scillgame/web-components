@@ -1,11 +1,11 @@
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
-import { faCheck }                           from '@fortawesome/free-solid-svg-icons';
-import {Challenge}                           from '@scillgame/scill-js';
+import {Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {faCheck}                                                from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'scill-task-item',
   templateUrl: './task-item.component.html',
-  styleUrls: ['./task-item.component.scss']
+  styleUrls: ['./task-item.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TaskItemComponent implements OnInit, OnDestroy{
     faCheck = faCheck;
