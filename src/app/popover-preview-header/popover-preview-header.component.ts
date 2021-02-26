@@ -17,6 +17,6 @@ export class PopoverPreviewHeaderComponent extends BattlePassComponent {
   @Input('header-notch-absolute-right') headerNotchAbsoluteRight: string;
   @Input('header-text-color') headerTextColor: string;
   @Input('header-bp-lvl-color') headerBpLvlColor: string;
-    @Input('header-progress-bar-background') headerProgressBarBackground: string;
-    @Input('header-progress-bar-fill-background') headerProgressBarFillBackground: string;
+  @Input('header-progress-bar-background') headerProgressBarBackground: string;
+  @Input('header-progress-bar-fill-background') headerProgressBarFillBackground: string;
 }
