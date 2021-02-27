@@ -7,19 +7,21 @@ import {
   OnInit, SimpleChanges,
   TemplateRef,
   ViewEncapsulation
-} from '@angular/core';
+}                                      from '@angular/core';
 import {
-  Challenge,
-  ChallengeCategory,
-  ChallengesApi,
-  ChallengeUpdateMonitor,
-  getChallengesApi,
-  startMonitorChallengeUpdates
+    BattlePass, BattlePassesApi,
+    Challenge,
+    ChallengeCategory,
+    ChallengesApi,
+    ChallengeUpdateMonitor, getBattlePassApi,
+    getChallengesApi, startMonitorBattlePassUpdates,
+    startMonitorChallengeUpdates, UserBattlePassUpdateMonitor
 } from '@scillgame/scill-js';
 import {BehaviorSubject, Subscription} from 'rxjs';
-import {filter, map} from 'rxjs/operators';
-import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
-import {SCILLService} from '../scill.service';
+import {filter, map, mergeMap}         from 'rxjs/operators';
+import {isNotNullOrUndefined}          from 'codelyzer/util/isNotNullOrUndefined';
+import {SCILLService}                  from '../scill.service';
+import {fromPromise}                   from 'rxjs/internal-compatibility';
 
 
 @Component({
@@ -39,11 +41,14 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy, OnChanges
   @Input() challenges: Challenge[];
   accessToken$ = new BehaviorSubject<string>(null);
   challengesApi$ = new BehaviorSubject<ChallengesApi>(null);
+  battlePass$ = new BehaviorSubject<BattlePass>(null);
+    battlePassApi$ = new BehaviorSubject<BattlePassesApi>(null);
+    monitorBattlePass: UserBattlePassUpdateMonitor;
   subscriptions: Subscription = new Subscription();
   categories: ChallengeCategory[] = [];
   challengeMonitor: ChallengeUpdateMonitor;
   isExpanded: boolean = true;
-
+  battlePass: BattlePass;
 
   @ContentChild('challengeTemplate', { static: false })
   challengeTemplateRef: TemplateRef<any>;
@@ -74,7 +79,6 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy, OnChanges
         return getChallengesApi(accessToken);
       })
     ).subscribe(this.challengesApi$);
-
     this.subscriptions.add(this.challengesApi$.pipe(filter(isNotNullOrUndefined)).subscribe(challengesApi => {
       this.updateChallenges();
     }));
@@ -82,7 +86,42 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy, OnChanges
     if (this.accessToken) {
       this.accessToken$.next(this.accessToken);
     }
-  }
+
+    try {
+        this.accessToken$.pipe(
+            filter(isNotNullOrUndefined),
+            map(accessToken => {
+                if (this.monitorBattlePass) {
+                    this.monitorBattlePass.stop();
+                }
+
+                this.monitorBattlePass = startMonitorBattlePassUpdates(accessToken, this.battlePassId, (payload => {
+                    this.refresh$.next(true);
+                }));
+
+
+                return getBattlePassApi(accessToken);
+            })
+        ).subscribe(this.battlePassApi$);
+
+        this.battlePassApi$.pipe(
+            filter(isNotNullOrUndefined),
+            mergeMap(battlePassApi => {
+                return fromPromise(battlePassApi.getBattlePasses(this.appId, this.battlePassId)).pipe(
+                    map(battlePasses => {
+                            console.log(battlePasses);
+                            const foundBattlePass = battlePasses.filter(battlePass => battlePass.battle_pass_id === this.battlePassId)[0];
+                            this.battlePass = foundBattlePass;
+                            console.log('FOUD', foundBattlePass);
+                            return foundBattlePass;
+                        }
+                    ));
+              })
+          ).subscribe(this.battlePass$);
+      }catch (e) {
+        console.log(e);
+      }
+    }
 
   updateChallenge(newChallenge: Challenge): void {
     for (const category of this.categories) {
@@ -164,4 +203,6 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy, OnChanges
     convertToPxl(position: number): string{
         return position + 'px';
     }
+
+
 }

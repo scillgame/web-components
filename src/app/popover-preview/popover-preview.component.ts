@@ -67,4 +67,6 @@ export class PopoverPreviewComponent extends PersonalChallengesComponent{
     @Input('personal-challenges-progress-background') personalChallengesProgressBackground: string;
     @Input('personal-challenges-progress-fill-background') personalChallengesProgressFillBackground: string;
     @Input('personal-challenges-background') personalChallengesBackground: string;
+
+
 }

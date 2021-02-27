@@ -1,10 +1,14 @@
 <div class="popover-preview-container" >
     <div class="sc-d-flex">
         <button (click)="toggleSection('isPopoverPreviewVisible')" class="popover-preview-btn" [ngStyle]="{'background': btnBackground}">
-            {{username}}
-            <div class="btn-battlepass-lvl">
-                <!--{{battlePass.level_priority}}-->
-                1
+            <div>
+                <span *ngIf="username">{{username}}</span>
+                <span *ngIf="!username">#{{userId}}</span>
+            </div>
+            <div *ngIf="(battlePass$ | async) as battlePass">
+                <div class="btn-battlepass-lvl">
+                    {{1}}
+                </div>
             </div>
         </button>
     </div>
