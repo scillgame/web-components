@@ -28,7 +28,7 @@ export class PopoverPreviewComponent extends PersonalChallengesComponent{
     @Input('challenge-id') challengeId: string;
     @Input('username') username: string;
     @Input() category: ChallengeCategory;
-    isPopoverPreviewVisible: boolean = false;
+    isPopoverPreviewVisible: boolean = true;
     challengeMonitor: ChallengeUpdateMonitor;
     challengesApi$ = new BehaviorSubject<ChallengesApi>(null);
     accessToken$ = new BehaviorSubject<string>(null);
@@ -67,6 +67,8 @@ export class PopoverPreviewComponent extends PersonalChallengesComponent{
     @Input('personal-challenges-progress-background') personalChallengesProgressBackground: string;
     @Input('personal-challenges-progress-fill-background') personalChallengesProgressFillBackground: string;
     @Input('personal-challenges-background') personalChallengesBackground: string;
+    @Input('button-background') buttonBackground: string;
+    @Input('button-text-color') buttonTextColor: string;
 
 
 }

@@ -1,4 +1,4 @@
-<div class="popover-preview-header" *ngIf="true"
+<div class="popover-preview-header" *ngIf="(battlePass$ | async) as battlePass"
      [ngStyle]="{
      'background': headerBackground,
      'color': headerTextColor

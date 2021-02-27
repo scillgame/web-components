@@ -23,7 +23,30 @@
         <div class="task-info-container">
             <div class="task-title"> {{task.challenge_name}} </div>
             <div class="task-description">{{task.challenge_description }}</div>
-            <div class="task-current-score">{{task.user_challenge_current_score}}/{{task.challenge_goal}}</div>
+            <div class="action-button" *ngIf="personalChallenge">
+                <button *ngIf="task.type === 'unlock'" [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
+                    Unlock
+                </button>
+                <button *ngIf="task.type === 'unlocked'" [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
+                    Activate
+                </button>
+                <button *ngIf="task.type === 'in-progress'" [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
+                    Cancel
+                </button>
+                <button *ngIf="task.type === 'unclaimed'" [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
+                    Claim
+                </button>
+
+            </div>
+            <div *ngIf="task.type === 'in-progress' || task.type === 'finished'"
+                 class="task-current-score"
+                 [ngClass]="task.type === 'in-progress' ? 'sc-d-flex sc-justify-content-between' : null"
+            >
+                <div>{{task.user_challenge_current_score}}/{{task.challenge_goal}}</div>
+                <div>
+                    <app-time-remaining [challenge]="task" [display-short-time-left]="true"></app-time-remaining>
+                </div>
+            </div>
         </div>
     </div>
     <scill-progress-bar

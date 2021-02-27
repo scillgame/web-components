@@ -18,6 +18,7 @@ interface TimeRemaining {
 export class TimeRemainingComponent implements OnInit, OnDestroy {
 
   @Input() challenge: Challenge;
+  @Input('display-short-time-left') displayShortTimeLeft: boolean;
   subscriptions = new Subscription();
 
   timeRemaining$: Observable<string>;
@@ -28,7 +29,7 @@ export class TimeRemainingComponent implements OnInit, OnDestroy {
     if (this.challenge.challenge_duration_time >= 0) {
       this.timeRemaining$ = timer(0, 1000).pipe(
         map(result => {
-          const timeRemaining = timeLeft(this.challenge, true);
+          const timeRemaining = timeLeft(this.challenge, this.displayShortTimeLeft);
           return timeRemaining;
         })
       );

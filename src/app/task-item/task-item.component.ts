@@ -19,6 +19,9 @@ export class TaskItemComponent implements OnInit, OnDestroy{
     @Input('progress-percentage') progressPercentage: string;
     @Input('progress-fill') progressFill: string;
     @Input('progress-background') progressBackground: string;
+    @Input('personal-challenge') personalChallenge: boolean;
+    @Input('button-background') buttonBackground: string;
+    @Input('button-text-color') buttonTextColor: string;
     constructor(){
     }
     ngOnInit(): void{}
