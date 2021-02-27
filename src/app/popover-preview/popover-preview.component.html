@@ -7,7 +7,7 @@
             </div>
             <div *ngIf="(battlePass$ | async) as battlePass">
                 <div class="btn-battlepass-lvl">
-                    {{1}}
+                    {{battlePass.battle_pass_priority}}
                 </div>
             </div>
         </button>

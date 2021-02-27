@@ -44,6 +44,7 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy, OnChanges
   battlePass$ = new BehaviorSubject<BattlePass>(null);
     battlePassApi$ = new BehaviorSubject<BattlePassesApi>(null);
     monitorBattlePass: UserBattlePassUpdateMonitor;
+    refresh$ = new BehaviorSubject<boolean>(false);
   subscriptions: Subscription = new Subscription();
   categories: ChallengeCategory[] = [];
   challengeMonitor: ChallengeUpdateMonitor;

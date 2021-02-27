@@ -28,7 +28,7 @@ export class PopoverPreviewComponent extends PersonalChallengesComponent{
     @Input('challenge-id') challengeId: string;
     @Input('username') username: string;
     @Input() category: ChallengeCategory;
-    isPopoverPreviewVisible: boolean = true;
+    isPopoverPreviewVisible: boolean = false;
     challengeMonitor: ChallengeUpdateMonitor;
     challengesApi$ = new BehaviorSubject<ChallengesApi>(null);
     accessToken$ = new BehaviorSubject<string>(null);
