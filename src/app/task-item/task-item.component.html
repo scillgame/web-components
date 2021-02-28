@@ -24,21 +24,29 @@
             <div class="task-title"> {{task.challenge_name}} </div>
             <div class="task-description">{{task.challenge_description }}</div>
             <div class="action-button" *ngIf="personalChallenge">
-                <button *ngIf="task.type === 'unlock'" [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
+                <button *ngIf="task.type === 'unlock' || task.type === 'cancelled'"
+                        (click)="unlockChallenge(task)"
+                        [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
                     Unlock
                 </button>
-                <button *ngIf="task.type === 'unlocked'" [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
+                <button *ngIf="task.type === 'unlocked'"
+                        (click)="activateChallenge(task)"
+                        [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
                     Activate
                 </button>
-                <button *ngIf="task.type === 'in-progress'" [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
+                <button *ngIf="task.type === 'in-progress'"
+                        (click)="cancelChallenge(task)"
+                        [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
                     Cancel
                 </button>
-                <button *ngIf="task.type === 'unclaimed'" [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
+                <button *ngIf="task.type === 'unclaimed'"
+                        (click)="claimChallenge(task)"
+                        [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
                     Claim
                 </button>
 
             </div>
-            <div *ngIf="task.type === 'in-progress' || task.type === 'finished'"
+            <div *ngIf="task.type === 'in-progress' || task.type === 'finished' || task.type === 'unclaimed'"
                  class="task-current-score"
                  [ngClass]="task.type === 'in-progress' ? 'sc-d-flex sc-justify-content-between' : null"
             >
