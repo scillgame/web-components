@@ -143,19 +143,6 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy, OnChanges
         }
     }
 
-    updateChallengeHelper = (newChallenge: Challenge): void => {
-        this.categories.map(ctg => {
-            ctg.challenges.map(ch => {
-                if (ch.challenge_id === newChallenge.challenge_id){
-                    ch = newChallenge;
-                }
-                return ch;
-            });
-            return ctg;
-        });
-        console.log('%c CATEGORIES', 'color:gold;', this.categories);
-    }
-
     updateChallenges(): void {
         this.challengesApi?.getAllPersonalChallenges(this.appId).then(categories => {
             this.categories = categories;
@@ -182,6 +169,7 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy, OnChanges
         this.challengesApi?.activatePersonalChallenge(this.appId, challenge.challenge_id).then(result => {
             this.updateChallenge(result.challenge);
         });
+        console.log('%c CATEGORIES', 'color:gold;', this.categories);
     }
 
     claimChallenge = (challenge: Challenge): void  => {
