@@ -34,7 +34,7 @@
                         [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
                     Activate
                 </button>
-                <button *ngIf="task.type === 'in-progress'"
+                <button *ngIf="task.type === 'in-progress' && !task.challenge_auto_activated"
                         (click)="cancelChallenge(task)"
                         [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
                     Cancel
