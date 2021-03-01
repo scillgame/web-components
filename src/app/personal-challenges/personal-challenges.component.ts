@@ -7,21 +7,21 @@ import {
     OnInit, SimpleChanges,
     TemplateRef,
     ViewEncapsulation
-}                                      from '@angular/core';
+}                                                                     from '@angular/core';
 import {
-    BattlePass, BattlePassesApi,
+    BattlePass, BattlePassesApi, BattlePassLevel,
     Challenge,
     ChallengeCategory,
     ChallengesApi,
     ChallengeUpdateMonitor, getBattlePassApi,
     getChallengesApi, startMonitorBattlePassUpdates,
     startMonitorChallengeUpdates, UserBattlePassUpdateMonitor
-}                                      from '@scillgame/scill-js';
-import {BehaviorSubject, Subscription} from 'rxjs';
-import {filter, map, mergeMap}         from 'rxjs/operators';
-import {isNotNullOrUndefined}          from 'codelyzer/util/isNotNullOrUndefined';
-import {SCILLService}                  from '../scill.service';
-import {fromPromise}                   from 'rxjs/internal-compatibility';
+}                                                                     from '@scillgame/scill-js';
+import {BehaviorSubject, combineLatest, Observable, of, Subscription} from 'rxjs';
+import {filter, map, mergeMap}                                        from 'rxjs/operators';
+import {isNotNullOrUndefined}                                         from 'codelyzer/util/isNotNullOrUndefined';
+import {SCILLService}                                                 from '../scill.service';
+import {fromPromise}                                                  from 'rxjs/internal-compatibility';
 
 let that = null;
 
@@ -40,20 +40,22 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy, OnChanges
     @Input('access-token') accessToken: string;
     @Input() category: ChallengeCategory;
     @Input() challenges: Challenge[];
-                     accessToken$                    = new BehaviorSubject<string>(null);
-                     challengesApi$                  = new BehaviorSubject<ChallengesApi>(null);
-                     battlePass$                     = new BehaviorSubject<BattlePass>(null);
-                     battlePassApi$                  = new BehaviorSubject<BattlePassesApi>(null);
-                     monitorBattlePass: UserBattlePassUpdateMonitor;
-                     refresh$                        = new BehaviorSubject<boolean>(false);
-                     subscriptions: Subscription     = new Subscription();
-                     categories: ChallengeCategory[] = [];
-                     challengeMonitor: ChallengeUpdateMonitor;
-                     isExpanded: boolean             = true;
-                     battlePass: BattlePass;
-
+     accessToken$                    = new BehaviorSubject<string>(null);
+     challengesApi$                  = new BehaviorSubject<ChallengesApi>(null);
+     battlePass$                     = new BehaviorSubject<BattlePass>(null);
+     battlePassApi$                  = new BehaviorSubject<BattlePassesApi>(null);
+     monitorBattlePass: UserBattlePassUpdateMonitor;
+     refresh$                        = new BehaviorSubject<boolean>(false);
+     subscriptions: Subscription     = new Subscription();
+     categories: ChallengeCategory[] = [];
+     challengeMonitor: ChallengeUpdateMonitor;
+     isExpanded: boolean             = true;
+     battlePass: BattlePass;
+    levels$: Observable<BattlePassLevel[]>;
+    levels: BattlePassLevel[] = [];
     @ContentChild('challengeTemplate', {static: false})
     challengeTemplateRef: TemplateRef<any>;
+    progress: any;
 
 
     constructor() {
@@ -92,39 +94,68 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy, OnChanges
             this.accessToken$.next(this.accessToken);
         }
 
-        try {
-            this.accessToken$.pipe(
-                filter(isNotNullOrUndefined),
-                map(accessToken => {
-                    if (this.monitorBattlePass) {
-                        this.monitorBattlePass.stop();
-                    }
+        this.accessToken$.pipe(
+            filter(isNotNullOrUndefined),
+            map(accessToken => {
+                if (this.monitorBattlePass) {
+                    this.monitorBattlePass.stop();
+                }
 
-                    this.monitorBattlePass = startMonitorBattlePassUpdates(accessToken, this.battlePassId, (payload => {
-                        this.refresh$.next(true);
-                    }));
+                this.monitorBattlePass = startMonitorBattlePassUpdates(accessToken, this.battlePassId, (payload => {
+                    this.refresh$.next(true);
+                }));
 
 
-                    return getBattlePassApi(accessToken);
-                })
-            ).subscribe(this.battlePassApi$);
+                return getBattlePassApi(accessToken);
+            })
+        ).subscribe(this.battlePassApi$);
 
-            this.battlePassApi$.pipe(
-                filter(isNotNullOrUndefined),
-                mergeMap(battlePassApi => {
-                    return fromPromise(battlePassApi.getBattlePasses(this.appId, this.battlePassId)).pipe(
-                        map(battlePasses => {
-                                console.log(battlePasses);
-                                const foundBattlePass = battlePasses.filter(battlePass => battlePass.battle_pass_id === this.battlePassId)[0];
-                                this.battlePass       = foundBattlePass;
-                                console.log('FOUD', foundBattlePass);
-                                return foundBattlePass;
-                            }
-                        ));
-                })
-            ).subscribe(this.battlePass$);
-        } catch (e) {
-            console.log(e);
+        this.battlePassApi$.pipe(
+            filter(isNotNullOrUndefined),
+            mergeMap(battlePassApi => {
+                return fromPromise(battlePassApi.getBattlePasses(this.appId, this.battlePassId)).pipe(
+                    map(battlePasses => {
+                            console.log(battlePasses);
+                            const foundBattlePass = battlePasses.filter(battlePass => battlePass.battle_pass_id === this.battlePassId)[0];
+                            this.battlePass       = foundBattlePass;
+                            console.log('FOUD', foundBattlePass);
+                            return foundBattlePass;
+                        }
+                    ));
+            })
+        ).subscribe(this.battlePass$);
+
+        this.levels$ = combineLatest([this.battlePassApi$, this.refresh$]).pipe(
+            mergeMap(([battlePassApi, refresh]) => {
+                console.log(battlePassApi, refresh);
+                if (battlePassApi) {
+                    return fromPromise(battlePassApi.getBattlePassLevels(this.appId, this.battlePassId));
+                } else {
+                    return of([]);
+                }
+            })
+        );
+
+        // Update the total level progress counter
+        this.subscriptions.add(this.levels$.subscribe(levels => {
+            this.levels = levels;
+            this.progress = 0;
+            for (const level of levels) {
+                let totalGoal = 0;
+                let totalCounter = 0;
+                for (const challenge of level.challenges) {
+                    totalGoal += challenge.challenge_goal;
+                    totalCounter += challenge.user_challenge_current_score;
+                }
+                const levelProgress = (totalGoal > 0) ? totalCounter / totalGoal : 0;
+                this.levelProgress = totalGoal;
+                this.progress += levelProgress / levels.length;
+            }
+            this.progress *= 100;
+        }));
+
+        if (this.accessToken) {
+            this.accessToken$.next(this.accessToken);
         }
     }
 

@@ -5,9 +5,14 @@
                 <span *ngIf="username">{{username}}</span>
                 <span *ngIf="!username">#{{userId}}</span>
             </div>
-            <div *ngIf="(battlePass$ | async) as battlePass">
+            <div>
                 <div class="btn-battlepass-lvl">
-                    {{battlePass.battle_pass_priority}}
+                    <!--{{battlePass.battle_pass_priority}}-->
+                    <div *ngFor="let lvl of levels">
+                        <div *ngIf="lvl.activated_at !== null && !lvl.level_completed">
+                            {{lvl.level_priority}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </button>
