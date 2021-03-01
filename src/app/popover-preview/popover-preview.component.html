@@ -12,7 +12,7 @@
             </div>
         </button>
     </div>
-        <div class="popover-preview" *ngIf="isPopoverPreviewVisible"
+        <div class="popover-preview" [hidden]="!isPopoverPreviewVisible"
              [ngStyle]="{
          'top':offsetTop > 0 && convertToPxl(offsetTop),
          'right':offsetRight > 0 && convertToPxl(offsetRight),
