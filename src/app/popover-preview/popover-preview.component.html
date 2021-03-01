@@ -1,10 +1,14 @@
 <div class="popover-preview-container" >
     <div class="sc-d-flex">
         <button (click)="toggleSection('isPopoverPreviewVisible')" class="popover-preview-btn" [ngStyle]="{'background': btnBackground}">
-            {{username}}
-            <div class="btn-battlepass-lvl">
-                <!--{{battlePass.level_priority}}-->
-                1
+            <div>
+                <span *ngIf="username">{{username}}</span>
+                <span *ngIf="!username">#{{userId}}</span>
+            </div>
+            <div *ngIf="(battlePass$ | async) as battlePass">
+                <div class="btn-battlepass-lvl">
+                    {{battlePass.battle_pass_priority}}
+                </div>
             </div>
         </button>
     </div>
@@ -65,6 +69,8 @@
                                                [personal-challenges-finished-type-bg-color]="personalChallengesFinishedTypeBgColor"
                                                [personal-challenges-type-border-color]="personalChallengesTypeBorderColor"
                                                [personal-challenges-type-icon-color]="personalChallengesTypeIconColor"
+                                               [button-background]="buttonBackground"
+                                               [button-text-color]=buttonTextColor
                 >
                 </scill-popover-preview-section>
             </div>

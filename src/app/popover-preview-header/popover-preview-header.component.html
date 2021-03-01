@@ -1,4 +1,4 @@
-<div class="popover-preview-header" *ngIf="true"
+<div class="popover-preview-header" *ngIf="(battlePass$ | async) as battlePass"
      [ngStyle]="{
      'background': headerBackground,
      'color': headerTextColor
@@ -11,7 +11,8 @@
                  'background': headerBackground,
                  'right':headerNotchAbsoluteRight + 'px'}"></div>
             <div class="sc-d-flex sc-justify-content-between sc-align-items-center">
-                <div class="user">{{username}}</div>
+                <div class="user" *ngIf="username">{{username}}</div>
+                <div class="user" *ngIf="!username">#{{userId}}</div>
                 <div class="sc-d-flex sc-align-items-center">
                     <div class="lvl-badge">
                         <img src="../../assets/images/badges/badge_rare_gempost_big.png" alt="">
@@ -25,9 +26,9 @@
                     </div>
                 </div>
             </div>
-            <div class="scill-progress"
-                 *ngFor="let level of levels; trackBy: challengeById">
+            <div *ngFor="let level of levels; trackBy: challengeById">
                 <div *ngIf="level.activated_at !== null && level.level_completed === false">
+                    {{calculateCompletedLevels(levels)}}/{{levels.length}}
                     <scill-progress-bar
                             [background]="headerProgressBarBackground" [fill-background]="headerProgressBarFillBackground"
                             [progress]="progress + '%'"></scill-progress-bar>

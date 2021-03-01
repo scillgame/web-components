@@ -6,9 +6,28 @@
                 {{popoverPreviewSectionTitle}}
                 {{calculateCompletedChallenges(category.challenges)}} / {{category.challenges.length}}
             </div>
-            <div [ngStyle]="{'color': personalChallengesCategoryTitleColor}">
-                <!--<fa-icon [icon]="faCaretLeft" *ngIf="!isExpanded"></fa-icon>-->
-                <!--<fa-icon [icon]="faCaretDown" *ngIf="isExpanded"></fa-icon>-->
+            <div [ngStyle]="{'fill': personalChallengesCategoryTitleColor}">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" *ngIf="!isExpanded"
+                     aria-hidden="true"
+                     focusable="false"
+                     width="1em"
+                     height="1em"
+                     style="-ms-transform: rotate(90deg); -webkit-transform: rotate(90deg); transform: rotate(90deg);"
+                     preserveAspectRatio="xMidYMid meet"
+                     viewBox="0 0 512 512">
+                    <path d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                        />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" *ngIf="isExpanded"
+                     aria-hidden="true"
+                     focusable="false"
+                     width="1em"
+                     height="1em"
+                     preserveAspectRatio="xMidYMid meet"
+                     viewBox="0 0 512 512">
+                    <path d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                          />
+                </svg>
             </div>
         </div>
         <scill-progress-bar [background]="personalChallengesCategoryProgressBarBackground"
@@ -29,6 +48,13 @@
                              [type-finished-color]="personalChallengesFinishedTypeBgColor"
                              [type-border-color]="personalChallengesTypeBorderColor"
                              [type-icon-color]="personalChallengesTypeIconColor"
+                             [personal-challenge]="true"
+                             [button-background]="buttonBackground"
+                             [button-text-color]="buttonTextColor"
+                             [unlock-challenge]="unlockChallenge"
+                             [activate-challenge]="activateChallenge"
+                             [claim-challenge]="claimChallenge"
+                             [cancel-challenge]="cancelChallenge"
             >
 
             </scill-task-item>`

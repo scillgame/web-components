@@ -1,4 +1,8 @@
 .task-container{
+  //display:flex;
+  //flex-direction: column;
+  //justify-content: space-between;
+  //min-height:65px;
   position: relative;
   color:#fff;
   margin:15px 0px;
@@ -23,20 +27,31 @@
     border-radius:50%;
     border:3px solid;
   }
-  .task-title{
-    font-size:12px;
-    color:#fff;
-  }
-  .task-description{
-    color:#C3C3C3;
-    font-size:12px;
-  }
-  .task-current-score{
-    color:#C3C3C3;
-    font-size:12px;
-  }
-  .task-xp-progress{
-    color:#C3C3C3;
-    font-size:12px;
+  .task-info-container{
+    width:100%;
+    padding-right:15px;
+    .task-title{
+      font-size:12px;
+      color:#fff;
+    }
+    .task-description{
+      color:#C3C3C3;
+      font-size:12px;
+    }
+    .task-current-score{
+      color:#C3C3C3;
+      font-size:12px;
+    }
+    .task-xp-progress{
+      color:#C3C3C3;
+      font-size:12px;
+    }
+    .action-button button{
+      margin:5px 0;
+      padding:2px 8px;
+      border:0;
+      border-radius:5px;
+      font-size:12px;
+    }
   }
 }

@@ -43,6 +43,7 @@ export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
   battlePass: BattlePass;
 
   progress = 0;
+  levelProgress = 0;
 
   subscriptions = new Subscription();
 
@@ -111,7 +112,7 @@ export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
           totalCounter += challenge.user_challenge_current_score;
         }
         const levelProgress = (totalGoal > 0) ? totalCounter / totalGoal : 0;
-        console.log(levelProgress);
+        this.levelProgress = totalGoal;
         this.progress += levelProgress / levels.length;
       }
       this.progress *= 100;
@@ -169,20 +170,15 @@ export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
     toggleSection(section: string): void {
         this[section] = !this[section];
     }
-
-    calculateBattlePassLevelProgress(levels): number {
-        let totalGoal     = 0;
-        let totalCounter  = 0;
-        let totalProgress = 0;
-        levels.map(lvl => {
-            lvl.challenges.map(ch => {
-                totalGoal += ch.challenge_goal;
-                totalCounter += ch.user_challenge_current_score;
-            });
-            const levelProgress = (totalGoal > 0) ? totalCounter / totalGoal : 0;
-            totalProgress += levelProgress;
-        });
-        return totalProgress;
+    calculateCompletedLevels(levels): number {
+      let counter = 0;
+      levels.map(lvl => {
+          if (lvl.level_completed){
+              counter++;
+          }
+          return lvl;
+      });
+      return counter;
     }
     calculateCompletedChallenges(challenges): number{
         let counter = 0;

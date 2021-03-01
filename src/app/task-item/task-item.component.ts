@@ -1,4 +1,5 @@
 import {Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Challenge}                                              from '@scillgame/scill-js';
 
 @Component({
   selector: 'scill-task-item',
@@ -19,6 +20,13 @@ export class TaskItemComponent implements OnInit, OnDestroy{
     @Input('progress-percentage') progressPercentage: string;
     @Input('progress-fill') progressFill: string;
     @Input('progress-background') progressBackground: string;
+    @Input('personal-challenge') personalChallenge: boolean;
+    @Input('button-background') buttonBackground: string;
+    @Input('button-text-color') buttonTextColor: string;
+    @Input('unlock-challenge') unlockChallenge: (args: Challenge) => void;
+    @Input('activate-challenge') activateChallenge: (args: Challenge) => void;
+    @Input('claim-challenge') claimChallenge: (args: Challenge) => void;
+    @Input('cancel-challenge') cancelChallenge: (args: Challenge) => void;
     constructor(){
     }
     ngOnInit(): void{}
