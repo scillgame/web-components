@@ -74,3 +74,39 @@ $gold: #F5A622;
 
 }
 
+.scill-profile-buttons-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px 0px;
+}
+
+.scill-profile-button {
+  border: 1px solid #DCDCDC;
+  border-radius: 3px;
+  background-color: #DCDCDC;
+  color: black;
+  padding: 5px;
+  width: 100%;
+  margin-right: 5px;
+  margin-left: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.scill-profile-button:hover {
+  opacity: 0.9;
+}
+
+.scill-profile-button:active {
+  opacity: 0.8;
+}
+
+.scill-profile-button:first-child {
+  margin-left: 0px;
+}
+
+.scill-profile-button:last-child {
+  margin-right: 0px;
+}
