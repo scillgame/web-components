@@ -82,7 +82,8 @@
                 <b>{{battlePass.battle_pass_name}}</b> is locked
             </div>
             <div>
-                <button class="scill-profile-button"
+                <button (click)="unlockBattlePass(battlePass)"
+                        class="scill-profile-button"
                         [ngStyle]="{
                         'background': unlockBattlePassBtnBackground,
                         'border-color': unlockBattlePassBtnBackground,

@@ -10,7 +10,6 @@ import {
 import {BehaviorSubject, combineLatest, Observable, of, Subscription} from 'rxjs';
 import {combineAll, filter, map, mergeMap, withLatestFrom} from 'rxjs/operators';
 import {UserBattlePassUpdateMonitor} from '@scillgame/scill-js/dist/user-battle-pass-update-monitor';
-import {SCILLService} from '../scill.service';
 import {fromPromise} from 'rxjs/internal-compatibility';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 
@@ -38,7 +37,7 @@ export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
   levels$: Observable<BattlePassLevel[]>;
   refresh$ = new BehaviorSubject<boolean>(false);
   levels: BattlePassLevel[] = [];
-  isExpanded: boolean = true;
+  isExpanded = true;
   monitorBattlePass: UserBattlePassUpdateMonitor;
   battlePass: BattlePass;
 
@@ -47,13 +46,10 @@ export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
 
   subscriptions = new Subscription();
 
-  constructor() {
-
-  }
-
+  constructor() { }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['accessToken'] && changes['accessToken'].currentValue) {
-      this.accessToken$.next(changes['accessToken'].currentValue);
+    if (changes.accessToken && changes.accessToken.currentValue) {
+      this.accessToken$.next(changes.accessToken.currentValue);
     }
   }
 
@@ -74,20 +70,7 @@ export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
       })
     ).subscribe(this.battlePassApi$);
 
-    this.battlePassApi$.pipe(
-      filter(isNotNullOrUndefined),
-      mergeMap(battlePassApi => {
-        return fromPromise(battlePassApi.getBattlePasses(this.appId, this.battlePassId)).pipe(
-          map(battlePasses => {
-            console.log(battlePasses);
-            const foundBattlePass = battlePasses.filter(battlePass => battlePass.battle_pass_id === this.battlePassId)[0];
-            this.battlePass = foundBattlePass;
-            console.log('FOUD', foundBattlePass);
-            return foundBattlePass;
-          }
-        ));
-      })
-    ).subscribe(this.battlePass$);
+    this.getBattlePasses();
 
     this.levels$ = combineLatest([this.battlePassApi$, this.refresh$]).pipe(
       mergeMap(([battlePassApi, refresh]) => {
@@ -131,6 +114,37 @@ export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
     if (this.subscriptions) {
       this.subscriptions.unsubscribe();
     }
+  }
+
+  getBattlePasses(): void{
+      this.battlePassApi$.pipe(
+          filter(isNotNullOrUndefined),
+          mergeMap(battlePassApi => {
+              return fromPromise(battlePassApi.getBattlePasses(this.appId, this.battlePassId)).pipe(
+                  map(battlePasses => {
+                          console.log(battlePasses);
+                          const foundBattlePass = battlePasses.filter(battlePass => battlePass.battle_pass_id === this.battlePassId)[0];
+                          this.battlePass = foundBattlePass;
+                          console.log('FOUD', foundBattlePass);
+                          return foundBattlePass;
+                      }
+                  ));
+          })
+      ).subscribe(this.battlePass$);
+  }
+  unlockBattlePass(battlePass: BattlePass): void {
+    const battlePassApi = this.battlePassApi$.getValue();
+    if (!battlePassApi) {
+          return;
+        }
+
+    battlePassApi.unlockBattlePass(this.appId, battlePass.battle_pass_id).then(result => {
+      if (result) {
+          console.log('%c BP', 'color:cyan;', result);
+          this.refresh$.next(true);
+          this.getBattlePasses();
+      }
+    });
   }
 
   levelById(index: number, item: BattlePassLevel): any {
