@@ -1,6 +1,6 @@
 <div class="popover-preview-section" *ngIf="(battlePass$ | async) as battlePass">
 
-    <div class="scill-progress" >
+    <div class="scill-progress" *ngIf="battlePass.unlocked_at !== null">
         <div class="sc-d-flex sc-justify-content-between pointer" (click)="toggleSection('isExpanded')">
             <div class="battle-pass-title" [ngStyle]="{'color': battlePassTitleColor}">
                 {{battlePass.battle_pass_name}}

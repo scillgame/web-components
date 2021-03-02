@@ -71,39 +71,8 @@ export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
     ).subscribe(this.battlePassApi$);
 
     this.getBattlePasses();
-
-    this.levels$ = combineLatest([this.battlePassApi$, this.refresh$]).pipe(
-      mergeMap(([battlePassApi, refresh]) => {
-        console.log(battlePassApi, refresh);
-        if (battlePassApi) {
-          return fromPromise(battlePassApi.getBattlePassLevels(this.appId, this.battlePassId));
-        } else {
-          return of([]);
-        }
-      })
-    );
-
-    // Update the total level progress counter
-    this.subscriptions.add(this.levels$.subscribe(levels => {
-      this.levels = levels;
-      this.progress = 0;
-      for (const level of levels) {
-        let totalGoal = 0;
-        let totalCounter = 0;
-        for (const challenge of level.challenges) {
-          totalGoal += challenge.challenge_goal;
-          totalCounter += challenge.user_challenge_current_score;
-        }
-        const levelProgress = (totalGoal > 0) ? totalCounter / totalGoal : 0;
-        this.levelProgress = totalGoal;
-        this.progress += levelProgress / levels.length;
-      }
-      this.progress *= 100;
-    }));
-
-    if (this.accessToken) {
-      this.accessToken$.next(this.accessToken);
-    }
+    this.getBattlePassLevels();
+    this.updateTotalLevelProgress();
   }
 
   ngOnDestroy(): void {
@@ -132,6 +101,42 @@ export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
           })
       ).subscribe(this.battlePass$);
   }
+
+  getBattlePassLevels(): any{
+      this.levels$ = combineLatest([this.battlePassApi$, this.refresh$]).pipe(
+          mergeMap(([battlePassApi, refresh]) => {
+              if (battlePassApi) {
+                  return fromPromise(battlePassApi.getBattlePassLevels(this.appId, this.battlePassId));
+              } else {
+                  return of([]);
+              }
+          })
+      );
+  }
+
+  updateTotalLevelProgress(): void{
+      // Update the total level progress counter
+      this.subscriptions.add(this.levels$.subscribe(levels => {
+          this.levels = levels;
+          this.progress = 0;
+          for (const level of levels) {
+              let totalGoal = 0;
+              let totalCounter = 0;
+              for (const challenge of level.challenges) {
+                  totalGoal += challenge.challenge_goal;
+                  totalCounter += challenge.user_challenge_current_score;
+              }
+              const levelProgress = (totalGoal > 0) ? totalCounter / totalGoal : 0;
+              this.levelProgress = totalGoal;
+              this.progress += levelProgress / levels.length;
+          }
+          this.progress *= 100;
+      }));
+
+      if (this.accessToken) {
+          this.accessToken$.next(this.accessToken);
+      }
+  }
   unlockBattlePass(battlePass: BattlePass): void {
     const battlePassApi = this.battlePassApi$.getValue();
     if (!battlePassApi) {
@@ -140,9 +145,7 @@ export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
 
     battlePassApi.unlockBattlePass(this.appId, battlePass.battle_pass_id).then(result => {
       if (result) {
-          console.log('%c BP', 'color:cyan;', result);
           this.refresh$.next(true);
-          this.getBattlePasses();
       }
     });
   }
