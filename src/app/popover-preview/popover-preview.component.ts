@@ -45,6 +45,7 @@ export class PopoverPreviewComponent extends PersonalChallengesComponent{
     @Input('offset-bottom') offsetBottom = 0;
     @Input('offset-left') offsetLeft = 0;
     @Input('btn-background') btnBackground: string;
+    @Input('btn-level-color') btnLevelColor: string;
     @Input('header-background') headerBackground: string;
     @Input('header-notch-absolute-right') headerNotchAbsoluteRight: string;
     @Input('header-text-color') headerTextColor: string;
@@ -71,6 +72,8 @@ export class PopoverPreviewComponent extends PersonalChallengesComponent{
     @Input('button-text-color') buttonTextColor: string;
     @Input('unlock-battle-pass-btn-background') unlockBattlePassBtnBackground: string;
     @Input('unlock-battle-pass-btn-text-color') unlockBattlePassBtnTextColor: string;
+    @Input('main-font-family') mainFont = 'Helvetica, Sans-serif';
+
 
 
 }

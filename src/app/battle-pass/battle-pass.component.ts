@@ -54,6 +54,9 @@ export class BattlePassComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
+      if (!this.battlePassId){
+          return;
+      }
     this.accessToken$.pipe(
       filter(isNotNullOrUndefined),
       map(accessToken => {
