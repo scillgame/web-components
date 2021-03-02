@@ -56,6 +56,7 @@ export class PersonalChallengesComponent implements OnInit, OnDestroy, OnChanges
     @ContentChild('challengeTemplate', {static: false})
     challengeTemplateRef: TemplateRef<any>;
     progress: any;
+    levelProgress: number;
 
 
     constructor() {
