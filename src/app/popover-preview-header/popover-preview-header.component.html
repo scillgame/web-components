@@ -5,7 +5,7 @@
      }"
 >
     <div  *ngFor="let level of levels; let i=index; trackBy: levelById">
-        <div  *ngIf="level.activated_at !== null && level.level_completed === false">
+        <div  *ngIf="level.activated_at !== null && level.level_completed === false" [hidden]="!battlePass.unlocked_at">
             <div class="header-triangle"
                  [ngStyle]="{
                  'background': headerBackground,
@@ -33,6 +33,64 @@
                             [background]="headerProgressBarBackground" [fill-background]="headerProgressBarFillBackground"
                             [progress]="progress + '%'"></scill-progress-bar>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div [hidden]="battlePass.unlocked_at">
+        <div class="header-triangle"
+             [ngStyle]="{
+             'background': headerBackground,
+             'right':headerNotchAbsoluteRight + 'px'}"></div>
+        <div class="sc-d-flex sc-justify-content-between sc-align-items-center">
+            <div class="user" *ngIf="username">{{username}}</div>
+            <div class="user" *ngIf="!username">#{{userId}}</div>
+            <div class="sc-d-flex sc-align-items-center">
+                <div class="lvl-badge">
+                    <img src="../../assets/images/badges/badge_rare_gempost_big.png" alt="">
+                </div>
+                <div class="battlepass-lvl"
+                     [ngStyle]="{
+                        'color':headerBpLvlColor, 'stroke': headerBpLvlColor,
+                        'border-color':headerBpLvlColor
+                     }">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         aria-hidden="true"
+                         focusable="false"
+                         width="1em"
+                         height="1em"
+                         style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
+                         preserveAspectRatio="xMidYMid meet"
+                         viewBox="0 0 512 512">
+                            <path d="M336 208v-95a80 80 0 0 0-160 0v95"
+                                  fill="none"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="32"></path>
+                                        <rect x="96" y="208" width="320" height="272" rx="48" ry="48" fill="none"
+                                             stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></rect>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div>
+            <!--{{calculateCompletedLevels(levels)}}/{{levels.length}}-->
+            <!--<scill-progress-bar-->
+                    <!--[background]="headerProgressBarBackground" [fill-background]="headerProgressBarFillBackground"-->
+                    <!--progress="0%">-->
+            <!--</scill-progress-bar>-->
+            <div class="unlocked-bp-name" [ngStyle]="{'color': headerTextColor}">
+                <b>{{battlePass.battle_pass_name}}</b> is locked
+            </div>
+            <div>
+                <button class="scill-profile-button"
+                        [ngStyle]="{
+                        'background': unlockBattlePassBtnBackground,
+                        'border-color': unlockBattlePassBtnBackground,
+                        'color': unlockBattlePassBtnTextColor
+                        }"
+                >
+                    Unlock
+                </button>
             </div>
         </div>
     </div>

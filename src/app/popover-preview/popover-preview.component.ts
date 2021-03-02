@@ -69,6 +69,8 @@ export class PopoverPreviewComponent extends PersonalChallengesComponent{
     @Input('personal-challenges-background') personalChallengesBackground: string;
     @Input('button-background') buttonBackground: string;
     @Input('button-text-color') buttonTextColor: string;
+    @Input('unlock-battle-pass-btn-background') unlockBattlePassBtnBackground: string;
+    @Input('unlock-battle-pass-btn-text-color') unlockBattlePassBtnTextColor: string;
 
 
 }

@@ -19,4 +19,6 @@ export class PopoverPreviewHeaderComponent extends BattlePassComponent {
   @Input('header-bp-lvl-color') headerBpLvlColor: string;
   @Input('header-progress-bar-background') headerProgressBarBackground: string;
   @Input('header-progress-bar-fill-background') headerProgressBarFillBackground: string;
+  @Input('unlock-battle-pass-btn-background') unlockBattlePassBtnBackground: string;
+  @Input('unlock-battle-pass-btn-text-color') unlockBattlePassBtnTextColor: string;
 }
