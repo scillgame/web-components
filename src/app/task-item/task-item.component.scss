@@ -7,6 +7,7 @@
   color:#fff;
   margin:15px 0px;
   border-radius:6px;
+  padding-top: 5px;
   background:#1D4913;
   .sc-badge{
     img{
@@ -36,6 +37,13 @@
     .task-title{
       font-size:12px;
       color:#fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .score {
+        color: #aaa;
+      }
     }
     .task-description{
       color:#C3C3C3;
@@ -57,4 +65,8 @@
       font-size:12px;
     }
   }
+}
+
+.task-container:last-child {
+  margin-bottom: 0px;
 }
