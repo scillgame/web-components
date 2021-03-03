@@ -20,6 +20,8 @@ export class SCILLPersonalChallengesInfo {
   refresh$ = new BehaviorSubject<boolean>(false);
   accessToken: string;
   challengesApi: ChallengesApi;
+  progress: number;
+  stats: string;
 }
 
 @Injectable({
@@ -45,7 +47,7 @@ export class SCILLPersonalChallengesService {
           const personalChallengesInfo = new SCILLPersonalChallengesInfo();
           personalChallengesInfo.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
             this.updateChallenge(personalChallengesInfo, payload.new_challenge);
-            personalChallengesInfo$.next(personalChallengesInfo);
+            personalChallengesInfo$.next(this.calculateStats(personalChallengesInfo));
           }));
 
           personalChallengesInfo.accessToken = accessToken;
@@ -58,11 +60,33 @@ export class SCILLPersonalChallengesService {
             personalChallengesInfo.categories = categories;
             return personalChallengesInfo;
           });
+        }),
+        map(personalChallengesInfo => {
+          return this.calculateStats(personalChallengesInfo);
         })
       ).subscribe(personalChallengesInfo$);
 
       return personalChallengesInfo$.asObservable();
     }
+  }
+
+  private calculateStats(personalChallengesInfo: SCILLPersonalChallengesInfo): SCILLPersonalChallengesInfo {
+    if (personalChallengesInfo.categories) {
+      let totalCounter = 0;
+      let totalGoals = 0;
+      for (const category of personalChallengesInfo.categories) {
+        for (const challenge of category.challenges) {
+          totalCounter += challenge.user_challenge_current_score;
+          totalGoals += challenge.challenge_goal;
+        }
+      }
+      personalChallengesInfo.progress = Math.round((totalCounter / totalGoals) * 100);
+      personalChallengesInfo.stats = `${totalCounter} / ${totalGoals}`;
+    } else if (personalChallengesInfo.challenge) {
+      personalChallengesInfo.progress = Math.round(personalChallengesInfo.challenge.user_challenge_current_score / personalChallengesInfo.challenge.challenge_goal) * 100;
+      personalChallengesInfo.stats = `${personalChallengesInfo.challenge.user_challenge_current_score} / ${personalChallengesInfo.challenge.challenge_goal}`;
+    }
+    return personalChallengesInfo;
   }
 
   getPersonalChallengeInfo(appId, challengeId): Observable<SCILLPersonalChallengesInfo> {
@@ -80,7 +104,7 @@ export class SCILLPersonalChallengesService {
           const personalChallengesInfo = new SCILLPersonalChallengesInfo();
           personalChallengesInfo.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
             this.updateChallenge(personalChallengesInfo, payload.new_challenge);
-            personalChallengesInfo$.next(personalChallengesInfo);
+            personalChallengesInfo$.next(this.calculateStats(personalChallengesInfo));
           }));
 
           personalChallengesInfo.accessToken = accessToken;
@@ -93,6 +117,9 @@ export class SCILLPersonalChallengesService {
             personalChallengesInfo.challenge = challenge;
             return personalChallengesInfo;
           });
+        }),
+        map(personalChallengesInfo => {
+          return this.calculateStats(personalChallengesInfo);
         })
       ).subscribe(personalChallengesInfo$);
 
