@@ -124,3 +124,14 @@ $gold: #F5A622;
 .scill-profile-button:last-child {
   margin-right: 0px;
 }
+
+.header-triangle {
+  width: 23px;
+  height: 23px;
+  transform: rotate(45deg);
+  background: white;
+  position: absolute;
+  top: -11px;
+  right: 15px;
+  z-index: -1;
+}

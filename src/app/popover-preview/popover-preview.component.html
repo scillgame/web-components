@@ -59,6 +59,7 @@
          'bottom':offsetBottom > 0 && offsetBottom + 'px',
          'left': offsetLeft > 0 && offsetLeft + 'px'}"
         >
+          <div class="header-triangle" *ngIf="!battlePassId" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px'}"></div>
             <scill-popover-preview-header [username]="username"
                                           [access-token]="accessToken"
                                           [app-id]="appId"
