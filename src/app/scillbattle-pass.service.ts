@@ -67,14 +67,18 @@ export class SCILLBattlePassService {
           return battlePassInfo;
         }),
         mergeMap(battlePassInfo => {
-          return fromPromise(battlePassInfo.battlePassApi.getBattlePasses(appId, battlePassId)).pipe(
-            map(battlePasses => {
-                console.log(battlePasses);
-                const foundBattlePass = battlePasses.filter(battlePass => battlePass.battle_pass_id === battlePassId)[0];
-                battlePassInfo.battlePass = foundBattlePass;
-                return battlePassInfo;
-              }
-            ));
+          return battlePassInfo.refresh$.pipe(
+            mergeMap(refresh => {
+              return fromPromise(battlePassInfo.battlePassApi.getBattlePasses(appId, battlePassId)).pipe(
+                map(battlePasses => {
+                    console.log(battlePasses);
+                    const foundBattlePass = battlePasses.filter(battlePass => battlePass.battle_pass_id === battlePassId)[0];
+                    battlePassInfo.battlePass = foundBattlePass;
+                    return battlePassInfo;
+                  }
+                ));
+            })
+          );
         }),
         mergeMap(battlePassInfo => {
           return battlePassInfo.refresh$.pipe(
