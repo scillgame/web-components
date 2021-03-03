@@ -4,7 +4,7 @@
         <div class="sc-d-flex sc-justify-content-between pointer" (click)="toggleSection('isExpanded')">
             <div class="battle-pass-title" [ngStyle]="{'color': battlePassTitleColor}">
                 {{battlePassInfo.battlePass.battle_pass_name}}
-                <span *ngFor="let level of battlePassInfo.levels">
+                <span *ngFor="let level of battlePassInfo.levels; trackBy: levelById">
                     <span *ngIf="level.activated_at !== null && !level.level_completed">
                         <span>{{calculateCompletedChallenges(level.challenges)}}/ {{level.challenges.length}}</span>
                     </span>
@@ -32,7 +32,7 @@
                 </svg>
             </div>
         </div>
-        <div *ngFor="let level of battlePassInfo.levels">
+        <div *ngFor="let level of battlePassInfo.levels; trackBy: levelById">
             <div *ngIf="level.activated_at !== null && !level.level_completed">
                 <scill-progress-bar [background]="battlePassLvlProgressBarBackground"
                                     [fill-background]="battlePassLvlProgressBarFillBackground"
@@ -43,9 +43,9 @@
 
 
         <div *ngIf="isExpanded">
-            <div *ngFor="let level of battlePassInfo.levels">
+            <div *ngFor="let level of battlePassInfo.levels; trackBy: levelById">
                 <div *ngIf="level.activated_at !== null && !level.level_completed">
-                    <div *ngFor="let challenge of level.challenges">
+                    <div *ngFor="let challenge of level.challenges; trackBy: challengeById">
                          <scill-task-item *ngIf="challenge.type !== 'unlock'"
                                          [task]="challenge"
                                          [background]="battlePassChallengeBackground"
