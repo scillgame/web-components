@@ -22,9 +22,9 @@
           >
           </scill-progress-bar>
             <div *ngIf="battlePassInfo$ | async as battlePassInfo">
-                <div class="btn-battlepass-lvl">
+                <div class="btn-battlepass-lvl" [ngStyle]="{'border-color': btnLevelColor}">
                     <!--{{battlePass.battle_pass_priority}}-->
-                    <div *ngFor="let lvl of battlePassInfo.levels">
+                    <div *ngFor="let lvl of battlePassInfo.levels" [ngStyle]="{'color': btnLevelColor}">
                         <div *ngIf="lvl.activated_at !== null && !lvl.level_completed">
                             {{lvl.level_priority}}
                         </div>
