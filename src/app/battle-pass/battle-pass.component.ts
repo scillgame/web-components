@@ -1,17 +1,7 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {
-  BattlePass,
-  BattlePassesApi,
-  BattlePassLevel,
-  BattlePassLevelChallenge,
-  getBattlePassApi,
-  startMonitorBattlePassUpdates
-} from '@scillgame/scill-js';
-import {BehaviorSubject, combineLatest, Observable, of, Subscription} from 'rxjs';
-import {combineAll, filter, map, mergeMap, withLatestFrom} from 'rxjs/operators';
-import {UserBattlePassUpdateMonitor} from '@scillgame/scill-js/dist/user-battle-pass-update-monitor';
-import {fromPromise} from 'rxjs/internal-compatibility';
-import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {BattlePass, BattlePassLevel, BattlePassLevelChallenge} from '@scillgame/scill-js';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {SCILLBattlePassInfo, SCILLBattlePassService} from '../scillbattle-pass.service';
 import {SCILLService} from '../scill.service';
 
@@ -46,6 +36,10 @@ export class BattlePassComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    if (!this.battlePassId){
+      return;
+    }
+
     this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId).pipe(
       map(battlePassInfo => {
         console.log(battlePassInfo);

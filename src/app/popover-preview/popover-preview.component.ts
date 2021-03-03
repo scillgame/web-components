@@ -1,17 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import {
-  Challenge,
-  ChallengeCategory,
-  ChallengesApi,
-  ChallengeUpdateMonitor,
-  getChallengesApi,
-  startMonitorChallengeUpdates
-} from '@scillgame/scill-js';
-import {filter, map} from 'rxjs/operators';
-import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
+import {Observable} from 'rxjs';
+import {ChallengeCategory} from '@scillgame/scill-js';
+import {map} from 'rxjs/operators';
 import {SCILLService} from '../scill.service';
-import {PersonalChallengesComponent} from '../personal-challenges/personal-challenges.component';
 import {SCILLBattlePassInfo, SCILLBattlePassService} from '../scillbattle-pass.service';
 import {SCILLPersonalChallengesInfo, SCILLPersonalChallengesService} from '../scillpersonal-challenges.service';
 
@@ -40,6 +31,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('offset-bottom') offsetBottom = 0;
   @Input('offset-left') offsetLeft = 0;
   @Input('btn-background') btnBackground: string;
+  @Input('btn-level-color') btnLevelColor: string;
   @Input('header-background') headerBackground: string;
   @Input('header-notch-absolute-right') headerNotchAbsoluteRight: string;
   @Input('header-text-color') headerTextColor: string;
@@ -66,6 +58,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('button-text-color') buttonTextColor: string;
   @Input('unlock-battle-pass-btn-background') unlockBattlePassBtnBackground: string;
   @Input('unlock-battle-pass-btn-text-color') unlockBattlePassBtnTextColor: string;
+  @Input('main-font-family') mainFont = 'Helvetica, Sans-serif';
 
   battlePassInfo$: Observable<SCILLBattlePassInfo>;
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
