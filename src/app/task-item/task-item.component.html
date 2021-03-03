@@ -21,7 +21,7 @@
             <img [src]="task.challenge_icon" alt="">
         </div>
         <div class="task-info-container">
-            <div class="task-title"> {{task.challenge_name}} </div>
+            <div class="task-title"> {{task.challenge_name}} <div class="score">{{task.user_challenge_current_score}}/{{task.challenge_goal}}</div></div>
             <div class="task-description">{{task.challenge_description }}</div>
             <div class="action-button" *ngIf="personalChallenge">
                 <button *ngIf="task.type === 'unlock' || task.type === 'cancelled'"
@@ -50,7 +50,6 @@
                  class="task-current-score"
                  [ngClass]="task.type === 'in-progress' ? 'sc-d-flex sc-justify-content-between' : null"
             >
-                <div>{{task.user_challenge_current_score}}/{{task.challenge_goal}}</div>
                 <app-time-remaining [challenge]="task" [display-short-time-left]="true"></app-time-remaining>
             </div>
         </div>
