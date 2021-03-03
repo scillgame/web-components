@@ -1,4 +1,4 @@
-<div class="scill-profile-button-container" *ngIf="battlePassInfo$ | async as battlePassInfo">
+<div class="scill-profile-button-container">
   <div class="scill-profile-button-name" [style.background-color]="buttonBackground">
     <h3>{{username}}</h3>
     <scill-progress-bar
@@ -6,19 +6,19 @@
       padding="0"
       height="5px"
       transform="none"
-      [progress]="battlePassInfo.levelProgress"
+      [progress]="progress"
       [fill-background]="progressFill"
       background="transparent"
       class="scill-progress-bar"
     >
     </scill-progress-bar>
   </div>
-  <div class="scill-profile-button-score">
-    {{battlePassInfo.levelStats}}
+  <div class="scill-profile-button-score" *ngIf="stats">
+    {{stats}}
   </div>
-  <div class="scill-profile-ranking" [style.background-image]="'url(' + avatarUrl + ')'" [style.border-color]="buttonBackground">
-    <div class="scill-profile-ranking-level" [style.background-color]="progressFill" [style.border-color]="buttonBackground">
-      {{battlePassInfo.currentLevel}}
+  <div class="scill-profile-ranking" *ngIf="avatarUrl" [style.background-image]="'url(' + avatarUrl + ')'" [style.border-color]="buttonBackground">
+    <div class="scill-profile-ranking-level" *ngIf="level" [style.background-color]="progressFill" [style.border-color]="buttonBackground">
+      {{level}}
     </div>
   </div>
 </div>

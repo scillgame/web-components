@@ -110,9 +110,6 @@ export class AppModule {
         const popoverPreview = createCustomElement(PopoverPreviewComponent, {injector: this.injector});
         customElements.define('scill-popover-preview', popoverPreview);
 
-        const profileButton = createCustomElement(ProfileButtonComponent, {injector: this.injector});
-        customElements.define('scill-profile-button', profileButton);
-
         const popover = createCustomElement(PopoverComponent, {injector: this.injector});
         customElements.define('scill-popover', popover);
     }
