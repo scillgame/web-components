@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {ChallengeCategory} from '@scillgame/scill-js';
 import {map} from 'rxjs/operators';
 import {SCILLService} from '../scill.service';
@@ -70,12 +70,16 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId).pipe(
-      map(battlePassInfo => {
-        console.log(battlePassInfo);
-        return battlePassInfo;
-      })
-    );
+    if (this.battlePassId) {
+      this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId).pipe(
+        map(battlePassInfo => {
+          console.log(battlePassInfo);
+          return battlePassInfo;
+        })
+      );
+    } else {
+      this.battlePassInfo$ = of(null);
+    }
 
     this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId).pipe(
       map(personalChallengesInfo => {
