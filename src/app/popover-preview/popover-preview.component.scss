@@ -52,6 +52,17 @@ $gold: #F5A622;
       font-size:14px;
       background: #fff;
     }
+
+    .scill-progress-bar {
+      position: absolute;
+      top: 25px;
+      left: 0;
+      width: 100%;
+    }
+
+    scill-progress-bar .progress-bar {
+      height: 2px;
+    }
   }
 
     .popover-preview {

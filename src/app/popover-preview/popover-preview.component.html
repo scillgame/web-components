@@ -10,6 +10,17 @@
                 <span *ngIf="!username">#{{userId}}</span>
                 <!--{{battlePass.battle_pass_name}}-->
             </div>
+          <scill-progress-bar *ngIf="!battlePassId"
+            border-radius="0 0 0px 6px"
+            padding="0"
+            height="3px"
+            transform="none"
+            [progress]="(personalChallengesInfo$ | async)?.progress"
+            [fill-background]="btnLevelColor"
+            background="transparent"
+            class="scill-progress-bar"
+          >
+          </scill-progress-bar>
             <div *ngIf="battlePassInfo$ | async as battlePassInfo">
                 <div class="btn-battlepass-lvl">
                     <!--{{battlePass.battle_pass_priority}}-->
