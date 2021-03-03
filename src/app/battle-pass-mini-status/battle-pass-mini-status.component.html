@@ -1,5 +1,5 @@
-<div class="battle-pass-mini-status">
-  <div class="battle-pass-levels" *ngFor="let level of levels; let i=index; trackBy: levelById">
+<div class="battle-pass-mini-status" *ngIf="battlePassInfo$ | async as battlePassInfo">
+  <div class="battle-pass-levels" *ngFor="let level of battlePassInfo.levels; let i=index; trackBy: levelById">
     <ng-container *ngIf="level.activated_at !== null && level.level_completed === false">
       <div class="battle-pass-level">
         <div class="battle-pass-level-reward">

@@ -1,7 +1,17 @@
 import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {getAuthApi} from '@scillgame/scill-js';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {
+  BattlePassesApi,
+  ChallengesApi,
+  getAuthApi,
+  getBattlePassApi,
+  getChallengesApi,
+  startMonitorBattlePassUpdates
+} from '@scillgame/scill-js';
 import {fromPromise} from 'rxjs/internal-compatibility';
+import {filter, map} from 'rxjs/operators';
+import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
+import {SCILLBattlePassInfo} from './scillbattle-pass.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +20,33 @@ export class SCILLService {
 
   accessTokenStore = new Map<string, string>();
 
-  constructor() { }
+  accessToken$ = new BehaviorSubject<string>(null);
+  battlePassApi$ = new BehaviorSubject<BattlePassesApi>(null);
+  challengesApi$ = new BehaviorSubject<ChallengesApi>(null);
+
+  constructor() {
+    // Setup Battle Pass Api
+    this.accessToken$.pipe(
+      filter(isNotNullOrUndefined),
+      map(accessToken => {
+        return getBattlePassApi(accessToken);
+      })
+    ).subscribe(this.battlePassApi$);
+
+    // Setup Challenges Api
+    this.accessToken$.pipe(
+      filter(isNotNullOrUndefined),
+      map(accessToken => {
+        return getChallengesApi(accessToken);
+      })
+    ).subscribe(this.challengesApi$);
+  }
+
+  public setAccessToken(accessToken: string): void {
+    if (this.accessToken$.getValue() !== accessToken) {
+      this.accessToken$.next(accessToken);
+    }
+  }
 
   public getAccessToken(apiKey: string, userId: string): Observable<string> {
     if (!apiKey || !userId) {

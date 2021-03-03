@@ -1,10 +1,10 @@
 <div class="popover-preview-section" >
 
     <div class="scill-progress">
-        <div class="sc-d-flex sc-justify-content-between pointer" (click)="toggleSection('isExpanded')">
+        <div class="sc-d-flex sc-justify-content-between pointer" (click)="isExpanded = !isExpanded">
             <div class="category-title" [ngStyle]="{'color': personalChallengesCategoryTitleColor}">
                 {{popoverPreviewSectionTitle}}
-                {{calculateCompletedChallenges(category.challenges)}} / {{category.challenges.length}}
+                {{category.challenges | completedChallenges}} / {{category.challenges.length}}
             </div>
             <div [ngStyle]="{'fill': personalChallengesCategoryTitleColor}">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" *ngIf="!isExpanded"
@@ -32,17 +32,18 @@
         </div>
         <scill-progress-bar [background]="personalChallengesCategoryProgressBarBackground"
                             [fill-background]="personalChallengesCategoryProgressBarFillBackground"
-                            [progress]="calculateCompletedChallenges(category.challenges)/category.challenges.length | percent"
+                            [progress]="(category.challenges | completedChallenges)/category.challenges.length | percent"
         >
         </scill-progress-bar>
 
 
         <div *ngIf="isExpanded">
-            <scill-task-item *ngFor="let challenge of challenges;"
+            <scill-task-item *ngFor="let challenge of category.challenges; trackBy: challengeById"
+                             [app-id]="appId"
                              [task]="challenge"
                              [background]="personalChallengesBackground"
                              [progress-fill]="personalChallengesProgressFillBackground"
-                             [progress-percentage]="challenge.user_challenge_current_score/challenge.challenge_goal | percent"
+                             [progress-percentage]="challenge.user_challenge_current_score/challenge.challenge_goal*100"
                              [progress-background]="personalChallengesProgressBackground"
                              [type-in-progress-color]="personalChallengesInProgressTypeBgColor"
                              [type-finished-color]="personalChallengesFinishedTypeBgColor"
@@ -51,10 +52,6 @@
                              [personal-challenge]="true"
                              [button-background]="buttonBackground"
                              [button-text-color]="buttonTextColor"
-                             [unlock-challenge]="unlockChallenge"
-                             [activate-challenge]="activateChallenge"
-                             [claim-challenge]="claimChallenge"
-                             [cancel-challenge]="cancelChallenge"
             >
 
             </scill-task-item>`

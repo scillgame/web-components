@@ -1,0 +1,74 @@
+.scill-profile-button-container {
+  position: relative;
+  display: inline-block;
+}
+
+.scill-profile-button-name {
+  width: 150px;
+  height: 30px;
+  background-color: #EF9F24;
+  color: black;
+  font-family: Helvetica;
+  font-size: 13px;
+  border-radius: 6px;
+  position: relative;
+  line-height: 30px;
+  padding: 0px 0px 2px 10px;
+}
+
+.scill-profile-button-name h3 {
+  margin: 0;
+  padding: 0;
+}
+
+.scill-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+scill-progress-bar .progress-bar {
+  height: 3px;
+}
+
+.scill-profile-ranking {
+  width: 49px;
+  height: 49px;
+  position: absolute;
+  right: 0px;
+  margin-right: -30px;
+  top: 0px;
+  margin-top: -2px;
+  background-color: #8C8C8C;
+  border-radius: 50%;
+  border: 2px solid #EF9F24;
+}
+
+.scill-profile-ranking-level {
+  width: 23px;
+  height: 23px;
+  border: 2px solid #EF9F24;
+  background-color: #8C8C8C;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  line-height: 23px;
+  text-align: center;
+  font-family: Helvetica;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-right: -10px;
+  margin-top: -10px;
+}
+
+.scill-profile-button-score {
+  background-color: #CBCBCB;
+  margin-left: 40px;
+  border-radius: 0px 0px 0px 6px;
+  font-size: 10px;
+  padding: 2px 24px 2px 10px;
+  text-align: right;
+}

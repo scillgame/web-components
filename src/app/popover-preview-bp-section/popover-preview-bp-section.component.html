@@ -1,10 +1,10 @@
-<div class="popover-preview-section" *ngIf="(battlePass$ | async) as battlePass">
+<div class="popover-preview-section" *ngIf="(battlePassInfo$ | async) as battlePassInfo">
 
-    <div class="scill-progress" *ngIf="battlePass.unlocked_at !== null">
+    <div class="scill-progress" *ngIf="battlePassInfo.battlePass.unlocked_at !== null">
         <div class="sc-d-flex sc-justify-content-between pointer" (click)="toggleSection('isExpanded')">
             <div class="battle-pass-title" [ngStyle]="{'color': battlePassTitleColor}">
-                {{battlePass.battle_pass_name}}
-                <span *ngFor="let level of levels">
+                {{battlePassInfo.battlePass.battle_pass_name}}
+                <span *ngFor="let level of battlePassInfo.levels">
                     <span *ngIf="level.activated_at !== null && !level.level_completed">
                         <span>{{calculateCompletedChallenges(level.challenges)}}/ {{level.challenges.length}}</span>
                     </span>
@@ -32,18 +32,18 @@
                 </svg>
             </div>
         </div>
-        <div *ngFor="let level of levels">
+        <div *ngFor="let level of battlePassInfo.levels">
             <div *ngIf="level.activated_at !== null && !level.level_completed">
                 <scill-progress-bar [background]="battlePassLvlProgressBarBackground"
                                     [fill-background]="battlePassLvlProgressBarFillBackground"
-                                    [progress]="calculateCompletedChallenges(level.challenges) / level.challenges.length | percent">
+                                    [progress]="battlePassInfo.levelProgress">
                 </scill-progress-bar>
             </div>
         </div>
 
 
         <div *ngIf="isExpanded">
-            <div *ngFor="let level of levels">
+            <div *ngFor="let level of battlePassInfo.levels">
                 <div *ngIf="level.activated_at !== null && !level.level_completed">
                     <div *ngFor="let challenge of level.challenges">
                          <scill-task-item *ngIf="challenge.type !== 'unlock'"
@@ -51,7 +51,7 @@
                                          [background]="battlePassChallengeBackground"
                                          [progress-fill]="battlePassChallengeProgressFillBackground"
                                          [progress-background]="battlePassChallengeProgressBackground"
-                                         [progress-percentage]="challenge.user_challenge_current_score / challenge.challenge_goal | percent"
+                                         [progress-percentage]="challenge.user_challenge_current_score / challenge.challenge_goal * 100"
                                          [type-in-progress-color]="battlePassInProgressTypeBgColor"
                                          [type-finished-color]="battlePassFinishedTypeBgColor"
                                          [type-border-color]="battlePassTypeBorderColor"

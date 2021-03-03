@@ -1,6 +1,10 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {PersonalChallengesComponent} from '../personal-challenges/personal-challenges.component';
-import {Challenge} from '@scillgame/scill-js';
+import {Challenge, ChallengesApi} from '@scillgame/scill-js';
+import {Observable} from 'rxjs';
+import {SCILLPersonalChallengesInfo, SCILLPersonalChallengesService} from '../scillpersonal-challenges.service';
+import {SCILLService} from '../scill.service';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'community-challenge',
@@ -8,35 +12,19 @@ import {Challenge} from '@scillgame/scill-js';
   styleUrls: ['./community-challenge.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CommunityChallengeComponent extends PersonalChallengesComponent {
+export class CommunityChallengeComponent extends PersonalChallengesComponent implements OnInit {
 
   @Input() challengeId: string;
 
-  challenge: Challenge;
+  personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
 
-  updateChallenges(): void {
-    console.log("Loading challenges: ", this.challengeId);
-    this.challengesApi?.getAllPersonalChallenges(this.appId).then(categories => {
-      console.log(categories);
-      this.categories = categories;
-      for (const category of categories) {
-        for (const challenge of category.challenges) {
-          if (challenge.challenge_id === this.challengeId) {
-            this.challenge = challenge;
-            break;
-          }
-        }
-      }
-    });
-  }
-
-  updateChallenge(newChallenge: Challenge): void {
-    if (newChallenge.challenge_id === this.challengeId) {
-      const updatedChallenge = {};
-      Object.assign(updatedChallenge, this.challenge);
-      Object.assign(updatedChallenge, newChallenge);
-      this.challenge = updatedChallenge;
-    }
+  ngOnInit(): void {
+    this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.challengeId).pipe(
+      map(personalChallengesInfo => {
+        console.log(personalChallengesInfo);
+        return personalChallengesInfo;
+      })
+    );
   }
 
 }

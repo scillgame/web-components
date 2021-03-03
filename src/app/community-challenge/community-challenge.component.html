@@ -1,26 +1,28 @@
-<div class="scill-community-challenge" *ngIf="challenge" attr.data-challenge-id="{{challenge.challenge_id}}" attr.data-challenge-type="{{challenge.type}}" [style.background-image]="challenge.challenge_icon_hd ? 'url(' + challenge.challenge_icon_hd + ')': 'none'">
-  <img *ngIf="challenge.challenge_icon && challenge.challenge_icon.substr(0,4) === 'http'" class="scill-community-challenge-image" src="{{challenge.challenge_icon}}">
-  <div class="scill-community-challenge-info">
-    <h3 class="scill-community-challenge-name" [class.finished]="challenge.type === 'finished'"> {{challenge.challenge_name}}</h3>
-    <p *ngIf="challenge.type == 'in-progress'" class="scill-community-challenge-time-remaining">
-      <span *ngIf="challenge.type === 'in-progress' && challenge.challenge_duration_time >=0 "><span class="scill-community-challenge-time-remaining-label">Time remaining: </span><app-time-remaining class="scill-community-challenge-time-remaining-counter" [challenge]="challenge" [style.color]="textColor"></app-time-remaining></span>
-    </p>
-    <div class="scill-community-challenge-progress" *ngIf="challenge.type === 'in-progress'">
-      <div class="scill-progress-bar-background">
-        <div class="scill-progress-bar-fill" style.width="{{challenge | progress}}%"></div>
+<ng-container *ngIf="personalChallengesInfo$ | async as personalChallengesInfo">
+  <div class="scill-community-challenge" *ngIf="personalChallengesInfo.challenge" attr.data-challenge-id="{{personalChallengesInfo.challenge.challenge_id}}" attr.data-challenge-type="{{personalChallengesInfo.challenge.type}}" [style.background-image]="personalChallengesInfo.challenge.challenge_icon_hd ? 'url(' + personalChallengesInfo.challenge.challenge_icon_hd + ')': 'none'">
+    <img *ngIf="personalChallengesInfo.challenge.challenge_icon && personalChallengesInfo.challenge.challenge_icon.substr(0,4) === 'http'" class="scill-community-challenge-image" src="{{challenge.challenge_icon}}">
+    <div class="scill-community-challenge-info">
+      <h3 class="scill-community-challenge-name" [class.finished]="personalChallengesInfo.challenge.type === 'finished'"> {{personalChallengesInfo.challenge.challenge_name}}</h3>
+      <p *ngIf="personalChallengesInfo.challenge.type == 'in-progress'" class="scill-community-challenge-time-remaining">
+        <span *ngIf="personalChallengesInfo.challenge.type === 'in-progress' && personalChallengesInfo.challenge.challenge_duration_time >=0 "><span class="scill-community-challenge-time-remaining-label">Time remaining: </span><app-time-remaining class="scill-community-challenge-time-remaining-counter" [challenge]="challenge" [style.color]="textColor"></app-time-remaining></span>
+      </p>
+      <div class="scill-community-challenge-progress" *ngIf="personalChallengesInfo.challenge.type === 'in-progress'">
+        <div class="scill-progress-bar-background">
+          <div class="scill-progress-bar-fill" style.width="{{personalChallengesInfo.challenge | progress}}%"></div>
+        </div>
+        <span class="scill-community-challenge-progress-goal">{{personalChallengesInfo.challenge.user_challenge_current_score}}/{{personalChallengesInfo.challenge.challenge_goal}}</span>
       </div>
-      <span class="scill-community-challenge-progress-goal">{{challenge.user_challenge_current_score}}/{{challenge.challenge_goal}}</span>
+    </div>
+    <div class="scill-community-challenge-actions">
+      <button class="scill-button" *ngIf="personalChallengesInfo.challenge.type === 'unlocked'" (click)="activateChallenge(personalChallengesInfo.challenge)"><span translate>Activate</span></button>
+      <button class="scill-button" *ngIf="personalChallengesInfo.challenge.type === 'unlock'" (click)="unlockChallenge(personalChallengesInfo.challenge)"><span translate>Unlock</span></button>
+      <button class="scill-button" *ngIf="personalChallengesInfo.challenge.type === 'unclaimed'" (click)="claimChallenge(personalChallengesInfo.challenge)"><span translate>Claim your reward</span></button>
+    </div>
+    <div *ngIf="personalChallengesInfo.challenge.challenge_xp" class="scill-community-challenge-xp">
+      {{personalChallengesInfo.challenge.challenge_xp}}
+    </div>
+    <div *ngIf="personalChallengesInfo.challenge.challenge_reward && personalChallengesInfo.challenge.challenge_reward_type !== 'Nothing'" class="scill-community-challenge-reward">
+      {{personalChallengesInfo.challenge.challenge_reward}}
     </div>
   </div>
-  <div class="scill-community-challenge-actions">
-    <button class="scill-button" *ngIf="challenge.type === 'unlocked'" (click)="activateChallenge(challenge)"><span translate>Activate</span></button>
-    <button class="scill-button" *ngIf="challenge.type === 'unlock'" (click)="unlockChallenge(challenge)"><span translate>Unlock</span></button>
-    <button class="scill-button" *ngIf="challenge.type === 'unclaimed'" (click)="claimChallenge(challenge)"><span translate>Claim your reward</span></button>
-  </div>
-  <div *ngIf="challenge.challenge_xp" class="scill-community-challenge-xp">
-    {{challenge.challenge_xp}}
-  </div>
-  <div *ngIf="challenge.challenge_reward && challenge.challenge_reward_type !== 'Nothing'" class="scill-community-challenge-reward">
-    {{challenge.challenge_reward}}
-  </div>
-</div>
+</ng-container>

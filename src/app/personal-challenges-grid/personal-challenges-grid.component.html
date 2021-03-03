@@ -1,5 +1,5 @@
-<div class="scill-personal-challenges-grid">
-  <div class="scill-category" *ngFor="let category of categories" attr.data-category-id="{{category.category_id}}">
+<div class="scill-personal-challenges-grid" *ngIf="personalChallengesInfo$ | async as personalChallengesInfo">
+  <div class="scill-category" *ngFor="let category of personalChallengesInfo.categories" attr.data-category-id="{{category.category_id}}">
     <h2 class="scill-category-header">
       {{category.category_name}}
     </h2>

@@ -1,10 +1,34 @@
+<div class="scill-profile-button-container" *ngIf="battlePassInfo$ | async as battlePassInfo">
+  <div class="scill-profile-button-name" [style.background-color]="buttonBackground">
+    <h3>{{username}}</h3>
+    <scill-progress-bar
+      border-radius="0 0 0px 6px"
+      padding="0"
+      height="5px"
+      transform="none"
+      [progress]="battlePassInfo.levelProgress"
+      [fill-background]="progressFill"
+      background="transparent"
+      class="scill-progress-bar"
+    >
+    </scill-progress-bar>
+  </div>
+  <div class="scill-profile-button-score">
+    {{battlePassInfo.levelStats}}
+  </div>
+  <div class="scill-profile-ranking" [style.background-image]="'url(' + avatarUrl + ')'" [style.border-color]="buttonBackground">
+    <div class="scill-profile-ranking-level" [style.background-color]="progressFill" [style.border-color]="buttonBackground">
+      {{battlePassInfo.currentLevel}}
+    </div>
+  </div>
+</div>
 <div class="scill-personal-challenges-list" *ngIf="personalChallengesInfo$ | async as personalChallengesInfo">
   <div class="scill-category" *ngFor="let category of personalChallengesInfo.categories" attr.data-category-id="{{category.category_id}}">
     <h2 class="scill-category-header scill-color-primary">
       {{category.category_name}}
     </h2>
     <div class="scill-challenges-list">
-      <div class="scill-personal-challenges-list-item" *ngFor="let challenge of category.challenges; let i = index; trackBy: challengeById" attr.data-challenge-id="{{challenge.challenge_id}}" attr.data-challenge-type="{{challenge.type}}">
+      <div class="scill-personal-challenges-list-item" *ngFor="let challenge of category.challenges; let i = index;" attr.data-challenge-id="{{challenge.challenge_id}}" attr.data-challenge-type="{{challenge.type}}">
         <div class="scill-personal-challenge">
           <img *ngIf="challenge.challenge_icon && challenge.challenge_icon.substr(0,4) === 'http'" class="scill-personal-challenge-image" src="{{challenge.challenge_icon}}">
           <div class="scill-personal-challenge-info">
@@ -20,10 +44,7 @@
             </div>
           </div>
           <div class="scill-personal-challenge-actions">
-            <button class="scill-personal-challenge-button scill-color-accent" *ngIf="challenge.type === 'unlocked'" (click)="activateChallenge(challenge)"><span translate>Activate</span></button>
-            <button class="scill-personal-challenge-button scill-color-primary" *ngIf="challenge.type === 'unlock'" (click)="unlockChallenge(challenge)"><span translate>Unlock</span></button>
-            <button class="scill-personal-challenge-button scill-color-primary" *ngIf="challenge.type === 'unclaimed'" (click)="claimChallenge(challenge)"><span translate>Claim</span></button>
-            <button class="scill-personal-challenge-button scill-color-warn" *ngIf="challenge.type === 'in-progress'" (click)="cancelChallenge(challenge)">Cancel</button>
+
           </div>
         </div>
         <div class="scill-divider"></div>

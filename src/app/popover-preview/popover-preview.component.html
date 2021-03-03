@@ -1,14 +1,14 @@
 <div class="popover-preview-container" >
     <div class="sc-d-flex">
-        <button (click)="toggleSection('isPopoverPreviewVisible')" class="popover-preview-btn" [ngStyle]="{'background': btnBackground}">
+        <button (click)="isPopoverPreviewVisible = !isPopoverPreviewVisible" class="popover-preview-btn" [ngStyle]="{'background': btnBackground}">
             <div>
                 <span *ngIf="username">{{username}}</span>
                 <span *ngIf="!username">#{{userId}}</span>
             </div>
-            <div>
+            <div *ngIf="battlePassInfo$ | async as battlePassInfo">
                 <div class="btn-battlepass-lvl">
                     <!--{{battlePass.battle_pass_priority}}-->
-                    <div *ngFor="let lvl of levels">
+                    <div *ngFor="let lvl of battlePassInfo.levels">
                         <div *ngIf="lvl.activated_at !== null && !lvl.level_completed">
                             {{lvl.level_priority}}
                         </div>
@@ -19,10 +19,10 @@
     </div>
         <div class="popover-preview" [hidden]="!isPopoverPreviewVisible"
              [ngStyle]="{
-         'top':offsetTop > 0 && convertToPxl(offsetTop),
-         'right':offsetRight > 0 && convertToPxl(offsetRight),
-         'bottom':offsetBottom > 0 && convertToPxl(offsetBottom),
-         'left': offsetLeft > 0 && convertToPxl(offsetLeft)}"
+         'top':offsetTop > 0 && offsetTop + 'px',
+         'right':offsetRight > 0 && offsetRight + 'px',
+         'bottom':offsetBottom > 0 && offsetBottom + 'px',
+         'left': offsetLeft > 0 && offsetLeft + 'px'}"
         >
             <scill-popover-preview-header [username]="username"
                                           [access-token]="accessToken"
@@ -63,12 +63,11 @@
                 >
                 </scill-popover-preview-bp-section>
 
-                <scill-popover-preview-section *ngFor="let category of categories;"
+              <ng-container *ngIf="personalChallengesInfo$ | async as personalChallengesInfo">
+                <scill-popover-preview-section *ngFor="let category of personalChallengesInfo.categories; trackBy: categoryById"
                                                [title]="category.category_name"
-                                               [challenges]="category.challenges"
                                                [category]="category"
                                                [app-id]="appId"
-                                               [access-token]="accessToken"
                                                [personal-challenges-category-title-color]="personalChallengesCategoryTitleColor"
                                                [personal-challenges-category-progress-bar-background]="personalChallengesCategoryProgressBarBackground"
                                                [personal-challenges-category-progress-bar-fill-background]="personalChallengesCategoryProgressBarFillBackground"
@@ -83,6 +82,7 @@
                                                [button-text-color]=buttonTextColor
                 >
                 </scill-popover-preview-section>
+              </ng-container>
             </div>
 
         </div>

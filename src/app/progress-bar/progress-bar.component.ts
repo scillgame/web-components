@@ -13,6 +13,7 @@ export class ProgressBarComponent implements OnInit {
     @Input('padding') padding: string;
     @Input('border-radius') borderRadius: string;
     @Input('task-type') taskType: string;
+    @Input('height') height = '6px';
 
     constructor() {
 

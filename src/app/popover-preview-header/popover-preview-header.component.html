@@ -1,11 +1,11 @@
-<div class="popover-preview-header" *ngIf="(battlePass$ | async) as battlePass"
+<div class="popover-preview-header" *ngIf="(battlePassInfo$ | async) as battlePassInfo"
      [ngStyle]="{
      'background': headerBackground,
      'color': headerTextColor
      }"
 >
-    <div  *ngFor="let level of levels; let i=index; trackBy: levelById">
-        <div  *ngIf="level.activated_at !== null && level.level_completed === false" [hidden]="!battlePass.unlocked_at">
+    <div  *ngFor="let level of battlePassInfo.levels; let i=index; trackBy: levelById">
+        <div  *ngIf="level.activated_at !== null && level.level_completed === false" [hidden]="!battlePassInfo.battlePass.unlocked_at">
             <div class="header-triangle"
                  [ngStyle]="{
                  'background': headerBackground,
@@ -26,17 +26,17 @@
                     </div>
                 </div>
             </div>
-            <div *ngFor="let level of levels; trackBy: challengeById">
+            <div *ngFor="let level of battlePassInfo.levels; trackBy: challengeById">
                 <div *ngIf="level.activated_at !== null && level.level_completed === false">
-                    {{calculateCompletedLevels(levels)}}/{{levels.length}}
+                    {{battlePassInfo.currentLevel}}/{{battlePassInfo.levels.length}} ({{battlePassInfo.progress}})
                     <scill-progress-bar
                             [background]="headerProgressBarBackground" [fill-background]="headerProgressBarFillBackground"
-                            [progress]="progress + '%'"></scill-progress-bar>
+                            [progress]="battlePassInfo.progress"></scill-progress-bar>
                 </div>
             </div>
         </div>
     </div>
-    <div [hidden]="battlePass.unlocked_at">
+    <div [hidden]="battlePassInfo.battlePass.unlocked_at">
         <div class="header-triangle"
              [ngStyle]="{
              'background': headerBackground,
@@ -79,10 +79,10 @@
                     <!--progress="0%">-->
             <!--</scill-progress-bar>-->
             <div class="unlocked-bp-name" [ngStyle]="{'color': headerTextColor}">
-                <b>{{battlePass.battle_pass_name}}</b> is locked
+                <b>{{battlePassInfo.battlePass.battle_pass_name}}</b> is locked
             </div>
             <div>
-                <button (click)="unlockBattlePass(battlePass)"
+                <button (click)="unlockBattlePass(battlePassInfo.battlePass)"
                         class="scill-profile-button"
                         [ngStyle]="{
                         'background': unlockBattlePassBtnBackground,

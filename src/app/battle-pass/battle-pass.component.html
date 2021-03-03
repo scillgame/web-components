@@ -1,11 +1,11 @@
-<div class="battle-pass" *ngIf="(battlePass$ | async) as battlePass">
+<div class="battle-pass" *ngIf="(battlePassInfo$ | async) as battlePassInfo">
   <div>
     <div>
       <div>
         <div>
-          <h3>{{battlePass.battle_pass_name}}</h3>
+          <h3>{{battlePassInfo.battlePass.battle_pass_name}}</h3>
           <div class="battle-pass-levels">
-            <div class="battle-pass-level" *ngFor="let level of levels; let i=index; trackBy: levelById"  [class.battle-pass-level-activated]="level.activated_at !== null && level.level_completed" [class.battle-pass-level-complete]="level.activated_at !== null && !level.level_completed">
+            <div class="battle-pass-level" *ngFor="let level of battlePassInfo.levels; let i=index; trackBy: levelById"  [class.battle-pass-level-activated]="level.activated_at !== null && level.level_completed" [class.battle-pass-level-complete]="level.activated_at !== null && !level.level_completed">
               <h2 class="battle-pass-level-header">Level {{i+1}}</h2>
               <div class="battle-pass-level-content">
                 <div class="battle-pass-level-challenges">

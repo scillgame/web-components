@@ -1,5 +1,5 @@
   .progress-bar {
-    height: 8px;
+    height: 6px;
     padding: 2px 4px;
     -webkit-transform: skewx(-20deg);
     -moz-transform: skewx(-20deg);
@@ -13,5 +13,6 @@
       background: #CF0E00;
       border-radius:inherit;
       max-width: 100%;
+      transition: all 2s;
     }
   }

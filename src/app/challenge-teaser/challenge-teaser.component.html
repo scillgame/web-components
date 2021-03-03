@@ -1,7 +1,9 @@
-<div class="challenge-teaser" *ngIf="challenge && challenge.type !== 'finished'">
-  <img *ngIf="challenge.challenge_icon && challenge.challenge_icon.substr(0,4) === 'http'" class="challenge-image" src="{{challenge.challenge_icon}}">
-  <div class="challenge-teaser-details">
-    <h3 class="challenge-teaser-name">{{challenge.challenge_name}}</h3>
-      <div class="challenge-teaser-checkbox"></div>
+<ng-container *ngIf="personalChallengesInfo$ | async as personalChallengesInfo">
+  <div class="challenge-teaser" *ngIf="personalChallengesInfo.challenge && personalChallengesInfo.challenge.type !== 'finished'">
+    <img *ngIf="personalChallengesInfo.challenge.challenge_icon && personalChallengesInfo.challenge.challenge_icon.substr(0,4) === 'http'" class="challenge-image" src="{{personalChallengesInfo.challenge.challenge_icon}}">
+    <div class="challenge-teaser-details">
+      <h3 class="challenge-teaser-name">{{personalChallengesInfo.challenge.challenge_name}}</h3>
+        <div class="challenge-teaser-checkbox"></div>
+    </div>
   </div>
-</div>
+</ng-container>
