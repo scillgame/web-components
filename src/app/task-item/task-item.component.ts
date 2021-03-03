@@ -14,7 +14,6 @@ export class TaskItemComponent {
   @Input('app-id') appId: string;
   @Input('task') task: any;
   @Input('title') popoverPreviewSectionTitle: string;
-  @Input('type-in-progress-color') typeInProgressColor: string;
   @Input('type-finished-color') typeFinishedColor: string;
   @Input('type-border-color') typeBorderColor: string;
   @Input('type-icon-color') typeIconColor: string;

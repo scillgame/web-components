@@ -23,7 +23,6 @@ export class PopoverPreviewSectionComponent {
     @Input('personal-challenges-category-title-color') personalChallengesCategoryTitleColor: string;
     @Input('personal-challenges-category-progress-bar-background') personalChallengesCategoryProgressBarBackground: string;
     @Input('personal-challenges-category-progress-bar-fill-background') personalChallengesCategoryProgressBarFillBackground: string;
-    @Input('personal-challenges-in-progress-type-bg-color') personalChallengesInProgressTypeBgColor: string;
     @Input('personal-challenges-finished-type-bg-color') personalChallengesFinishedTypeBgColor: string;
     @Input('personal-challenges-type-border-color') personalChallengesTypeBorderColor: string;
     @Input('personal-challenges-type-icon-color') personalChallengesTypeIconColor: string;
