@@ -91,7 +91,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
     }
   }
 
-  categoryById(index: number, category: ChallengeCategory) {
+  categoryById(index: number, category: ChallengeCategory): any {
     return category.category_id;
   }
 }
