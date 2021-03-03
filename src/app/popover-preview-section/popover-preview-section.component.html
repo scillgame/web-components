@@ -32,7 +32,7 @@
         </div>
         <scill-progress-bar [background]="personalChallengesCategoryProgressBarBackground"
                             [fill-background]="personalChallengesCategoryProgressBarFillBackground"
-                            [progress]="(category.challenges | completedChallenges)/category.challenges.length | percent"
+                            [progress]="(category.challenges | completedChallenges)/category.challenges.length * 100"
         >
         </scill-progress-bar>
 
