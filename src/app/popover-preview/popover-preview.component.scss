@@ -73,12 +73,15 @@ $gold: #F5A622;
       color: #fff;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
+      box-shadow: 0 7px 6px rgb(0 0 0 / 40%);
       .popover-preview-sections-container{
         overflow: auto;
         max-height: 700px;
-        padding-top: 15px;
+        padding-top: 10px;
       }
-      box-shadow: 0 7px 6px rgb(0 0 0 / 40%);
+      .popover-preview-section {
+        padding-bottom: 10px;
+      }
     }
   .battlepass{
     //margin-top:30px;
@@ -86,6 +89,10 @@ $gold: #F5A622;
     //background:#fff;
   }
 
+}
+
+.scill-profile-buttons {
+  padding-bottom: 10px;
 }
 
 .scill-profile-buttons-row {
