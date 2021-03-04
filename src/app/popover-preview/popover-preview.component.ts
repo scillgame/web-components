@@ -87,9 +87,6 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
     this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId).pipe(
       map(personalChallengesInfo => {
         console.log(personalChallengesInfo);
-        if (personalChallengesInfo) {
-          this.scillService.showChallengeCompleteNotification(personalChallengesInfo.categories[0].challenges[0]);
-        }
         return personalChallengesInfo;
       })
     );
