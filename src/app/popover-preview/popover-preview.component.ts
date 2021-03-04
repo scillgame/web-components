@@ -1,10 +1,11 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {ChallengeCategory} from '@scillgame/scill-js';
-import {map} from 'rxjs/operators';
-import {SCILLService} from '../scill.service';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {Challenge, ChallengeCategory} from '@scillgame/scill-js';
+import {buffer, debounceTime, map} from 'rxjs/operators';
+import {SCILLNotification, SCILLService} from '../scill.service';
 import {SCILLBattlePassInfo, SCILLBattlePassService} from '../scillbattle-pass.service';
 import {SCILLPersonalChallengesInfo, SCILLPersonalChallengesService} from '../scillpersonal-challenges.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'scill-popover-preview',
@@ -62,7 +63,9 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
 
   battlePassInfo$: Observable<SCILLBattlePassInfo>;
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
-  isPopoverPreviewVisible = true;
+  isPopoverPreviewVisible = false;
+
+  currentNotification$: Observable<SCILLNotification>;
 
   constructor(private scillService: SCILLService,
               private scillBattlePassService: SCILLBattlePassService,
@@ -84,9 +87,24 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
     this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId).pipe(
       map(personalChallengesInfo => {
         console.log(personalChallengesInfo);
+        if (personalChallengesInfo) {
+          this.scillService.showChallengeCompleteNotification(personalChallengesInfo.categories[0].challenges[0]);
+        }
         return personalChallengesInfo;
       })
     );
+
+    this.currentNotification$ = this.scillService.latestNotification$.asObservable().pipe(
+      map(notification => {
+        console.log(notification);
+        return notification;
+      })
+    );
+  }
+
+  togglePopover(): void {
+    this.scillService.clearNotifications();
+    this.isPopoverPreviewVisible = !this.isPopoverPreviewVisible;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

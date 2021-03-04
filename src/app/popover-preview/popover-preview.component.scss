@@ -82,6 +82,33 @@ $gold: #F5A622;
         padding-bottom: 10px;
       }
     }
+
+  .popover-notification {
+    min-width: 300px;
+    max-width: 350px;
+    position: absolute;
+    width: 100%;
+    background: white;
+    color: black;
+    border-radius: 5px;
+    box-shadow: 0 7px 6px rgb(0 0 0 / 40%);
+    padding: 10px;
+    transition: all 2s;
+
+    .popover-notification-details {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 100%;
+      img.sc-badge {
+        width: 26px;
+        height: 29px;
+        padding: 8px 10px;
+        margin-right: 10px;
+      }
+    }
+  }
+
   .battlepass{
     //margin-top:30px;
     padding:20px 10px;
@@ -140,4 +167,61 @@ $gold: #F5A622;
   top: -11px;
   right: 15px;
   z-index: -1;
+}
+
+// Define vars we'll be using
+$brand-success: #5cb85c;
+$loader-size: 7em;
+$check-height: 20px;
+$check-width: $check-height/2;
+$check-left: ($loader-size/6 + $loader-size/12);
+$check-thickness: 3px;
+$check-color: $brand-success;
+
+.checkmark {
+  width: $check-height;
+  height: $check-height;
+  position: relative;
+  padding-right: 5px;
+  &.draw:after {
+    animation-duration: 1200ms;
+    animation-timing-function: ease;
+    animation-name: checkmark;
+    transform: scaleX(-1) rotate(135deg);
+  }
+
+  &:after {
+    opacity: 1;
+    height: $check-height;
+    width: $check-width;
+    transform-origin: left top;
+    border-right: $check-thickness solid $check-color;
+    border-top: $check-thickness solid $check-color;
+    content: '';
+    top: $check-width;
+    position: absolute;
+  }
+}
+
+@keyframes checkmark {
+  0% {
+    height: 0;
+    width: 0;
+    opacity: 1;
+  }
+  20% {
+    height: 0;
+    width: $check-width;
+    opacity: 1;
+  }
+  40% {
+    height: $check-height;
+    width: $check-width;
+    opacity: 1;
+  }
+  100% {
+    height: $check-height;
+    width: $check-width;
+    opacity: 1;
+  }
 }

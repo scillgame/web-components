@@ -54,7 +54,7 @@ import { CompletedLevelsPipe } from './pipes/completed-levels.pipe';
     ],
     imports        : [
         BrowserModule,
-        BrowserAnimationsModule,
+        BrowserAnimationsModule
     ],
     providers      : [],
     entryComponents: [

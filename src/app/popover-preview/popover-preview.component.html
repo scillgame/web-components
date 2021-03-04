@@ -4,7 +4,7 @@
      }"
 >
     <div class="sc-d-flex">
-        <button (click)="isPopoverPreviewVisible = !isPopoverPreviewVisible" class="popover-preview-btn" [ngStyle]="{'background': btnBackground}">
+        <button (click)="togglePopover()" class="popover-preview-btn" [ngStyle]="{'background': btnBackground}">
             <div>
                 <span *ngIf="username">{{username}}</span>
                 <span *ngIf="!username">#{{userId}}</span>
@@ -52,6 +52,23 @@
             </div>
         </button>
     </div>
+        <ng-container *ngIf="!isPopoverPreviewVisible">
+          <div class="popover-notification" *ngIf="currentNotification$ | async as notification" (click)="togglePopover()" [ngStyle]="{
+           'top':offsetTop > 0 && offsetTop + 'px',
+           'right':offsetRight > 0 && offsetRight + 'px',
+           'bottom':offsetBottom > 0 && offsetBottom + 'px',
+           'left': offsetLeft > 0 && offsetLeft + 'px'}">
+            <div class="header-triangle" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px'}"></div>
+            <div class="popover-notification-container">
+              <div class="popover-notification-details">
+                <img *ngIf="notification.imageUrl" class="sc-badge" [src]="notification.imageUrl" alt="">
+                <div class="task-title"> {{notification.message}}</div>
+                <div class="checkmark draw"></div>
+              </div>
+
+            </div>
+          </div>
+        </ng-container>
         <div class="popover-preview" [hidden]="!isPopoverPreviewVisible"
              [ngStyle]="{
          'top':offsetTop > 0 && offsetTop + 'px',

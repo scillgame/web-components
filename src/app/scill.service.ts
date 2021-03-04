@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {
-  BattlePassesApi,
+  BattlePassesApi, BattlePassLevel, BattlePassLevelChallenge, Challenge,
   ChallengesApi,
   getAuthApi,
   getBattlePassApi,
@@ -13,6 +13,20 @@ import {filter, map} from 'rxjs/operators';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {SCILLBattlePassInfo} from './scillbattle-pass.service';
 
+export class SCILLNotification {
+  imageUrl?: string;
+  message: string;
+  action?: string;
+  callback: () => void;
+
+  constructor(message: string, imageUrl: string, action?: string, callback?: () => void) {
+    this.imageUrl = imageUrl;
+    this.message = message;
+    this.callback = callback;
+    this.action = action;
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,6 +37,8 @@ export class SCILLService {
   accessToken$ = new BehaviorSubject<string>(null);
   battlePassApi$ = new BehaviorSubject<BattlePassesApi>(null);
   challengesApi$ = new BehaviorSubject<ChallengesApi>(null);
+
+  latestNotification$ = new BehaviorSubject<SCILLNotification>(null);
 
   constructor() {
     // Setup Battle Pass Api
@@ -40,6 +56,29 @@ export class SCILLService {
         return getChallengesApi(accessToken);
       })
     ).subscribe(this.challengesApi$);
+  }
+
+  public clearNotifications(): void {
+    this.latestNotification$.next(null);
+  }
+
+  public showNotification(message: string, imageUrl?: string, action?: string, buttonClicked?: () => void, duration?: number): void {
+    this.latestNotification$.next(new SCILLNotification(message, imageUrl, action, buttonClicked));
+    setTimeout(() => {
+      this.latestNotification$.next(null);
+    }, duration ? duration : 5000);
+  }
+
+  public showChallengeCompleteNotification(challenge: Challenge): void {
+    this.showNotification(challenge.challenge_name, challenge.challenge_icon);
+  }
+
+  public showBattlePassChallengeCompleteNotification(challenge: BattlePassLevelChallenge): void {
+    this.showNotification(challenge.challenge_name, challenge.challenge_icon);
+  }
+
+  public showBattlePassLevelCompletedNotification(level: BattlePassLevel): void {
+    this.showNotification("Congratulations, you are now on level " + level.level_priority + 1);
   }
 
   public setAccessToken(accessToken: string): void {

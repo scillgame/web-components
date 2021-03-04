@@ -4,7 +4,7 @@ import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {
   Challenge,
   ChallengeCategory,
-  ChallengesApi,
+  ChallengesApi, ChallengeWebhookPayload,
   getChallengesApi,
   startMonitorChallengeUpdates
 } from '@scillgame/scill-js';
@@ -46,7 +46,7 @@ export class SCILLPersonalChallengesService {
 
           const personalChallengesInfo = new SCILLPersonalChallengesInfo();
           personalChallengesInfo.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
-            this.updateChallenge(personalChallengesInfo, payload.new_challenge);
+            this.updateChallenge(personalChallengesInfo, payload);
             personalChallengesInfo$.next(this.calculateStats(personalChallengesInfo));
           }));
 
@@ -58,6 +58,7 @@ export class SCILLPersonalChallengesService {
         mergeMap(personalChallengesInfo => {
           return personalChallengesInfo.challengesApi?.getAllPersonalChallenges(appId).then(categories => {
             personalChallengesInfo.categories = categories;
+            this.scillService.showNotification("HALLO");
             return personalChallengesInfo;
           });
         }),
@@ -103,7 +104,7 @@ export class SCILLPersonalChallengesService {
 
           const personalChallengesInfo = new SCILLPersonalChallengesInfo();
           personalChallengesInfo.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
-            this.updateChallenge(personalChallengesInfo, payload.new_challenge);
+            this.updateChallenge(personalChallengesInfo, payload);
             personalChallengesInfo$.next(this.calculateStats(personalChallengesInfo));
           }));
 
@@ -127,22 +128,30 @@ export class SCILLPersonalChallengesService {
     }
   }
 
-  public updateChallenge(personalChallengesInfo: SCILLPersonalChallengesInfo, newChallenge: Challenge): void {
-    if (personalChallengesInfo.challenge && personalChallengesInfo.challenge.challenge_id === newChallenge.challenge_id) {
+  public updateChallenge(personalChallengesInfo: SCILLPersonalChallengesInfo, payload: ChallengeWebhookPayload): void {
+    if (personalChallengesInfo.challenge && personalChallengesInfo.challenge.challenge_id === payload.new_challenge.challenge_id) {
       // We just have queried a single challenge before, so just update this one
       const updatedChallenge = {};
       Object.assign(updatedChallenge, personalChallengesInfo.challenge);
-      Object.assign(updatedChallenge, newChallenge);
+      Object.assign(updatedChallenge, payload.new_challenge);
+
+      if (payload.old_challenge.type === 'in-progress' && payload.new_challenge.type === 'unclaimed') {
+        this.scillService.showNotification(personalChallengesInfo.challenge.challenge_name, personalChallengesInfo.challenge.challenge_icon);
+      }
     } else {
       // We have queried categories before, find the updated challenge and update it with the new data
       for (const category of personalChallengesInfo.categories) {
         for (let i = 0; i < category.challenges.length; i++) {
-          if (category.challenges[i].challenge_id === newChallenge.challenge_id) {
+          if (category.challenges[i].challenge_id === payload.new_challenge.challenge_id) {
             // Create a copy of the original challenge and overwrite with new challenge
-            const updatedChallenge = {};
+            const updatedChallenge: Challenge = {};
             Object.assign(updatedChallenge, category.challenges[i]);
-            Object.assign(updatedChallenge, newChallenge);
+            Object.assign(updatedChallenge, payload.new_challenge);
             category.challenges.splice(i, 1, updatedChallenge);
+
+            if (payload.old_challenge.type === 'in-progress' && payload.new_challenge.type === 'unclaimed') {
+              this.scillService.showNotification(updatedChallenge.challenge_name, updatedChallenge.challenge_icon);
+            }
             break;
           }
         }

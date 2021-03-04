@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import {BattlePass, BattlePassesApi, BattlePassLevel, getBattlePassApi, startMonitorBattlePassUpdates} from '@scillgame/scill-js';
+import {
+  BattlePass,
+  BattlePassesApi,
+  BattlePassLevel,
+  Challenge,
+  getBattlePassApi,
+  startMonitorBattlePassUpdates
+} from '@scillgame/scill-js';
 import {SCILLService} from './scill.service';
 import {BehaviorSubject, combineLatest, Observable, of, Subscription} from 'rxjs';
 import {filter, map, mergeMap} from 'rxjs/operators';
@@ -27,6 +34,7 @@ export class SCILLBattlePassService {
 
   storage = new Map<string, BehaviorSubject<SCILLBattlePassInfo>>();
   subscriptions = new Subscription();
+  lastCompletedChallenge$ = new BehaviorSubject<Challenge>(null);
 
   constructor(private scillService: SCILLService) {
 
@@ -58,6 +66,14 @@ export class SCILLBattlePassService {
 
           const battlePassInfo = new SCILLBattlePassInfo();
           battlePassInfo.monitorBattlePass = startMonitorBattlePassUpdates(accessToken, battlePassId, (payload => {
+            if (payload.webhook_type === 'battlepass-challenge-changed') {
+              if (payload.old_battle_pass_challenge.type === 'in-progress' && payload.new_battle_pass_challenge.type === 'finished') {
+                const challenge = battlePassInfo?.levels[payload.new_battle_pass_challenge.level_position_index]?.challenges[payload.new_battle_pass_challenge.challenge_position_index];
+                if (challenge) {
+                  this.scillService.showBattlePassChallengeCompleteNotification(challenge);
+                }
+              }
+            }
             battlePassInfo.refresh$.next(true);
           }));
 
