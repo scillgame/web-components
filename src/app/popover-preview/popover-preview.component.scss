@@ -67,7 +67,6 @@ $gold: #F5A622;
     .popover-preview {
       min-width: 300px;
       max-width: 350px;
-      padding-bottom: 15px;
       position: absolute;
       width: 100%;
       background: #fff;
@@ -79,6 +78,7 @@ $gold: #F5A622;
         max-height: 700px;
         padding-top: 15px;
       }
+      box-shadow: 0 7px 6px rgb(0 0 0 / 40%);
     }
   .battlepass{
     //margin-top:30px;
