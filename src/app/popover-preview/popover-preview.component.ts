@@ -5,7 +5,6 @@ import {buffer, debounceTime, map} from 'rxjs/operators';
 import {SCILLNotification, SCILLService} from '../scill.service';
 import {SCILLBattlePassInfo, SCILLBattlePassService} from '../scillbattle-pass.service';
 import {SCILLPersonalChallengesInfo, SCILLPersonalChallengesService} from '../scillpersonal-challenges.service';
-import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'scill-popover-preview',
