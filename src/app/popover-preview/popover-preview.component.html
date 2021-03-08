@@ -80,7 +80,7 @@
          'borderColor': borderColor,
          'borderWidth': borderWidth + 'px'}"
         >
-          <div class="header-triangle" *ngIf="!battlePassId" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', 'top': (-12 - borderWidth) + 'px'}"></div>
+          <div class="header-triangle" *ngIf="!battlePassId" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', 'top': (-12 - borderWidth) + 'px', 'borderColor': borderColor, 'borderWidth': borderWidth + 'px'}"></div>
             <scill-popover-preview-header [username]="username"
                                           [access-token]="accessToken"
                                           [app-id]="appId"
