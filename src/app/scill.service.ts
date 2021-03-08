@@ -67,7 +67,7 @@ export class SCILLService {
   public showNotification(message: string, imageUrl?: string, action?: string, buttonClicked?: () => void, duration?: number, checkmark?: boolean): void {
     this.latestNotification$.next(new SCILLNotification(message, imageUrl, action, buttonClicked, checkmark));
     setTimeout(() => {
-      this.latestNotification$.next(null);
+      //this.latestNotification$.next(null);
     }, duration ? duration : 50000);
   }
 

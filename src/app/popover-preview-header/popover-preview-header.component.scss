@@ -8,13 +8,12 @@ $gold: #F5A622;
   background: transparent linear-gradient(180deg, #0AE3ED 0%, #009BED 100%) 0% 0% no-repeat padding-box;
   padding-bottom: 15px;
   .header-triangle {
-    width: 23px;
-    height: 23px;
-    transform: rotate(45deg);
-    background: #08E0EC;
     position: absolute;
     top: -13px;
     right: 15px;
+  }
+  .header-triangle .header-triangle-inner {
+    border-bottom-color: #0AE3ED;
   }
   .user {
     font-family: Helvetica, Sans-serif;

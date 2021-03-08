@@ -165,7 +165,7 @@ $gold: #F5A622;
 .scill-profile-button:last-child {
   margin-right: 0px;
 }
-
+/*
 .header-triangle {
   width: 23px;
   height: 23px;
@@ -177,6 +177,41 @@ $gold: #F5A622;
   z-index: 2;
   border-left: 1px solid #999;
   border-top: 1px solid #999;
+}
+*/
+.header-triangle {
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 14px solid #999;
+  position: absolute;
+  top: -11px;
+  right: 15px;
+  z-index: 2;
+}
+
+.header-triangle .header-triangle-inner {
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 14px solid white;
+  position: absolute;
+  top: 0px;
+  left: -14px;
+}
+
+.header-triangle.border-width-1:after {
+  top: 1px;
+}
+
+.header-triangle.border-width-2:after {
+  top: 2px;
+}
+
+.header-triangle.border-width-3:after {
+  top: 3px;
 }
 
 // Define vars we'll be using

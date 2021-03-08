@@ -4,6 +4,7 @@
      }"
 >
     <div class="sc-d-flex">
+      <div class="triangle-left"></div>
       <ng-container *ngIf="buttonType === '1'">
         <ng-container *ngIf="battlePassId">
           <scill-profile-button *ngIf="battlePassInfo$ | async as battlePassInfo" (click)="togglePopover()" [username]="username" [stats]="battlePassInfo.levelStats" [level]="battlePassInfo.currentLevel" [avatar-url]="avatarUrl" [button-background]="buttonBackground" [progress-fill]="btnProgressColor"></scill-profile-button>
@@ -58,7 +59,9 @@
            'borderWidth': borderWidth + 'px'
            }"
           >
-            <div class="header-triangle" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', 'top': (-12 - borderWidth) + 'px', 'background': notificationBackground, 'borderColor': borderColor, 'borderWidth': borderWidth + 'px'}"></div>
+            <div class="header-triangle" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', 'top': (-13 - borderWidth) + 'px', 'borderBottomColor': borderColor}">
+              <div class="header-triangle-inner" [ngStyle]="{'top': borderWidth + 'px', 'background': notificationBackground}"></div>
+            </div>
             <div class="popover-notification-container">
               <div class="popover-notification-details">
                 <div class="sc-d-flex sc-align-items-center">
@@ -80,7 +83,9 @@
          'borderColor': borderColor,
          'borderWidth': borderWidth + 'px'}"
         >
-          <div class="header-triangle" *ngIf="!battlePassId" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', 'top': (-12 - borderWidth) + 'px', 'borderColor': borderColor, 'borderWidth': borderWidth + 'px'}"></div>
+          <div class="header-triangle" *ngIf="!battlePassId" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', 'top': (-13 - borderWidth) + 'px', 'borderBottomColor': borderColor}">
+            <div class="header-triangle-inner" [ngStyle]="{'top': borderWidth + 'px'}"></div>
+          </div>
             <scill-popover-preview-header [username]="username"
                                           [access-token]="accessToken"
                                           [app-id]="appId"
