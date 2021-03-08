@@ -7,7 +7,7 @@ build:SCILLWS1:
   variables:
     GIT_STRATEGY: clone
   script:
-    - sh /home/gitlab-runner/builds/hyQTHNpm/0/scill/gaas/sdks/web-components/build.sh 
+    - sh /home/gitlab-runner/builds/hyQTHNpm/0/scill/gaas/sdks/web-components/build.sh
   tags:
     - scill-ws-1
   only:
@@ -18,7 +18,7 @@ deploy:SCILLWS1:
   variables:
     GIT_STRATEGY: clone
   script:
-    - sh /home/gitlab-runner/builds/hyQTHNpm/0/scill/gaas/sdks/web-components/deploy-cdn.sh 
+    - sh /home/gitlab-runner/builds/hyQTHNpm/0/scill/gaas/sdks/web-components/deploy-cdn.sh
   tags: 
     - scill-ws-1
   only:
