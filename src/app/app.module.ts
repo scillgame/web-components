@@ -25,6 +25,7 @@ import { ProfileButtonComponent } from './profile-button/profile-button.componen
 import { CompletedChallengesPipe } from './pipes/completed-challenges.pipe';
 import { CompletedLevelsPipe } from './pipes/completed-levels.pipe';
 import { UserIconComponent } from './user-icon/user-icon.component';
+import { LockedIconComponent } from './locked-icon/locked-icon.component';
 
 @NgModule({
     declarations   : [
@@ -50,7 +51,8 @@ import { UserIconComponent } from './user-icon/user-icon.component';
         ProfileButtonComponent,
         CompletedChallengesPipe,
         CompletedLevelsPipe,
-        UserIconComponent
+        UserIconComponent,
+        LockedIconComponent
     ],
     imports        : [
         BrowserModule,
