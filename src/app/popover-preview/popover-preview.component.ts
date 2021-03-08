@@ -59,6 +59,8 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('unlock-battle-pass-btn-background') unlockBattlePassBtnBackground: string;
   @Input('unlock-battle-pass-btn-text-color') unlockBattlePassBtnTextColor: string;
   @Input('main-font-family') mainFont = 'Helvetica, Sans-serif';
+  @Input('notification-background') notificationBackground: string;
+  @Input('notification-text-color') notificationTextColor: string;
 
   battlePassInfo$: Observable<SCILLBattlePassInfo>;
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
