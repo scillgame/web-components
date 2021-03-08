@@ -8,6 +8,6 @@ const concat = require('concat');
   ]
   await fs.ensureDir('elements')
   await concat(files, 'elements/scill-widgets.js');
-  await fs.copyFile('./dist/scill-web-components/styles.css', 'elements/styles.css')
+  await fs.copyFile('./dist/scill-web-components/styles.css', 'elements/scill-widgets.css')
   //await fs.copy('./dist/scill-web-components/assets/', 'elements/assets/' )
 })()
