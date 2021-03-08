@@ -12,6 +12,7 @@ build:SCILLWS1:
     - npm install
   script:
     - npm run build:elements
+    - rsync -r /home/gitlab-runner/builds/hyQTHNpm/0/scill/gaas/sdks/web-components /var/www/
   cache:
     paths:
       - node_modules/  
