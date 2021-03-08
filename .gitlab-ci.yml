@@ -1,3 +1,5 @@
+image: node:14.16.0
+
 stages:
   - build
   - deploy
@@ -8,7 +10,8 @@ build:SCILLWS1:
     GIT_STRATEGY: clone
   before_script:
   script:
-    - sh /home/gitlab-runner/builds/hyQTHNpm/0/scill/gaas/sdks/web-components/build.sh
+    - npm install
+    - npm build:elements
   tags:
     - scill-ws-1
   only:
