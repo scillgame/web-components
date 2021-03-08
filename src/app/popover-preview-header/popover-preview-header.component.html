@@ -1,7 +1,9 @@
 <div class="popover-preview-header" *ngIf="(battlePassInfo$ | async) as battlePassInfo"
      [ngStyle]="{
      'background': headerBackground,
-     'color': headerTextColor
+     'color': headerTextColor,
+     'borderWidth': borderWidth + 'px',
+     'borderColor': borderColor
      }"
 >
     <div  *ngFor="let level of battlePassInfo.levels; let i=index; trackBy: levelById">
@@ -9,7 +11,8 @@
             <div class="header-triangle"
                  [ngStyle]="{
                  'background': headerBackground,
-                 'right':headerNotchAbsoluteRight + 'px'}"></div>
+                 'right':headerNotchAbsoluteRight + 'px',
+                 'top': (-12 - borderWidth) + 'px'}"></div>
             <div class="sc-d-flex sc-justify-content-between sc-align-items-center">
                 <div class="user" *ngIf="username">{{username}}</div>
                 <div class="user" *ngIf="!username">#{{userId}}</div>
@@ -40,7 +43,10 @@
         <div class="header-triangle"
              [ngStyle]="{
              'background': headerBackground,
-             'right':headerNotchAbsoluteRight + 'px'}"></div>
+             'right':headerNotchAbsoluteRight + 'px',
+             'borderWidth': borderWidth + 'px',
+             'borderColor': borderColor,
+             'top': (-12 - borderWidth) + 'px'}"></div>
         <div class="sc-d-flex sc-justify-content-between sc-align-items-center">
             <div class="user" *ngIf="username">{{username}}</div>
             <div class="user" *ngIf="!username">#{{userId}}</div>

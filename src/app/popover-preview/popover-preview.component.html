@@ -53,10 +53,12 @@
            'bottom':offsetBottom > 0 && offsetBottom + 'px',
            'left': offsetLeft > 0 && offsetLeft + 'px',
            'background': notificationBackground,
-           'color': notificationTextColor
+           'color': notificationTextColor,
+           'borderColor': borderColor,
+           'borderWidth': borderWidth + 'px'
            }"
           >
-            <div class="header-triangle" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', background: notificationBackground}"></div>
+            <div class="header-triangle" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', 'top': (-12 - borderWidth) + 'px', 'background': notificationBackground, 'borderColor': borderColor, 'borderWidth': borderWidth + 'px'}"></div>
             <div class="popover-notification-container">
               <div class="popover-notification-details">
                 <div class="sc-d-flex sc-align-items-center">
@@ -74,9 +76,11 @@
          'top':offsetTop > 0 && offsetTop + 'px',
          'right':offsetRight > 0 && offsetRight + 'px',
          'bottom':offsetBottom > 0 && offsetBottom + 'px',
-         'left': offsetLeft > 0 && offsetLeft + 'px'}"
+         'left': offsetLeft > 0 && offsetLeft + 'px',
+         'borderColor': borderColor,
+         'borderWidth': borderWidth + 'px'}"
         >
-          <div class="header-triangle" *ngIf="!battlePassId" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px'}"></div>
+          <div class="header-triangle" *ngIf="!battlePassId" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', 'top': (-12 - borderWidth) + 'px'}"></div>
             <scill-popover-preview-header [username]="username"
                                           [access-token]="accessToken"
                                           [app-id]="appId"
@@ -91,6 +95,8 @@
                                           [header-progress-bar-fill-background]="headerProgressBarFillBackground"
                                           [unlock-battle-pass-btn-background]="unlockBattlePassBtnBackground"
                                           [unlock-battle-pass-btn-text-color]="unlockBattlePassBtnTextColor"
+                                          [border-color]="borderColor"
+                                          [border-width]="borderWidth"
             >
             </scill-popover-preview-header>
 

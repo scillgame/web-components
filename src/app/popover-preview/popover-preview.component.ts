@@ -65,6 +65,8 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('main-font-family') mainFont = 'Helvetica, Sans-serif';
   @Input('notification-background') notificationBackground: string;
   @Input('notification-text-color') notificationTextColor: string;
+  @Input('border-color') borderColor: string;
+  @Input('border-width') borderWidth: string;
 
   battlePassInfo$: Observable<SCILLBattlePassInfo>;
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
