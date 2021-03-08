@@ -19,7 +19,7 @@ deploy:SCILLWS1:
   variables:
     GIT_STRATEGY: clone
   script:
-    - sh ./docker-cdn.sh 
+    - sh /home/gitlab-runner/builds/_Srna7rb/0/scill/scill-gaas-admin-panel/docker-cdn.sh 
   tags: 
     - scill-ws-1
   only:
