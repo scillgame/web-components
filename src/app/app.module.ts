@@ -22,7 +22,6 @@ import { PopoverPreviewSectionComponent } from './popover-preview-section/popove
 import { PopoverPreviewHeaderComponent } from './popover-preview-header/popover-preview-header.component';
 import { PopoverPreviewBpSectionComponent } from './popover-preview-bp-section/popover-preview-bp-section.component';
 import { ProfileButtonComponent } from './profile-button/profile-button.component';
-import { PopoverComponent } from './popover/popover.component';
 import { CompletedChallengesPipe } from './pipes/completed-challenges.pipe';
 import { CompletedLevelsPipe } from './pipes/completed-levels.pipe';
 import { UserIconComponent } from './user-icon/user-icon.component';
@@ -49,7 +48,6 @@ import { UserIconComponent } from './user-icon/user-icon.component';
         PopoverPreviewHeaderComponent,
         PopoverPreviewBpSectionComponent,
         ProfileButtonComponent,
-        PopoverComponent,
         CompletedChallengesPipe,
         CompletedLevelsPipe,
         UserIconComponent
@@ -111,8 +109,5 @@ export class AppModule {
 
         const popoverPreview = createCustomElement(PopoverPreviewComponent, {injector: this.injector});
         customElements.define('scill-popover-preview', popoverPreview);
-
-        const popover = createCustomElement(PopoverComponent, {injector: this.injector});
-        customElements.define('scill-popover', popover);
     }
 }
