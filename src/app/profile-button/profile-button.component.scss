@@ -1,12 +1,13 @@
 .scill-profile-button-container {
   position: relative;
   margin-right: 34px;
+  cursor: pointer;
 }
 
 .scill-profile-button-name {
   width: 150px;
   height: 30px;
-  background-color: #EF9F24;
+  background-color: white;
   color: black;
   font-family: Helvetica;
   font-size: 13px;
@@ -42,13 +43,13 @@ scill-progress-bar .progress-bar {
   margin-top: -2px;
   background-color: #8C8C8C;
   border-radius: 50%;
-  border: 2px solid #EF9F24;
+  border: 2px solid white;
 }
 
 .scill-profile-ranking-level {
   width: 23px;
   height: 23px;
-  border: 2px solid #EF9F24;
+  border: 2px solid white;
   background-color: #8C8C8C;
   border-radius: 50%;
   font-size: 13px;

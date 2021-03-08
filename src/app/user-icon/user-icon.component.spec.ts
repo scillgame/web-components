@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PopoverComponent } from './popover.component';
+import { UserIconComponent } from './user-icon.component';
 
-describe('PopoverComponent', () => {
-  let component: PopoverComponent;
-  let fixture: ComponentFixture<PopoverComponent>;
+describe('UserIconComponent', () => {
+  let component: UserIconComponent;
+  let fixture: ComponentFixture<UserIconComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PopoverComponent ]
+      declarations: [ UserIconComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PopoverComponent);
+    fixture = TestBed.createComponent(UserIconComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

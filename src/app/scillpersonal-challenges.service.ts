@@ -58,7 +58,6 @@ export class SCILLPersonalChallengesService {
         mergeMap(personalChallengesInfo => {
           return personalChallengesInfo.challengesApi?.getAllPersonalChallenges(appId).then(categories => {
             personalChallengesInfo.categories = categories;
-            this.scillService.showNotification("HALLO");
             return personalChallengesInfo;
           });
         }),
