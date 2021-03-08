@@ -11,7 +11,7 @@ build:SCILLWS1:
   before_script:
     - npm install
   script:
-    - npm build:elements
+    - npm run build:elements
   cache:
     paths:
       - node_modules/  
