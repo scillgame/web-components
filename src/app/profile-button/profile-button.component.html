@@ -16,7 +16,8 @@
   <div class="scill-profile-button-score" *ngIf="stats">
     {{stats}}
   </div>
-  <div class="scill-profile-ranking" *ngIf="avatarUrl" [style.background-image]="'url(' + avatarUrl + ')'" [style.border-color]="buttonBackground">
+  <div class="scill-profile-ranking" [style.background-image]="'url(' + avatarUrl + ')'" [style.border-color]="buttonBackground">
+    <scill-user-icon width="48" height="48"></scill-user-icon>
     <div class="scill-profile-ranking-level" *ngIf="level" [style.background-color]="progressFill" [style.border-color]="buttonBackground">
       {{level}}
     </div>

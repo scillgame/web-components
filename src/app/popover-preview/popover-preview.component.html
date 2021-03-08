@@ -1,56 +1,64 @@
-<div class="popover-preview-container"
+<div class="popover-preview-container" [ngClass]="'button-type-' + buttonType"
      [ngStyle]="{
         'font-family': mainFont
      }"
 >
     <div class="sc-d-flex">
+      <ng-container *ngIf="buttonType === '1'">
+        <ng-container *ngIf="battlePassId">
+          <scill-profile-button *ngIf="battlePassInfo$ | async as battlePassInfo" (click)="togglePopover()" [username]="username" [stats]="battlePassInfo.levelStats" [level]="battlePassInfo.currentLevel" [avatar-url]="avatarUrl" [button-background]="buttonBackground" [progress-fill]="btnProgressColor"></scill-profile-button>
+        </ng-container>
+        <ng-container *ngIf="!battlePassId">
+          <scill-profile-button *ngIf="personalChallengesInfo$ | async as personalChallengesInfo" (click)="togglePopover()" [username]="username" [stats]="personalChallengesInfo.stats" [avatar-url]="avatarUrl" [button-background]="buttonBackground" [progress-fill]="btnProgressColor"></scill-profile-button>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="buttonType === '0'">
         <button (click)="togglePopover()" class="popover-preview-btn" [ngStyle]="{'background': btnBackground}">
-            <div>
-                <span *ngIf="username">{{username}}</span>
-                <span *ngIf="!username">#{{userId}}</span>
-                <!--{{battlePass.battle_pass_name}}-->
-            </div>
+          <div>
+            <span *ngIf="username">{{username}}</span>
+            <span *ngIf="!username">#{{userId}}</span>
+          </div>
           <scill-progress-bar *ngIf="!battlePassId"
-            border-radius="0 0 0px 6px"
-            padding="0"
-            height="3px"
-            transform="none"
-            [progress]="(personalChallengesInfo$ | async)?.progress"
-            [fill-background]="btnLevelColor"
-            background="transparent"
-            class="scill-progress-bar"
+                              border-radius="0 0 0px 6px"
+                              padding="0"
+                              height="3px"
+                              transform="none"
+                              [progress]="(personalChallengesInfo$ | async)?.progress"
+                              [fill-background]="btnLevelColor"
+                              background="transparent"
+                              class="scill-progress-bar"
           >
           </scill-progress-bar>
-            <div *ngIf="battlePassInfo$ | async as battlePassInfo">
-                <div class="btn-battlepass-lvl" [ngStyle]="{'border-color': btnLevelColor}">
-                    <!--{{battlePass.battle_pass_priority}}-->
-                    <div *ngFor="let lvl of battlePassInfo.levels" [ngStyle]="{'color': btnLevelColor}">
-                        <div *ngIf="lvl.activated_at !== null && !lvl.level_completed">
-                            {{lvl.level_priority}}
-                        </div>
-                    </div>
-                    <div *ngIf="battlePassInfo.battlePass.unlocked_at === null" [ngStyle]="{'stroke': btnLevelColor}">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                             aria-hidden="true"
-                             focusable="false"
-                             width="1em"
-                             height="1em"
-                             style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
-                             preserveAspectRatio="xMidYMid meet"
-                             viewBox="0 0 512 512">
-                            <path d="M336 208v-95a80 80 0 0 0-160 0v95"
-                                  fill="none"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="32"></path>
-                            <rect x="96" y="208" width="320" height="272" rx="48" ry="48" fill="none"
-                                  stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></rect>
-                        </svg>
-
-                    </div>
+          <div *ngIf="battlePassInfo$ | async as battlePassInfo">
+            <div class="btn-battlepass-lvl" [ngStyle]="{'border-color': btnLevelColor}">
+              <div [ngStyle]="{'color': btnLevelColor}">
+                <div >
+                  {{battlePassInfo.currentLevel}}
                 </div>
+              </div>
+              <div *ngIf="battlePassInfo.battlePass.unlocked_at === null" [ngStyle]="{'stroke': btnLevelColor}">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                     aria-hidden="true"
+                     focusable="false"
+                     width="1em"
+                     height="1em"
+                     style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
+                     preserveAspectRatio="xMidYMid meet"
+                     viewBox="0 0 512 512">
+                  <path d="M336 208v-95a80 80 0 0 0-160 0v95"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="32"></path>
+                  <rect x="96" y="208" width="320" height="272" rx="48" ry="48" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></rect>
+                </svg>
+
+              </div>
             </div>
+          </div>
         </button>
+      </ng-container>
     </div>
         <ng-container *ngIf="!isPopoverPreviewVisible">
           <div class="popover-notification" *ngIf="currentNotification$ | async as notification" (click)="togglePopover()"  [ngStyle]="{
@@ -101,7 +109,7 @@
             </scill-popover-preview-header>
 
           <!-- Include any outside content -->
-          <ng-content></ng-content>
+          <ng-content *ngIf="(battlePassInfo$ | async) || (personalChallengesInfo$ | async)"></ng-content>
 
             <div class="popover-preview-sections-container">
                 <scill-popover-preview-bp-section  [app-id]="appId"
@@ -133,7 +141,6 @@
                                                [personal-challenges-background]="personalChallengesBackground"
                                                [personal-challenges-progress-background]="personalChallengesProgressBackground"
                                                [personal-challenges-progress-fill-background]="personalChallengesProgressFillBackground"
-                                               [personal-challenges-in-progress-type-bg-color]="personalChallengesInProgressTypeBgColor"
                                                [personal-challenges-finished-type-bg-color]="personalChallengesFinishedTypeBgColor"
                                                [personal-challenges-type-border-color]="personalChallengesTypeBorderColor"
                                                [personal-challenges-type-icon-color]="personalChallengesTypeIconColor"
