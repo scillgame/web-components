@@ -77,7 +77,7 @@
                     <img *ngIf="notification.imageUrl" class="sc-badge" [src]="notification.imageUrl" alt="">
                     <div class="task-title">{{notification.message}}</div>
                 </div>
-                <div class="checkmark draw"></div>
+                <div *ngIf="notification.checkmark" class="checkmark draw"></div>
               </div>
 
             </div>

@@ -18,12 +18,14 @@ export class SCILLNotification {
   message: string;
   action?: string;
   callback: () => void;
+  checkmark: boolean;
 
-  constructor(message: string, imageUrl: string, action?: string, callback?: () => void) {
+  constructor(message: string, imageUrl: string, action?: string, callback?: () => void, checkmark?: boolean) {
     this.imageUrl = imageUrl;
     this.message = message;
     this.callback = callback;
     this.action = action;
+    this.checkmark = checkmark;
   }
 }
 
@@ -62,19 +64,19 @@ export class SCILLService {
     this.latestNotification$.next(null);
   }
 
-  public showNotification(message: string, imageUrl?: string, action?: string, buttonClicked?: () => void, duration?: number): void {
-    this.latestNotification$.next(new SCILLNotification(message, imageUrl, action, buttonClicked));
+  public showNotification(message: string, imageUrl?: string, action?: string, buttonClicked?: () => void, duration?: number, checkmark?: boolean): void {
+    this.latestNotification$.next(new SCILLNotification(message, imageUrl, action, buttonClicked, checkmark));
     setTimeout(() => {
       this.latestNotification$.next(null);
     }, duration ? duration : 50000);
   }
 
   public showChallengeCompleteNotification(challenge: Challenge): void {
-    this.showNotification(challenge.challenge_name, challenge.challenge_icon);
+    this.showNotification(challenge.challenge_name, challenge.challenge_icon, null, null, 5000, true);
   }
 
   public showBattlePassChallengeCompleteNotification(challenge: BattlePassLevelChallenge): void {
-    this.showNotification(challenge.challenge_name, challenge.challenge_icon);
+    this.showNotification(challenge.challenge_name, challenge.challenge_icon, null, null, 5000, true);
   }
 
   public showBattlePassLevelCompletedNotification(level: BattlePassLevel): void {

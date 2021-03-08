@@ -21,7 +21,8 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('challenge-id') challengeId: string;
   @Input('username') username: string;
   @Input('avatar-url') avatarUrl: string;
-  @Input('button-type') buttonType = "0";
+  @Input('button-type') buttonType = '0';
+  @Input('welcome-message') welcomeMessage: string;
   @Input('battle-pass-in-progress-type-bg-color') battlePassInProgressTypeBgColor: string;
   @Input('battle-pass-finished-type-bg-color') battlePassFinishedTypeBgColor: string;
   @Input('battle-pass-type-border-color') battlePassTypeBorderColor: string;
@@ -101,6 +102,10 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
         return notification;
       })
     );
+
+    if (this.welcomeMessage) {
+      this.scillService.showNotification(this.welcomeMessage, null, null, null, 5000, false);
+    }
   }
 
   togglePopover(): void {
