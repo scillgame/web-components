@@ -29,18 +29,20 @@
                               class="scill-progress-bar"
           >
           </scill-progress-bar>
-          <div *ngIf="battlePassInfo$ | async as battlePassInfo">
-            <div class="btn-battlepass-lvl" [ngStyle]="{'border-color': btnLevelColor}">
-              <div [ngStyle]="{'color': btnLevelColor}">
-                <div >
-                  {{battlePassInfo.currentLevel}}
+          <ng-container *ngIf="battlePassId">
+            <div *ngIf="battlePassInfo$ | async as battlePassInfo">
+              <div class="btn-battlepass-lvl" [ngStyle]="{'border-color': btnLevelColor}">
+                <div [ngStyle]="{'color': btnLevelColor}">
+                  <div >
+                    {{battlePassInfo.currentLevel}}
+                  </div>
+                </div>
+                <div *ngIf="battlePassInfo?.battlePass?.unlocked_at === null" [ngStyle]="{'stroke': btnLevelColor}">
+                  <scill-locked-icon></scill-locked-icon>
                 </div>
               </div>
-              <div *ngIf="battlePassInfo.battlePass.unlocked_at === null" [ngStyle]="{'stroke': btnLevelColor}">
-                <scill-locked-icon></scill-locked-icon>
-              </div>
             </div>
-          </div>
+          </ng-container>
         </button>
       </ng-container>
     </div>
