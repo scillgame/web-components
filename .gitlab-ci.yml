@@ -9,11 +9,14 @@ build:SCILLWS1:
   variables:
     GIT_STRATEGY: clone
   before_script:
-  script:
     - npm install
+  script:
     - npm build:elements
+  cache:
+    paths:
+      - node_modules/  
   tags:
-    - scill-ws-1
+    - scill-docker-ws-1
   only:
     - master
 
