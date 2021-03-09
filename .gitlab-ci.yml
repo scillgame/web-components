@@ -6,23 +6,10 @@ build:SCILLWS1:
   stage: build
   variables:
     GIT_STRATEGY: clone
-  before_script:
   script:
-    - sh /home/gitlab-runner/builds/hyQTHNpm/0/scill/gaas/sdks/web-components/build.sh
+    - cd /home/gitlab-runner/builds/hyQTHNpm/0/scill/gaas/sdks/web-components/ && sh ./build.sh
   tags:
     - scill-ws-1
   only:
     - master
-
-deploy:SCILLWS1:
-  stage: deploy
-  variables:
-    GIT_STRATEGY: clone
-  script:
-    - sh /home/gitlab-runner/builds/hyQTHNpm/0/scill/gaas/sdks/web-components/deploy-cdn.sh 
-  tags: 
-    - scill-ws-1
-  only:
-    - tags
  
-
