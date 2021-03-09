@@ -80,7 +80,6 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    console.log('%c TEST CDN', 'color:gold;');
     if (this.battlePassId) {
       this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId).pipe(
         map(battlePassInfo => {
