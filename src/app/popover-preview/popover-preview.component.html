@@ -58,8 +58,8 @@
            'borderWidth': borderWidth + 'px'
            }"
           >
-            <div class="header-triangle" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', 'top': (-13 - borderWidth) + 'px', 'borderBottomColor': borderColor}">
-              <div class="header-triangle-inner" [ngStyle]="{'top': borderWidth + 'px', 'borderBottomColor': notificationBackground}"></div>
+            <div class="header-triangle" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', 'top': (-14 - borderWidth) + 'px', 'borderBottomColor': borderWidth > 0 ? borderColor : notificationBackground}">
+              <div class="header-triangle-inner" *ngIf="borderWidth > 0" [ngStyle]="{'top': borderWidth + 'px', 'borderBottomColor': notificationBackground}"></div>
             </div>
             <div class="popover-notification-container">
               <div class="popover-notification-details">
@@ -82,7 +82,7 @@
          'borderColor': borderColor,
          'borderWidth': borderWidth + 'px'}"
         >
-          <div class="header-triangle" *ngIf="!battlePassId" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', 'top': (-13 - borderWidth) + 'px', 'borderBottomColor': borderColor}">
+          <div class="header-triangle" *ngIf="!battlePassId" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', 'top': (-14 - borderWidth) + 'px', 'borderBottomColor': borderColor}">
             <div class="header-triangle-inner" [ngStyle]="{'top': borderWidth + 'px'}"></div>
           </div>
             <scill-popover-preview-header [username]="username"
