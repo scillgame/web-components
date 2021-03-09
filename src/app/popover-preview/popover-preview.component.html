@@ -4,7 +4,6 @@
      }"
 >
     <div class="sc-d-flex">
-      <div class="triangle-left"></div>
       <ng-container *ngIf="buttonType === '1'">
         <ng-container *ngIf="battlePassId">
           <scill-profile-button *ngIf="battlePassInfo$ | async as battlePassInfo" (click)="togglePopover()" [username]="username" [stats]="battlePassInfo.levelStats" [level]="battlePassInfo.currentLevel" [avatar-url]="avatarUrl" [button-background]="buttonBackground" [progress-fill]="btnProgressColor"></scill-profile-button>
