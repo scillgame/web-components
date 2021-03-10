@@ -26,6 +26,8 @@ import { CompletedChallengesPipe } from './pipes/completed-challenges.pipe';
 import { CompletedLevelsPipe } from './pipes/completed-levels.pipe';
 import { UserIconComponent } from './user-icon/user-icon.component';
 import { LockedIconComponent } from './locked-icon/locked-icon.component';
+import { ImageSearchComponent } from './image-search/image-search.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations   : [
@@ -52,11 +54,13 @@ import { LockedIconComponent } from './locked-icon/locked-icon.component';
         CompletedChallengesPipe,
         CompletedLevelsPipe,
         UserIconComponent,
-        LockedIconComponent
+        LockedIconComponent,
+        ImageSearchComponent
     ],
     imports        : [
         BrowserModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        HttpClientModule
     ],
     providers      : [],
     entryComponents: [
@@ -111,5 +115,8 @@ export class AppModule {
 
         const popoverPreview = createCustomElement(PopoverPreviewComponent, {injector: this.injector});
         customElements.define('scill-popover-preview', popoverPreview);
+
+        const imageSearch = createCustomElement(ImageSearchComponent, {injector: this.injector});
+        customElements.define('scill-image-search', imageSearch);
     }
 }
