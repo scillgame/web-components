@@ -25,6 +25,7 @@ export class TaskItemComponent {
   @Input('personal-challenge') personalChallenge: boolean;
   @Input('button-background') buttonBackground: string;
   @Input('button-text-color') buttonTextColor: string;
+  @Input('text-color') textColor: string;
 
   constructor(private scillService: SCILLService, private scillPersonalChallengesService: SCILLPersonalChallengesService) {
   }

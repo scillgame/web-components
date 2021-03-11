@@ -1,67 +1,69 @@
-<div class="task-container" [ngStyle]="{'background':background}">
-    <div class="sc-d-flex sc-align-items-center">
-        <div class="task-type" *ngIf="task.type === 'finished'" [ngStyle]="{
+<div class="task-item">
+  <div class="task-type" *ngIf="task.type === 'finished'" [ngStyle]="{
             'background': typeFinishedColor,
             'border-color':typeBorderColor,
             'color':typeIconColor
         }">
-            <div [ngStyle]="{'stroke': typeIconColor}">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                     aria-hidden="true"
-                     focusable="false"
-                     width="1em"
-                     height="1em"
-                     style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
-                     preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
-                    <path fill="none" stroke-linecap="square" stroke-miterlimit="10" stroke-width="44" d="M416 128L192 384l-96-96"/>
-                </svg>
-            </div>
-        </div>
-        <div class="sc-badge">
-            <img [src]="task.challenge_icon" alt="">
-        </div>
-        <div class="task-info-container">
-            <div class="task-title"> {{task.challenge_name}} <div class="score">{{task.user_challenge_current_score}}/{{task.challenge_goal}}</div></div>
-            <div class="task-description">{{task.challenge_description }}</div>
-            <div class="action-button" *ngIf="personalChallenge">
-                <button *ngIf="task.type === 'unlock' || task.type === 'cancelled'"
-                        (click)="unlockChallenge(task)"
-                        [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
-                    Unlock
-                </button>
-                <button *ngIf="task.type === 'unlocked'"
-                        (click)="activateChallenge(task)"
-                        [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
-                    Activate
-                </button>
-                <button *ngIf="task.type === 'in-progress' && !task.challenge_auto_activated"
-                        (click)="cancelChallenge(task)"
-                        [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
-                    Cancel
-                </button>
-                <button *ngIf="task.type === 'unclaimed'"
-                        (click)="claimChallenge(task)"
-                        [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
-                    Claim
-                </button>
+    <div [ngStyle]="{'stroke': typeIconColor}">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+           aria-hidden="true"
+           focusable="false"
+           width="1em"
+           height="1em"
+           style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
+           preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+        <path fill="none" stroke-linecap="square" stroke-miterlimit="10" stroke-width="44" d="M416 128L192 384l-96-96"/>
+      </svg>
+    </div>
+  </div>
+  <div class="task-container" [ngStyle]="{'background':background}">
+    <div class="sc-d-flex sc-align-items-center">
+      <div class="sc-badge">
+        <img [src]="task.challenge_icon" alt="">
+      </div>
+      <div class="task-info-container">
+        <div class="task-title" [ngStyle]="{'color':textColor}"> {{task.challenge_name}}<div class="score" [ngStyle]="{'color':textColor}">{{task.user_challenge_current_score}}/{{task.challenge_goal}}</div></div>
+        <div class="task-description" [ngStyle]="{'color':textColor}">{{task.challenge_description }}</div>
+        <div class="action-button" *ngIf="personalChallenge">
+          <button *ngIf="task.type === 'unlock' || task.type === 'cancelled'"
+                  (click)="unlockChallenge(task)"
+                  [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
+            Unlock
+          </button>
+          <button *ngIf="task.type === 'unlocked'"
+                  (click)="activateChallenge(task)"
+                  [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
+            Activate
+          </button>
+          <button *ngIf="task.type === 'in-progress' && !task.challenge_auto_activated"
+                  (click)="cancelChallenge(task)"
+                  [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
+            Cancel
+          </button>
+          <button *ngIf="task.type === 'unclaimed'"
+                  (click)="claimChallenge(task)"
+                  [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
+            Claim
+          </button>
 
-            </div>
-            <div *ngIf="task.type === 'in-progress' || task.type === 'finished' || task.type === 'unclaimed'"
-                 class="task-current-score"
-                 [ngClass]="task.type === 'in-progress' ? 'sc-d-flex sc-justify-content-between' : null"
-            >
-                <app-time-remaining [challenge]="task" [display-short-time-left]="true"></app-time-remaining>
-            </div>
         </div>
+        <div *ngIf="task.type === 'in-progress' || task.type === 'finished' || task.type === 'unclaimed'"
+             class="task-current-score"
+             [ngClass]="task.type === 'in-progress' ? 'sc-d-flex sc-justify-content-between' : null"
+        >
+          <app-time-remaining [challenge]="task" [display-short-time-left]="true"></app-time-remaining>
+        </div>
+      </div>
     </div>
     <scill-progress-bar
-            border-radius="0 0 0px 6px"
-            padding="0"
-            transform="skewY(0deg)"
-            [progress]="progressPercentage"
-            [fill-background]="progressFill"
-            [background]="progressBackground"
-            [task-type]="task.type"
+      border-radius="0 0 0px 6px"
+      padding="0"
+      transform="skewY(0deg)"
+      [progress]="progressPercentage"
+      [fill-background]="progressFill"
+      [background]="progressBackground"
+      [task-type]="task.type"
     >
     </scill-progress-bar>
+  </div>
 </div>
