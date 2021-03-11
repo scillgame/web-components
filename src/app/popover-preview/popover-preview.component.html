@@ -59,7 +59,7 @@
            }"
           >
             <div class="header-triangle" [ngStyle]="{'right':headerNotchAbsoluteRight + 'px', 'top': (-14 - borderWidth) + 'px', 'borderBottomColor': borderWidth > 0 ? borderColor : notificationBackground}">
-              <div class="header-triangle-inner" *ngIf="borderWidth > 0" [ngStyle]="{'top': borderWidth + 'px', 'borderBottomColor': notificationBackground}"></div>
+              <div class="header-triangle-inner" *ngIf="borderWidth > 0" [ngStyle]="{'top': borderWidth + 'px', 'borderBottomColor': (notificationBackground ? notificationBackground : 'white')}"></div>
             </div>
             <div class="popover-notification-container">
               <div class="popover-notification-details">
