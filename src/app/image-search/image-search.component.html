@@ -1,1 +1,8 @@
-<p>image-search works!</p>
+<div *ngIf="image$ | async as imageInfo" class="image-search-image" [style.top]="imageInfo.top + 'px'" [style.left]="imageInfo.left + 'px'">
+  <img src="{{imageInfo.imageUrl}}" (click)="collectImage(imageInfo)">
+</div>
+<button (click)="simulatePageImpression()">Simulate a Page Impression</button>
+<div class="notification" *ngIf="notification$ | async as notification">
+  <p class="message">{{notification.message}}</p>
+  <button (click)="closeNotification()">Close</button>
+</div>

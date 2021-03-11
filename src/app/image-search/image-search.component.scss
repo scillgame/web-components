@@ -1,0 +1,27 @@
+.image-search-image {
+  position: absolute;
+  width: auto;
+  height: auto;
+}
+
+.image-search-image img {
+  max-width: 350px;
+  max-height: 350px;
+  cursor: pointer;
+}
+
+.notification {
+  font-familty: Sans-serif;
+  width: 400px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0px 3px 3px rgba(0,0,0,0.7);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -200px;
+  padding: 20px;
+  border: 1px solid lightgrey;
+  margin-top: -100px;
+  background-color: white;
+}

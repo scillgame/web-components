@@ -15,12 +15,13 @@
   <script type="text/javascript">
     // Please note, this should not be done on client side as it exposes user ids and api keys to the client side
     // const apiKey = "$9SeaUecbCe3N2s[PV1Ts7a@P)09$Ki$i0TY2(H-Ys";
-    const apiKey = "3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,";
-    const userId = "1234  ";
+    const apiKey = "EAwo1wccf6yS_PejrYJyTmhwrb3dIvGkC_L6It4S1nejqhBESQvAWMZp";
+    const userId = "1234567824";
     // const userId = "1614678726156";
 
     const authApi = SCILL.getAuthApi(apiKey);
     authApi.generateAccessToken({user_id: userId}).then((response) => {
+      console.log(response.token);
       const components = document.getElementsByClassName("scill-web-component");
       for (let i=0;i<components.length;i++) {
         components[i].setAttribute("access-token", response.token);
@@ -30,30 +31,14 @@
   </script>
 </head>
 <body>
-<!--
-<scill-popover app-id="593776232582742019" battle-pass-id="627086321190174723" username="4P|Phillip" avatar-url="https://login.4players.de/images/f9/eb/avatar1485460.gif" progress-fill="red" button-background="white" class="scill-web-component"></scill-popover>
--->
-<!--
-  <scill-battle-pass-mini-status
-          app-id="593776232582742019"
-          battle-pass-id="627086321190174723" class="scill-web-component">
-  </scill-battle-pass-mini-status>
-
-  <scill-battle-pass-status
-                            app-id="593776232582742019"
-                            challenge-id="627581542241501194"
-                            api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,"
-                            user-id="1234"
-                            username="franjoeric"
-                            battle-pass-id="627086321190174723" class="scill-web-component"></scill-battle-pass-status>-->
+<scill-image-search app-id="639938110737711114" driver-challenge-id="639951911993638926" challenge-id="639964880380887041" class="scill-web-component"></scill-image-search>
 
 <div style="display:flex; justify-content:flex-end">
   <scill-popover-preview class="scill-web-component"
-                         username="franj0"
-                         app-id="593776232582742019"
-                         battle-pass-id="627086321190174723"
-                         welcome-message="Welcome back stranger and this is this is just this and thats"
-                         button-type="0"
+                         username="Phillip"
+                         app-id="639938110737711114"
+                         welcome-message="Welcome to our Image Search PoC"
+                         button-type="1"
                          offset-top="" offset-right="1" offset-bottom="" offset-left=""
                          btn-background=""
                          btn-level-color=""
@@ -86,10 +71,10 @@
                          personal-challenges-background="#363D40"
                          button-background=""
                          button-text-color=""
-                         notification-background=""
+                         notification-background="#f5f5f5"
                          notification-text-color=""
                          border-color="red"
-                         border-width="2"
+                         border-width="0"
 
   >
     <div class="scill-profile-buttons">
@@ -103,24 +88,26 @@
     </div>
   </scill-popover-preview>
 </div>
+<main>
+  <section>
+    <p>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-  <!--<scill-community-challenge app-id="593776232582742019"-->
-                   <!--challenge-id="628421695795232771"-->
-                   <!--text-color="black"-->
-                   <!--primary-color="#004b6b" class="scill-web-component">-->
-  <!--</scill-community-challenge>-->
+      Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
 
-  <!--<scill-challenge-teaser app-id="593776232582742019"-->
-                   <!--challenge-id="627581542241501194"-->
-                   <!--text-color="black"-->
-                   <!--primary-color="#004b6b" class="scill-web-component">-->
-  <!--</scill-challenge-teaser>-->
+      Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
 
-  <!--<scill-task-list app-id="593776232582742019"-->
-                   <!--battle-pass-id="627086321190174723" class="scill-web-component">-->
-  <!--</scill-task-list>-->
-  <!--
-  <scill-personal-challenges-list app-id="593776232582742019" api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*," user-id="1234"></scill-personal-challenges-list>
-  <scill-personal-challenges-grid app-id="593776232582742019" api-key="3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*," user-id="1234"></scill-personal-challenges-grid>-->
+      Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+
+      Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.
+
+      At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
+
+      Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.
+
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+    </p>
+  </section>
+</main>
 </body>
 </html>

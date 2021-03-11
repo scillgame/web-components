@@ -46,7 +46,7 @@ export class SCILLPersonalChallengesService {
 
           const personalChallengesInfo = new SCILLPersonalChallengesInfo();
           personalChallengesInfo.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
-            this.updateChallenge(personalChallengesInfo, payload);
+            this.updateChallenge(personalChallengesInfo$, payload);
             personalChallengesInfo$.next(this.calculateStats(personalChallengesInfo));
           }));
 
@@ -100,11 +100,9 @@ export class SCILLPersonalChallengesService {
       this.scillService.accessToken$.pipe(
         filter(isNotNullOrUndefined),
         map(accessToken => {
-
           const personalChallengesInfo = new SCILLPersonalChallengesInfo();
           personalChallengesInfo.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
-            this.updateChallenge(personalChallengesInfo, payload);
-            personalChallengesInfo$.next(this.calculateStats(personalChallengesInfo));
+            this.updateChallenge(personalChallengesInfo$, payload);
           }));
 
           personalChallengesInfo.accessToken = accessToken;
@@ -127,16 +125,16 @@ export class SCILLPersonalChallengesService {
     }
   }
 
-  public updateChallenge(personalChallengesInfo: SCILLPersonalChallengesInfo, payload: ChallengeWebhookPayload): void {
+  public updateChallenge(personalChallengesInfo$: BehaviorSubject<SCILLPersonalChallengesInfo>, payload: ChallengeWebhookPayload): void {
+    const personalChallengesInfo = personalChallengesInfo$.getValue();
     if (personalChallengesInfo.challenge && personalChallengesInfo.challenge.challenge_id === payload.new_challenge.challenge_id) {
       // We just have queried a single challenge before, so just update this one
-      const updatedChallenge = {};
-      Object.assign(updatedChallenge, personalChallengesInfo.challenge);
-      Object.assign(updatedChallenge, payload.new_challenge);
+      Object.assign(personalChallengesInfo.challenge, payload.new_challenge);
 
       if (payload.old_challenge.type === 'in-progress' && payload.new_challenge.type === 'unclaimed') {
         this.scillService.showNotification(personalChallengesInfo.challenge.challenge_name, personalChallengesInfo.challenge.challenge_icon);
       }
+      personalChallengesInfo$.next(this.calculateStats(personalChallengesInfo));
     } else {
       // We have queried categories before, find the updated challenge and update it with the new data
       for (const category of personalChallengesInfo.categories) {
@@ -151,6 +149,7 @@ export class SCILLPersonalChallengesService {
             if (payload.old_challenge.type === 'in-progress' && payload.new_challenge.type === 'unclaimed') {
               this.scillService.showNotification(updatedChallenge.challenge_name, updatedChallenge.challenge_icon);
             }
+            personalChallengesInfo$.next(this.calculateStats(personalChallengesInfo));
             break;
           }
         }
