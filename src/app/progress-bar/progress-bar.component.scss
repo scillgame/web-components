@@ -1,11 +1,6 @@
   .progress-bar {
-    height: 6px;
-    padding: 2px 4px;
-    -webkit-transform: skewx(-20deg);
-    -moz-transform: skewx(-20deg);
-    -ms-transform: skewx(-20deg);
-    -o-transform: skewx(-20deg);
-    transform: skewx(-20deg);
+    height: 4px;
+    padding: 0px;
     background: #07DDEC;
     .progress-bar-fill {
       width: 0;
