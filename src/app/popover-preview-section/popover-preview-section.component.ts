@@ -31,6 +31,7 @@ export class PopoverPreviewSectionComponent {
     @Input('personal-challenges-background') personalChallengesBackground: string;
     @Input('button-background') buttonBackground: string;
     @Input('button-text-color') buttonTextColor: string;
+    @Input('text-color') textColor: string;
 
     isExpanded = true;
 

@@ -23,6 +23,7 @@ export class PopoverPreviewBpSectionComponent extends BattlePassComponent {
     @Input('battle-pass-finished-type-bg-color') battlePassFinishedTypeBgColor: string;
     @Input('battle-pass-type-border-color') battlePassTypeBorderColor: string;
     @Input('battle-pass-type-icon-color') battlePassTypeIconColor: string;
+    @Input('text-color') textColor: string;
 
     isExpanded = true;
 }

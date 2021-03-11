@@ -20,6 +20,17 @@ $gold: #F5A622;
     font-weight: 600;
     font-size: 27px;
   }
+  .battle-pass-stats {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-size: smaller;
+    scill-progress-bar {
+      width: 100%;
+    }
+  }
   .lvl-badge {
     margin-right: 15px;
     img {

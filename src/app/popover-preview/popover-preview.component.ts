@@ -6,6 +6,36 @@ import {SCILLNotification, SCILLService} from '../scill.service';
 import {SCILLBattlePassInfo, SCILLBattlePassService} from '../scillbattle-pass.service';
 import {SCILLPersonalChallengesInfo, SCILLPersonalChallengesService} from '../scillpersonal-challenges.service';
 
+class Theme {
+  primaryColor: string;
+  secondaryColor: string;
+  thirdColor: string;
+  accentColor: string;
+  warnColor: string;
+  buttonType: string;
+  contrastPrimaryColor: string;
+  contrastSecondaryColor: string;
+  contrastAccentColor: string;
+  contrastThirdColor: string;
+  textColor: string;
+}
+
+const themes: Map<string, Theme> = new Map<string, Theme>([[
+  'default', {
+    buttonType: '0',
+    primaryColor: '#F5A622',
+    contrastPrimaryColor: 'white',
+    secondaryColor: '#B7A99A',
+    contrastSecondaryColor: 'white',
+    thirdColor: '#504538',
+    contrastThirdColor: 'white',
+    accentColor: '#00D490',
+    contrastAccentColor: 'black',
+    warnColor: 'red',
+    textColor: 'black'
+  }
+]]);
+
 @Component({
   selector: 'scill-popover-preview',
   templateUrl: './popover-preview.component.html',
@@ -48,6 +78,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('battle-pass-challenge-progress-background') battlePassChallengeProgressBackground: string;
   @Input('battle-pass-challenge-progress-fill-background') battlePassChallengeProgressFillBackground: string;
   @Input('battle-pass-challenge-background') battlePassChallengeBackground: string;
+  @Input('battle-pass-challenge-text-color') battlePassChallengeTextColor: string;
   @Input('personal-challenges-category-title-color') personalChallengesCategoryTitleColor: string;
   @Input('personal-challenges-category-progress-bar-background') personalChallengesCategoryProgressBarBackground: string;
   @Input('personal-challenges-category-progress-bar-fill-background') personalChallengesCategoryProgressBarFillBackground: string;
@@ -58,6 +89,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('personal-challenges-progress-background') personalChallengesProgressBackground: string;
   @Input('personal-challenges-progress-fill-background') personalChallengesProgressFillBackground: string;
   @Input('personal-challenges-background') personalChallengesBackground: string;
+  @Input('personal-challenges-text-color') personalChallengesTextColor: string;
   @Input('button-background') buttonBackground: string;
   @Input('button-text-color') buttonTextColor: string;
   @Input('unlock-battle-pass-btn-background') unlockBattlePassBtnBackground: string;
@@ -67,6 +99,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('notification-text-color') notificationTextColor: string;
   @Input('border-color') borderColor = '#999';
   @Input('border-width') borderWidth = '0';
+  @Input('theme') theme = 'default';
 
   battlePassInfo$: Observable<SCILLBattlePassInfo>;
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
@@ -77,6 +110,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   constructor(private scillService: SCILLService,
               private scillBattlePassService: SCILLBattlePassService,
               private scillPersonalChallengesService: SCILLPersonalChallengesService) {
+    this.setTheme(this.theme);
   }
 
   ngOnInit(): void {
@@ -123,5 +157,44 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
 
   categoryById(index: number, category: ChallengeCategory): any {
     return category.category_id;
+  }
+
+  setTheme(themeName: string): void {
+    const theme = themes.get(themeName);
+
+    this.buttonType = theme.buttonType;
+
+    this.btnBackground = theme.primaryColor;
+    this.btnLevelColor = theme.secondaryColor;
+    this.btnProgressColor = theme.accentColor;
+
+    this.headerBackground = theme.secondaryColor;
+    this.headerTextColor = theme.contrastSecondaryColor;
+    this.headerBpLvlColor = theme.primaryColor;
+    this.headerProgressBarBackground = theme.thirdColor;
+    this.headerProgressBarFillBackground = theme.primaryColor;
+
+    this.battlePassChallengeBackground = theme.accentColor;
+    this.battlePassChallengeTextColor = theme.contrastAccentColor;
+    this.battlePassChallengeProgressBackground = theme.accentColor;
+    this.battlePassChallengeProgressFillBackground = theme.primaryColor;
+    this.battlePassLvlProgressBarBackground = theme.secondaryColor;
+    this.battlePassLvlProgressBarFillBackground = theme.primaryColor;
+    this.battlePassTitleColor = theme.textColor;
+
+    this.personalChallengesBackground = theme.thirdColor;
+    this.personalChallengesTextColor = theme.contrastThirdColor;
+    this.personalChallengesProgressBackground = theme.thirdColor;
+    this.personalChallengesProgressFillBackground = theme.primaryColor;
+
+    this.personalChallengesCategoryTitleColor = theme.textColor;
+    this.personalChallengesCategoryProgressBarBackground = theme.secondaryColor;
+    this.personalChallengesCategoryProgressBarFillBackground = theme.primaryColor;
+
+    this.personalChallengesTypeBorderColor = theme.thirdColor;
+    this.personalChallengesFinishedTypeBgColor = theme.primaryColor;
+    this.personalChallengesInProgressTypeBgColor = theme.primaryColor;
+    this.personalChallengesTypeIconColor = theme.thirdColor;
+
   }
 }

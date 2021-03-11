@@ -10,7 +10,7 @@
         <div  *ngIf="level.activated_at !== null && level.level_completed === false" [hidden]="!battlePassInfo.battlePass.unlocked_at">
             <div class="header-triangle"
                  [ngStyle]="{
-                 'background': headerBackground,
+                 'borderBottomColor': headerBackground,
                  'right':headerNotchAbsoluteRight + 'px',
                  'top': (-12 - borderWidth) + 'px'}"></div>
             <div class="sc-d-flex sc-justify-content-between sc-align-items-center">
@@ -18,7 +18,7 @@
                 <div class="user" *ngIf="!username">#{{userId}}</div>
                 <div class="sc-d-flex sc-align-items-center">
                     <div class="lvl-badge">
-                        <img src="../../assets/images/badges/badge_rare_gempost_big.png" alt="">
+
                     </div>
                     <div class="battlepass-lvl"
                          [ngStyle]="{
@@ -29,13 +29,11 @@
                     </div>
                 </div>
             </div>
-            <div *ngFor="let level of battlePassInfo.levels; trackBy: challengeById">
-                <div *ngIf="level.activated_at !== null && level.level_completed === false">
-                    {{battlePassInfo.currentLevel}}/{{battlePassInfo.levels.length}} ({{battlePassInfo.progress}})
-                    <scill-progress-bar
-                            [background]="headerProgressBarBackground" [fill-background]="headerProgressBarFillBackground"
-                            [progress]="battlePassInfo.progress"></scill-progress-bar>
-                </div>
+            <div class="battle-pass-stats">
+              <scill-progress-bar
+                [background]="headerProgressBarBackground" [fill-background]="headerProgressBarFillBackground"
+                [progress]="battlePassInfo.progress"></scill-progress-bar>
+              <div>{{battlePassInfo.currentLevel}}/{{battlePassInfo.levels.length}}</div>
             </div>
         </div>
     </div>
@@ -48,7 +46,7 @@
             <div class="user" *ngIf="!username">#{{userId}}</div>
             <div class="sc-d-flex sc-align-items-center">
                 <div class="lvl-badge">
-                    <img src="../../assets/images/badges/badge_rare_gempost_big.png" alt="">
+
                 </div>
                 <div class="battlepass-lvl"
                      [ngStyle]="{
