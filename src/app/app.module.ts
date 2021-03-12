@@ -1,6 +1,5 @@
 import {BrowserModule}                   from '@angular/platform-browser';
 import {Injector, NgModule}              from '@angular/core';
-import {AnalyticsCounterComponent}       from './analytics-counter/analytics-counter.component';
 import {createCustomElement}             from '@angular/elements';
 import {BrowserAnimationsModule}         from '@angular/platform-browser/animations';
 import {PersonalChallengesComponent}     from './personal-challenges/personal-challenges.component';
