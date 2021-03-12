@@ -53,10 +53,8 @@ export class SCILLBattlePassService {
 
   getBattlePassInfo(appId: string, battlePassId: string): Observable<SCILLBattlePassInfo> {
     if (this.storage.has(battlePassId)) {
-      console.log("Getting cached battle pass info", appId, battlePassId);
       return this.storage.get(battlePassId).asObservable();
     } else {
-      console.log("Loading battle pass info", appId, battlePassId);
       const battlePassInfo$ = new BehaviorSubject<SCILLBattlePassInfo>(null);
       this.storage.set(battlePassId, battlePassInfo$);
 
@@ -87,7 +85,6 @@ export class SCILLBattlePassService {
             mergeMap(refresh => {
               return fromPromise(battlePassInfo.battlePassApi.getBattlePasses(appId, battlePassId)).pipe(
                 map(battlePasses => {
-                    console.log(battlePasses);
                     const foundBattlePass = battlePasses.filter(battlePass => battlePass.battle_pass_id === battlePassId)[0];
                     battlePassInfo.battlePass = foundBattlePass;
                     return battlePassInfo;

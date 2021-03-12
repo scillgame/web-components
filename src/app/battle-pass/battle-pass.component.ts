@@ -41,7 +41,6 @@ export class BattlePassComponent implements OnInit, OnChanges {
 
     this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId).pipe(
       map(battlePassInfo => {
-        console.log(battlePassInfo);
         return battlePassInfo;
       })
     );

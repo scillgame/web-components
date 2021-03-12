@@ -117,7 +117,6 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
     if (this.battlePassId) {
       this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId).pipe(
         map(battlePassInfo => {
-          console.log(battlePassInfo);
           return battlePassInfo;
         })
       );
@@ -127,14 +126,12 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
 
     this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId).pipe(
       map(personalChallengesInfo => {
-        console.log(personalChallengesInfo);
         return personalChallengesInfo;
       })
     );
 
     this.currentNotification$ = this.scillService.latestNotification$.asObservable().pipe(
       map(notification => {
-        console.log(notification);
         return notification;
       })
     );

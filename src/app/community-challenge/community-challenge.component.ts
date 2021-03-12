@@ -21,7 +21,6 @@ export class CommunityChallengeComponent extends PersonalChallengesComponent imp
   ngOnInit(): void {
     this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.challengeId).pipe(
       map(personalChallengesInfo => {
-        console.log(personalChallengesInfo);
         return personalChallengesInfo;
       })
     );

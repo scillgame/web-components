@@ -29,7 +29,6 @@ import { LockedIconComponent } from './locked-icon/locked-icon.component';
 
 @NgModule({
     declarations   : [
-        AnalyticsCounterComponent,
         PersonalChallengesComponent,
         ActiveTillPipe,
         ProgressPipe,
@@ -60,7 +59,6 @@ import { LockedIconComponent } from './locked-icon/locked-icon.component';
     ],
     providers      : [],
     entryComponents: [
-        AnalyticsCounterComponent,
         PersonalChallengesComponent,
         PersonalChallengesListComponent,
         PersonalChallengesGridComponent,
@@ -79,9 +77,6 @@ export class AppModule {
     }
 
     ngDoBootstrap(): void {
-        const analyticsCounter = createCustomElement(AnalyticsCounterComponent, {injector: this.injector});
-        customElements.define('analytics-counter', analyticsCounter);
-
         const personalChallenges = createCustomElement(PersonalChallengesComponent, {injector: this.injector});
         customElements.define('scill-personal-challenges', personalChallenges);
 

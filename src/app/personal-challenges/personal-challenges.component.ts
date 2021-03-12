@@ -46,7 +46,6 @@ export class PersonalChallengesComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.accessToken && changes.accessToken.currentValue) {
-      console.log(changes.accessToken.currentValue);
       this.scillService.setAccessToken(changes.accessToken.currentValue);
     }
   }
@@ -58,7 +57,6 @@ export class PersonalChallengesComponent implements OnInit, OnChanges {
     ngOnInit(): void {
       this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId).pipe(
         map(personalChallengesInfo => {
-          console.log(personalChallengesInfo);
           return personalChallengesInfo;
         })
       );
