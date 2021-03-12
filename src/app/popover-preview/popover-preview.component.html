@@ -116,7 +116,7 @@
           </ng-container>
 
           <!-- Include any outside content -->
-          <ng-content *ngIf="(battlePassInfo$ | async) || (personalChallengesInfo$ | async)"></ng-content>
+          <ng-content></ng-content>
 
             <div class="popover-preview-sections-container">
                 <scill-popover-preview-bp-section  [app-id]="appId"
