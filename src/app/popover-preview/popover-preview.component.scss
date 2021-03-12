@@ -91,7 +91,7 @@ $gold: #F5A622;
 
   .popover-notification-container {
     color: black;
-    padding: 14px;
+    padding: 10px;
 
     .popover-notification-details {
       display: flex;
@@ -107,8 +107,10 @@ $gold: #F5A622;
     }
   }
 
-  .popover-inline-notification {
-    border-bottom: 1px solid #999;
+  .popover-inline-title {
+    font-weight:600;
+    color:black;
+    padding-bottom: 5px;
   }
 
   .popover-notification {
