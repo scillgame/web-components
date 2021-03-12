@@ -103,12 +103,8 @@
             >
             </scill-popover-preview-header>
 
-          <!-- Include any outside content -->
-          <ng-content *ngIf="(battlePassInfo$ | async) || (personalChallengesInfo$ | async)"></ng-content>
-
-          <div class="popover-inline-notification" *ngIf="isPopoverPreviewVisible">
-            <div class="popover-notification-container" *ngIf="currentNotification$ | async as notification">
-              <div class="popover-inline-title" [style.color]="personalChallengesCategoryTitleColor">Notifications</div>
+          <ng-container *ngIf="isPopoverPreviewVisible">
+            <div class="popover-notification-container popover-inline-notification" *ngIf="currentNotification$ | async as notification">
               <div class="popover-notification-details">
                 <div class="sc-d-flex sc-align-items-center">
                   <img *ngIf="notification.imageUrl" class="sc-badge" [src]="notification.imageUrl" alt="">
@@ -117,7 +113,10 @@
                 <div *ngIf="notification.checkmark" class="checkmark draw"></div>
               </div>
             </div>
-          </div>
+          </ng-container>
+
+          <!-- Include any outside content -->
+          <ng-content *ngIf="(battlePassInfo$ | async) || (personalChallengesInfo$ | async)"></ng-content>
 
             <div class="popover-preview-sections-container">
                 <scill-popover-preview-bp-section  [app-id]="appId"

@@ -68,7 +68,7 @@ export class SCILLService {
     this.latestNotification$.next(new SCILLNotification(message, imageUrl, action, buttonClicked, checkmark));
     setTimeout(() => {
       this.latestNotification$.next(null);
-    }, duration ? duration : 50000);
+    }, duration ? duration : 5000);
   }
 
   public showChallengeCompleteNotification(challenge: Challenge): void {
