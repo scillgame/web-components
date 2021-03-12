@@ -135,7 +135,7 @@ export class SCILLPersonalChallengesService {
       Object.assign(updatedChallenge, payload.new_challenge);
 
       if (payload.old_challenge.type === 'in-progress' && payload.new_challenge.type === 'unclaimed') {
-        this.scillService.showNotification(personalChallengesInfo.challenge.challenge_name, personalChallengesInfo.challenge.challenge_icon);
+        this.scillService.showChallengeCompleteNotification(personalChallengesInfo.challenge);
       }
     } else {
       // We have queried categories before, find the updated challenge and update it with the new data
@@ -149,7 +149,7 @@ export class SCILLPersonalChallengesService {
             category.challenges.splice(i, 1, updatedChallenge);
 
             if (payload.old_challenge.type === 'in-progress' && payload.new_challenge.type === 'unclaimed') {
-              this.scillService.showNotification(updatedChallenge.challenge_name, updatedChallenge.challenge_icon);
+              this.scillService.showChallengeCompleteNotification(updatedChallenge);
             }
             break;
           }
