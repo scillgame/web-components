@@ -1,6 +1,7 @@
 *{
   font-family: Helvetica, Sans-serif;
   line-height: 1rem;
+  text-align: left;
 }
 $gold: #F5A622;
 // flexbox global rules
@@ -88,19 +89,9 @@ $gold: #F5A622;
       }
     }
 
-  .popover-notification {
-    right: 0px;
-    min-width: 300px;
-    max-width: 350px;
-    position: absolute;
-    width: 100%;
-    background: white;
+  .popover-notification-container {
     color: black;
-    border-radius: 5px;
-    box-shadow: 0 7px 6px rgb(0 0 0 / 40%);
     padding: 14px;
-    transition: all 2s;
-    border: 1px solid #999;
 
     .popover-notification-details {
       display: flex;
@@ -114,6 +105,23 @@ $gold: #F5A622;
         margin-right: 10px;
       }
     }
+  }
+
+  .popover-inline-notification {
+    border-bottom: 1px solid #999;
+  }
+
+  .popover-notification {
+    right: 0px;
+    min-width: 300px;
+    max-width: 350px;
+    position: absolute;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 7px 6px rgb(0 0 0 / 40%);
+    transition: all 2s;
+    border: 1px solid #999;
+    background: white;
   }
 
   .battlepass{
