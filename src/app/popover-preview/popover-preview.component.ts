@@ -142,7 +142,10 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   }
 
   togglePopover(): void {
-    //this.scillService.clearNotifications();
+    if (this.isPopoverPreviewVisible) {
+      // If the popover is hidden remove notifications - we are sure someone saw them
+      this.scillService.clearNotifications();
+    }
     this.isPopoverPreviewVisible = !this.isPopoverPreviewVisible;
   }
 
