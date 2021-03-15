@@ -4,7 +4,7 @@ import {
   BattlePassesApi,
   BattlePassLevel,
   Challenge,
-  getBattlePassApi,
+  getBattlePassApi, SCILLEnvironment,
   startMonitorBattlePassUpdates
 } from '@scillgame/scill-js';
 import {SCILLService} from './scill.service';
@@ -51,7 +51,7 @@ export class SCILLBattlePassService {
     }
   }
 
-  getBattlePassInfo(appId: string, battlePassId: string): Observable<SCILLBattlePassInfo> {
+  getBattlePassInfo(appId: string, battlePassId: string, environment?: SCILLEnvironment): Observable<SCILLBattlePassInfo> {
     if (this.storage.has(battlePassId)) {
       return this.storage.get(battlePassId).asObservable();
     } else {
@@ -73,10 +73,10 @@ export class SCILLBattlePassService {
               }
             }
             battlePassInfo.refresh$.next(true);
-          }));
+          }), environment);
 
           battlePassInfo.accessToken = accessToken;
-          battlePassInfo.battlePassApi = getBattlePassApi(battlePassInfo.accessToken);
+          battlePassInfo.battlePassApi = getBattlePassApi(battlePassInfo.accessToken, environment);
 
           return battlePassInfo;
         }),
