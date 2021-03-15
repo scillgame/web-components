@@ -57,7 +57,6 @@ export class SCILLService {
     this.accessToken$.pipe(
       filter(isNotNullOrUndefined),
       map(accessToken => {
-        console.log(this.environment, accessToken);
         return getChallengesApi(accessToken, this.environment);
       })
     ).subscribe(this.challengesApi$);
@@ -88,9 +87,9 @@ export class SCILLService {
 
   public setAccessToken(accessToken: string, environment?: SCILLEnvironment): void {
     this.environment = environment;
-    //if (this.accessToken$.getValue() !== accessToken || this.environment !== environment) {
+    if (this.accessToken$.getValue() !== accessToken || this.environment !== environment) {
       this.accessToken$.next(accessToken);
-    //}
+    }
   }
 
   public getAccessToken(apiKey: string, userId: string): Observable<string> {
