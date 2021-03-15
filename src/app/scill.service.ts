@@ -5,7 +5,7 @@ import {
   ChallengesApi,
   getAuthApi,
   getBattlePassApi,
-  getChallengesApi,
+  getChallengesApi, SCILLEnvironment,
   startMonitorBattlePassUpdates
 } from '@scillgame/scill-js';
 import {fromPromise} from 'rxjs/internal-compatibility';
@@ -42,12 +42,14 @@ export class SCILLService {
 
   latestNotification$ = new BehaviorSubject<SCILLNotification>(null);
 
+  environment: SCILLEnvironment = 'production';
+
   constructor() {
     // Setup Battle Pass Api
     this.accessToken$.pipe(
       filter(isNotNullOrUndefined),
       map(accessToken => {
-        return getBattlePassApi(accessToken);
+        return getBattlePassApi(accessToken, this.environment);
       })
     ).subscribe(this.battlePassApi$);
 
@@ -55,7 +57,8 @@ export class SCILLService {
     this.accessToken$.pipe(
       filter(isNotNullOrUndefined),
       map(accessToken => {
-        return getChallengesApi(accessToken);
+        console.log(this.environment, accessToken);
+        return getChallengesApi(accessToken, this.environment);
       })
     ).subscribe(this.challengesApi$);
   }
@@ -83,10 +86,11 @@ export class SCILLService {
     this.showNotification("Congratulations, you are now on level " + level.level_priority + 1);
   }
 
-  public setAccessToken(accessToken: string): void {
-    if (this.accessToken$.getValue() !== accessToken) {
+  public setAccessToken(accessToken: string, environment?: SCILLEnvironment): void {
+    this.environment = environment;
+    //if (this.accessToken$.getValue() !== accessToken || this.environment !== environment) {
       this.accessToken$.next(accessToken);
-    }
+    //}
   }
 
   public getAccessToken(apiKey: string, userId: string): Observable<string> {

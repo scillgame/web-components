@@ -152,7 +152,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.accessToken && changes.accessToken.currentValue) {
-      this.scillService.setAccessToken(changes.accessToken.currentValue);
+      this.scillService.setAccessToken(changes.accessToken.currentValue, this.environment);
     }
   }
 
