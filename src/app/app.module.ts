@@ -76,34 +76,54 @@ export class AppModule {
     }
 
     ngDoBootstrap(): void {
+      if (!customElements.get('scill-personal-challenges')) {
         const personalChallenges = createCustomElement(PersonalChallengesComponent, {injector: this.injector});
         customElements.define('scill-personal-challenges', personalChallenges);
+      }
 
+      if (!customElements.get('scill-personal-challenges-list')) {
         const personalChallengesList = createCustomElement(PersonalChallengesListComponent, {injector: this.injector});
         customElements.define('scill-personal-challenges-list', personalChallengesList);
+      }
 
+      if (!customElements.get('scill-personal-challenges-grid')) {
         const personalChallengesGrid = createCustomElement(PersonalChallengesGridComponent, {injector: this.injector});
         customElements.define('scill-personal-challenges-grid', personalChallengesGrid);
+      }
 
+      if (!customElements.get('scill-battle-pass')) {
         const battlePass = createCustomElement(BattlePassComponent, {injector: this.injector});
         customElements.define('scill-battle-pass', battlePass);
+      }
 
+      if (!customElements.get('scill-battle-pass-status')) {
         const battlePassStatus = createCustomElement(BattlePassStatusComponent, {injector: this.injector});
         customElements.define('scill-battle-pass-status', battlePassStatus);
+      }
 
+      if (!customElements.get('scill-battle-pass-mini-status')) {
         const battlePassMiniStatus = createCustomElement(BattlePassMiniStatusComponent, {injector: this.injector});
         customElements.define('scill-battle-pass-mini-status', battlePassMiniStatus);
+      }
 
+      if (!customElements.get('scill-task-list')) {
         const taskList = createCustomElement(TaskListComponent, {injector: this.injector});
         customElements.define('scill-task-list', taskList);
+      }
 
+      if (!customElements.get('scill-community-challenge')) {
         const communityChallenge = createCustomElement(CommunityChallengeComponent, {injector: this.injector});
         customElements.define('scill-community-challenge', communityChallenge);
+      }
 
+      if (!customElements.get('scill-challenge-teaser')) {
         const challengeTeaser = createCustomElement(ChallengeTeaserComponent, {injector: this.injector});
         customElements.define('scill-challenge-teaser', challengeTeaser);
+      }
 
+      if (!customElements.get('scill-popover-preview')) {
         const popoverPreview = createCustomElement(PopoverPreviewComponent, {injector: this.injector});
         customElements.define('scill-popover-preview', popoverPreview);
+      }
     }
 }
