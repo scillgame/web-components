@@ -1,14 +1,92 @@
-<scill-battle-pass-status
-        [app-id]="appId"
-        [api-key]="apiKey"
-        [user-id]="userId"
-        [battle-pass-id]="battlePassId"
-        [access-token]="accessToken"
-></scill-battle-pass-status>
+<div class="popover-preview-container" [ngClass]="'button-type-' + buttonType"
+     [ngStyle]="{
+        'font-family': mainFont
+     }"
+>
+  <div class="popover-preview"
+       [ngStyle]="{
+         'top':offsetTop > 0 && offsetTop + 'px',
+         'right':offsetRight > 0 && offsetRight + 'px',
+         'bottom':offsetBottom > 0 && offsetBottom + 'px',
+         'left': offsetLeft > 0 && offsetLeft + 'px',
+         'borderColor': borderColor,
+         'borderWidth': borderWidth + 'px'}"
+  >
+    <scill-popover-preview-header [username]="username"
+                                  [access-token]="accessToken"
+                                  [app-id]="appId"
+                                  [api-key]="apiKey"
+                                  [user-id]="userId"
+                                  [battle-pass-id]="battlePassId"
+                                  [header-background]="headerBackground"
+                                  [header-notch-absolute-right]="headerNotchAbsoluteRight"
+                                  [header-text-color]="headerTextColor"
+                                  [header-bp-lvl-color]="headerBpLvlColor"
+                                  [header-progress-bar-background]="headerProgressBarBackground"
+                                  [header-progress-bar-fill-background]="headerProgressBarFillBackground"
+                                  [unlock-battle-pass-btn-background]="unlockBattlePassBtnBackground"
+                                  [unlock-battle-pass-btn-text-color]="unlockBattlePassBtnTextColor"
+                                  [border-color]="borderColor"
+                                  [border-width]="borderWidth"
+    >
+    </scill-popover-preview-header>
 
-    <scill-personal-challenges-grid
-            [app-id]="appId"
-            [api-key]="apiKey"
-            [user-id]="userId"
-            [access-token]="accessToken">
-    </scill-personal-challenges-grid>
+    <ng-container *ngIf="isPopoverPreviewVisible">
+      <div class="popover-notification-container popover-inline-notification" *ngIf="currentNotification$ | async as notification">
+        <div class="popover-notification-details">
+          <div class="sc-d-flex sc-align-items-center">
+            <img *ngIf="notification.imageUrl" class="sc-badge" [src]="notification.imageUrl" alt="">
+            <div class="task-title">{{notification.message}}</div>
+          </div>
+          <div *ngIf="notification.checkmark" class="checkmark draw"></div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Include any outside content -->
+    <ng-content></ng-content>
+
+    <div class="popover-preview-sections-container">
+      <scill-popover-preview-bp-section  [app-id]="appId"
+                                         [api-key]="apiKey"
+                                         [user-id]="userId"
+                                         [battle-pass-id]="battlePassId"
+                                         [access-token]="accessToken"
+                                         [battle-pass-finished-type-bg-color]="battlePassFinishedTypeBgColor"
+                                         [battle-pass-in-progress-type-bg-color]="battlePassInProgressTypeBgColor"
+                                         [battle-pass-type-border-color]="battlePassTypeBorderColor"
+                                         [battle-pass-type-icon-color]="battlePassTypeIconColor"
+                                         [battle-pass-title-color]="battlePassTitleColor"
+                                         [battle-pass-lvl-progress-bar-background]="battlePassLvlProgressBarBackground"
+                                         [battle-pass-lvl-progress-bar-fill-background]="battlePassLvlProgressBarFillBackground"
+                                         [battle-pass-challenge-progress-background]="battlePassChallengeProgressBackground"
+                                         [battle-pass-challenge-progress-fill-background]="battlePassChallengeProgressFillBackground"
+                                         [battle-pass-challenge-background]="battlePassChallengeBackground"
+                                         [text-color]="battlePassChallengeTextColor"
+      >
+      </scill-popover-preview-bp-section>
+
+      <ng-container *ngIf="personalChallengesInfo$ | async as personalChallengesInfo">
+        <scill-popover-preview-section *ngFor="let category of personalChallengesInfo.categories; trackBy: categoryById"
+                                       [title]="category.category_name"
+                                       [category]="category"
+                                       [app-id]="appId"
+                                       [personal-challenges-category-title-color]="personalChallengesCategoryTitleColor"
+                                       [personal-challenges-category-progress-bar-background]="personalChallengesCategoryProgressBarBackground"
+                                       [personal-challenges-category-progress-bar-fill-background]="personalChallengesCategoryProgressBarFillBackground"
+                                       [personal-challenges-background]="personalChallengesBackground"
+                                       [personal-challenges-progress-background]="personalChallengesProgressBackground"
+                                       [personal-challenges-progress-fill-background]="personalChallengesProgressFillBackground"
+                                       [personal-challenges-finished-type-bg-color]="personalChallengesFinishedTypeBgColor"
+                                       [personal-challenges-type-border-color]="personalChallengesTypeBorderColor"
+                                       [personal-challenges-type-icon-color]="personalChallengesTypeIconColor"
+                                       [button-background]="buttonBackground"
+                                       [button-text-color]=buttonTextColor
+                                       [text-color]="personalChallengesTextColor"
+        >
+        </scill-popover-preview-section>
+      </ng-container>
+    </div>
+
+  </div>
+</div>
