@@ -5,6 +5,7 @@ import {buffer, debounceTime, map} from 'rxjs/operators';
 import {SCILLNotification, SCILLService} from '../scill.service';
 import {SCILLBattlePassInfo, SCILLBattlePassService} from '../scillbattle-pass.service';
 import {SCILLPersonalChallengesInfo, SCILLPersonalChallengesService} from '../scillpersonal-challenges.service';
+import { TranslateService } from '@ngx-translate/core';
 
 class Theme {
   primaryColor: string;
@@ -100,17 +101,25 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('border-color') borderColor = '#999';
   @Input('border-width') borderWidth = '0';
   @Input('theme') theme = 'default';
+  @Input('language') language = 'en';
 
   battlePassInfo$: Observable<SCILLBattlePassInfo>;
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
-  isPopoverPreviewVisible = false;
+  isPopoverPreviewVisible = true;
 
   currentNotification$: Observable<SCILLNotification>;
 
   constructor(private scillService: SCILLService,
               private scillBattlePassService: SCILLBattlePassService,
-              private scillPersonalChallengesService: SCILLPersonalChallengesService) {
+              private scillPersonalChallengesService: SCILLPersonalChallengesService,
+              private translate: TranslateService) {
     this.setTheme(this.theme);
+
+    /**
+     * Set default frontend translation language
+     * If language attribute provided but value does not exist set default to 'en'
+    **/
+    translate.setDefaultLang('en');
   }
 
   ngOnInit(): void {
@@ -139,8 +148,10 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
     if (this.welcomeMessage) {
       this.scillService.showNotification(this.welcomeMessage, null, null, null, 5000, false);
     }
-  }
 
+    console.log('%c THIS LANGUAGE', 'color:gold;', this.language);
+    this.translate.use(this.language);
+  }
   togglePopover(): void {
     if (this.isPopoverPreviewVisible) {
       // If the popover is hidden remove notifications - we are sure someone saw them
