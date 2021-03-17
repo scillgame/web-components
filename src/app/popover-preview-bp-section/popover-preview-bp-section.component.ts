@@ -24,7 +24,7 @@ export class PopoverPreviewBpSectionComponent extends BattlePassComponent {
     @Input('battle-pass-type-border-color') battlePassTypeBorderColor: string;
     @Input('battle-pass-type-icon-color') battlePassTypeIconColor: string;
     @Input('text-color') textColor: string;
-    @Input('language') language: string;
+    @Input('language') language = 'en';
 
     isExpanded = true;
 }

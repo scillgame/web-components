@@ -51,7 +51,7 @@ export class SCILLBattlePassService {
     }
   }
 
-  getBattlePassInfo(appId: string, battlePassId: string): Observable<SCILLBattlePassInfo> {
+  getBattlePassInfo(appId: string, battlePassId: string, language: string): Observable<SCILLBattlePassInfo> {
     if (this.storage.has(battlePassId)) {
       return this.storage.get(battlePassId).asObservable();
     } else {
@@ -83,7 +83,7 @@ export class SCILLBattlePassService {
         mergeMap(battlePassInfo => {
           return battlePassInfo.refresh$.pipe(
             mergeMap(refresh => {
-              return fromPromise(battlePassInfo.battlePassApi.getBattlePasses(appId, battlePassId)).pipe(
+              return fromPromise(battlePassInfo.battlePassApi.getBattlePasses(appId, language)).pipe(
                 map(battlePasses => {
                     const foundBattlePass = battlePasses.filter(battlePass => battlePass.battle_pass_id === battlePassId)[0];
                     battlePassInfo.battlePass = foundBattlePass;
@@ -96,7 +96,7 @@ export class SCILLBattlePassService {
         mergeMap(battlePassInfo => {
           return battlePassInfo.refresh$.pipe(
             mergeMap(refresh => {
-              return fromPromise(battlePassInfo.battlePassApi.getBattlePassLevels(appId, battlePassId)).pipe(
+              return fromPromise(battlePassInfo.battlePassApi.getBattlePassLevels(appId, battlePassId, language)).pipe(
                 map(levels => {
                   battlePassInfo.levels = levels;
                   battlePassInfo.progress = 0;

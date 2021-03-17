@@ -101,7 +101,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('border-color') borderColor = '#999';
   @Input('border-width') borderWidth = '0';
   @Input('theme') theme = 'default';
-  @Input('language') language = 'en';
+  @Input('language') language: string;
 
   battlePassInfo$: Observable<SCILLBattlePassInfo>;
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
@@ -115,16 +115,18 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
               private translate: TranslateService) {
     this.setTheme(this.theme);
 
-    /**
-     * Set default frontend translation language
-     * If language attribute provided but value does not exist set default to 'en'
-    **/
     translate.setDefaultLang('en');
   }
 
   ngOnInit(): void {
-    if (this.battlePassId) {
-      this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId).pipe(
+
+      // Set default frontend translation language
+      // If language attribute provided but value does not exist set default to 'en'
+      this.language =  this.language.length === 0 || this.language !== 'de' ? 'en'  : this.language;
+      this.translate.use(this.language);
+
+      if (this.battlePassId) {
+      this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId, this.language).pipe(
         map(battlePassInfo => {
           return battlePassInfo;
         })
@@ -133,7 +135,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
       this.battlePassInfo$ = of(null);
     }
 
-    this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId).pipe(
+    this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId, this.language).pipe(
       map(personalChallengesInfo => {
         return personalChallengesInfo;
       })
@@ -149,8 +151,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
       this.scillService.showNotification(this.welcomeMessage, null, null, null, 5000, false);
     }
 
-    console.log('%c THIS LANGUAGE', 'color:gold;', this.language);
-    this.translate.use(this.language);
+
   }
   togglePopover(): void {
     if (this.isPopoverPreviewVisible) {

@@ -38,6 +38,7 @@ export class PersonalChallengesComponent implements OnInit, OnChanges {
     @Input('battle-pass-id') battlePassId: string;
     @Input('api-key') apiKey: string;
     @Input('access-token') accessToken: string;
+    @Input('language') language: string;
 
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
 
@@ -55,7 +56,7 @@ export class PersonalChallengesComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-      this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId).pipe(
+      this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId, this.language).pipe(
         map(personalChallengesInfo => {
           return personalChallengesInfo;
         })
@@ -64,7 +65,7 @@ export class PersonalChallengesComponent implements OnInit, OnChanges {
 
     unlockChallenge = (challenge: Challenge): void => {
         // We need to buy the challenge
-        this.challengesApi?.unlockPersonalChallenge(this.appId, challenge.challenge_id).then(result => {
+        this.challengesApi?.unlockPersonalChallenge(this.appId, challenge.challenge_id, this.language).then(result => {
 
         });
 
@@ -72,20 +73,20 @@ export class PersonalChallengesComponent implements OnInit, OnChanges {
 
     activateChallenge = (challenge: Challenge): void  => {
         // We need to activate the challenge
-        this.challengesApi?.activatePersonalChallenge(this.appId, challenge.challenge_id).then(result => {
+        this.challengesApi?.activatePersonalChallenge(this.appId, challenge.challenge_id, this.language).then(result => {
 
         });
     }
 
     claimChallenge = (challenge: Challenge): void  => {
         // We need to buy/claim the challenge
-        this.challengesApi?.claimPersonalChallengeReward(this.appId, challenge.challenge_id).then(result => {
+        this.challengesApi?.claimPersonalChallengeReward(this.appId, challenge.challenge_id, this.language).then(result => {
 
         });
     }
 
     cancelChallenge = (challenge: Challenge): void => {
-        this.challengesApi?.cancelPersonalChallenge(this.appId, challenge.challenge_id).then(result => {
+        this.challengesApi?.cancelPersonalChallenge(this.appId, challenge.challenge_id, this.language).then(result => {
 
         });
     }

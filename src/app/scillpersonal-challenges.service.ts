@@ -33,7 +33,7 @@ export class SCILLPersonalChallengesService {
 
   constructor(private scillService: SCILLService) { }
 
-  getPersonalChallengesInfo(appId): Observable<SCILLPersonalChallengesInfo> {
+  getPersonalChallengesInfo(appId, language = 'en'): Observable<SCILLPersonalChallengesInfo> {
     if (this.storage.has(appId)) {
       return this.storage.get(appId).asObservable();
     } else {
@@ -56,7 +56,7 @@ export class SCILLPersonalChallengesService {
           return personalChallengesInfo;
         }),
         mergeMap(personalChallengesInfo => {
-          return personalChallengesInfo.challengesApi?.getAllPersonalChallenges(appId).then(categories => {
+          return personalChallengesInfo.challengesApi?.getAllPersonalChallenges(appId, [], [], language).then(categories => {
             personalChallengesInfo.categories = categories;
             return personalChallengesInfo;
           });
