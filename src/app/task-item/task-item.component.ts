@@ -26,6 +26,7 @@ export class TaskItemComponent {
   @Input('button-background') buttonBackground: string;
   @Input('button-text-color') buttonTextColor: string;
   @Input('text-color') textColor: string;
+  @Input('language') language: string;
 
   constructor(private scillService: SCILLService, private scillPersonalChallengesService: SCILLPersonalChallengesService) {
   }

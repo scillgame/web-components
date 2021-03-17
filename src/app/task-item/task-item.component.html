@@ -51,7 +51,7 @@
              class="task-current-score"
              [ngClass]="task.type === 'in-progress' ? 'sc-d-flex sc-justify-content-between' : null"
         >
-          <app-time-remaining [challenge]="task" [display-short-time-left]="false" lang="de"></app-time-remaining>
+          <app-time-remaining [challenge]="task" [display-short-time-left]="false" [lang]="language"></app-time-remaining>
         </div>
       </div>
     </div>

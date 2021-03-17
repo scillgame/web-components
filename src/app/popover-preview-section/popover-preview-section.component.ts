@@ -32,6 +32,7 @@ export class PopoverPreviewSectionComponent {
     @Input('button-background') buttonBackground: string;
     @Input('button-text-color') buttonTextColor: string;
     @Input('text-color') textColor: string;
+    @Input('language') langugage: string;
 
     isExpanded = true;
 
