@@ -22,6 +22,7 @@ export class BattlePassComponent implements OnInit, OnChanges {
   @Input('type-finished-color') typeFinishedColor: string;
   @Input('type-border-color') typeBorderColor: string;
   @Input('type-icon-color') typeIconColor: string;
+  @Input('language') language: string;
 
   battlePassInfo$: Observable<SCILLBattlePassInfo>;
 
@@ -39,7 +40,7 @@ export class BattlePassComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId).pipe(
+    this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId, this.language).pipe(
       map(battlePassInfo => {
         return battlePassInfo;
       })
@@ -73,7 +74,7 @@ export class BattlePassComponent implements OnInit, OnChanges {
       return;
     }
 
-    battlePassApi.activateBattlePassLevel(this.appId, level.level_id).then(result => {
+    battlePassApi.activateBattlePassLevel(this.appId, level.level_id, this.language).then(result => {
       if (result) {
         this.scillBattlePassService.reloadBattlePass(this.battlePassId);
       }
@@ -86,7 +87,7 @@ export class BattlePassComponent implements OnInit, OnChanges {
       return;
     }
 
-    battlePassApi.claimBattlePassLevelReward(this.appId, level.level_id).then(result => {
+    battlePassApi.claimBattlePassLevelReward(this.appId, level.level_id, this.language).then(result => {
       if (result) {
         this.scillBattlePassService.reloadBattlePass(this.battlePassId);
         // Let's unlock the next level

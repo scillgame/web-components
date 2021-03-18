@@ -28,22 +28,22 @@
           <button *ngIf="task.type === 'unlock' || task.type === 'cancelled'"
                   (click)="unlockChallenge(task)"
                   [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
-            Unlock
+            {{'unlock' | translate}}
           </button>
           <button *ngIf="task.type === 'unlocked'"
                   (click)="activateChallenge(task)"
                   [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
-            Activate
+            {{'activate' | translate}}
           </button>
           <button *ngIf="task.type === 'in-progress' && !task.challenge_auto_activated"
                   (click)="cancelChallenge(task)"
                   [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
-            Cancel
+            {{'cancel' | translate}}
           </button>
           <button *ngIf="task.type === 'unclaimed'"
                   (click)="claimChallenge(task)"
                   [ngStyle]="{'background': buttonBackground, 'color':buttonTextColor}">
-            Claim
+            {{'claim' | translate}}
           </button>
 
         </div>
@@ -51,7 +51,7 @@
              class="task-current-score"
              [ngClass]="task.type === 'in-progress' ? 'sc-d-flex sc-justify-content-between' : null"
         >
-          <app-time-remaining [challenge]="task" [display-short-time-left]="true"></app-time-remaining>
+          <app-time-remaining [challenge]="task" [display-short-time-left]="true" [lang]="language"></app-time-remaining>
         </div>
       </div>
     </div>

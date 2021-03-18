@@ -64,7 +64,7 @@
                     <!--progress="0%">-->
             <!--</scill-progress-bar>-->
             <div class="unlocked-bp-name" [ngStyle]="{'color': headerTextColor}">
-                <b>{{battlePassInfo.battlePass.battle_pass_name}}</b> is locked
+                {{'battle_pass_locked' | translate:battlePassInfo.battlePass}}
             </div>
             <div>
                 <button (click)="unlockBattlePass(battlePassInfo.battlePass)"
@@ -75,7 +75,7 @@
                         'color': unlockBattlePassBtnTextColor
                         }"
                 >
-                    Unlock
+                    {{'unlock' | translate}}
                 </button>
             </div>
         </div>
