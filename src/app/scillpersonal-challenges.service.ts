@@ -33,7 +33,7 @@ export class SCILLPersonalChallengesService {
 
   constructor(private scillService: SCILLService) { }
 
-  getPersonalChallengesInfo(appId, language = 'en'): Observable<SCILLPersonalChallengesInfo> {
+  getPersonalChallengesInfo(appId, language = 'en', environment?: SCILLEnvironment): Observable<SCILLPersonalChallengesInfo> {
     if (this.storage.has(appId)) {
       return this.storage.get(appId).asObservable();
     } else {

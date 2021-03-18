@@ -1,9 +1,9 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {BattlePass, BattlePassLevel, BattlePassLevelChallenge} from '@scillgame/scill-js';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {SCILLBattlePassInfo, SCILLBattlePassService} from '../scillbattle-pass.service';
-import {SCILLService} from '../scill.service';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation}   from '@angular/core';
+import {BattlePass, BattlePassLevel, BattlePassLevelChallenge, SCILLEnvironment} from '@scillgame/scill-js';
+import {Observable}                                                              from 'rxjs';
+import {map}                                                                     from 'rxjs/operators';
+import {SCILLBattlePassInfo, SCILLBattlePassService}                             from '../scillbattle-pass.service';
+import {SCILLService}                                                            from '../scill.service';
 
 @Component({
   selector: 'scill-battle-pass',
@@ -18,6 +18,7 @@ export class BattlePassComponent implements OnInit, OnChanges {
   @Input('app-id') appId: string;
   @Input('user-id') userId: string;
   @Input('access-token') accessToken: string;
+  @Input('environment') environment: SCILLEnvironment;
   @Input('type-in-progress-color') typeInProgressColor: string;
   @Input('type-finished-color') typeFinishedColor: string;
   @Input('type-border-color') typeBorderColor: string;
@@ -40,7 +41,7 @@ export class BattlePassComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId, this.language).pipe(
+    this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId, this.language, this.environment).pipe(
       map(battlePassInfo => {
         return battlePassInfo;
       })
