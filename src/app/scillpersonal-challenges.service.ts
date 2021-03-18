@@ -5,7 +5,7 @@ import {
   Challenge,
   ChallengeCategory,
   ChallengesApi, ChallengeWebhookPayload,
-  getChallengesApi,
+  getChallengesApi, SCILLEnvironment,
   startMonitorChallengeUpdates
 } from '@scillgame/scill-js';
 import {SCILLBattlePassInfo} from './scillbattle-pass.service';
@@ -48,10 +48,10 @@ export class SCILLPersonalChallengesService {
           personalChallengesInfo.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
             this.updateChallenge(personalChallengesInfo, payload);
             personalChallengesInfo$.next(this.calculateStats(personalChallengesInfo));
-          }));
+          }), environment);
 
           personalChallengesInfo.accessToken = accessToken;
-          personalChallengesInfo.challengesApi = getChallengesApi(personalChallengesInfo.accessToken);
+          personalChallengesInfo.challengesApi = getChallengesApi(personalChallengesInfo.accessToken, environment);
 
           return personalChallengesInfo;
         }),
@@ -89,7 +89,7 @@ export class SCILLPersonalChallengesService {
     return personalChallengesInfo;
   }
 
-  getPersonalChallengeInfo(appId, challengeId): Observable<SCILLPersonalChallengesInfo> {
+  getPersonalChallengeInfo(appId, challengeId, environment?: SCILLEnvironment): Observable<SCILLPersonalChallengesInfo> {
     const key = `${appId}_${challengeId}`;
     if (this.storage.has(key)) {
       return this.storage.get(key).asObservable();
@@ -105,10 +105,10 @@ export class SCILLPersonalChallengesService {
           personalChallengesInfo.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
             this.updateChallenge(personalChallengesInfo, payload);
             personalChallengesInfo$.next(this.calculateStats(personalChallengesInfo));
-          }));
+          }), environment);
 
           personalChallengesInfo.accessToken = accessToken;
-          personalChallengesInfo.challengesApi = getChallengesApi(personalChallengesInfo.accessToken);
+          personalChallengesInfo.challengesApi = getChallengesApi(personalChallengesInfo.accessToken, environment);
 
           return personalChallengesInfo;
         }),

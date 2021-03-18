@@ -4,7 +4,7 @@ import {
   BattlePassesApi,
   BattlePassLevel,
   Challenge,
-  getBattlePassApi,
+  getBattlePassApi, SCILLEnvironment,
   startMonitorBattlePassUpdates
 } from '@scillgame/scill-js';
 import {SCILLService} from './scill.service';
@@ -73,10 +73,10 @@ export class SCILLBattlePassService {
               }
             }
             battlePassInfo.refresh$.next(true);
-          }));
+          }), environment);
 
           battlePassInfo.accessToken = accessToken;
-          battlePassInfo.battlePassApi = getBattlePassApi(battlePassInfo.accessToken);
+          battlePassInfo.battlePassApi = getBattlePassApi(battlePassInfo.accessToken, environment);
 
           return battlePassInfo;
         }),

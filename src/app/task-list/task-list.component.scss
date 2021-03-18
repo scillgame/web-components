@@ -1,0 +1,233 @@
+*{
+  font-family: Helvetica, Sans-serif;
+  line-height: 1rem;
+  text-align: left;
+}
+$gold: #F5A622;
+// flexbox global rules
+.sc-d-flex{
+  display:flex;
+}
+.sc-flex-column{
+  flex-direction: column;
+}
+.sc-justify-content-center{
+  justify-content: center;
+}
+.sc-justify-content-between{
+  justify-content:space-between;
+}
+.sc-justify-content-end{
+  justify-content: flex-end;
+}
+.sc-align-items-center{
+  align-items:center;
+}
+.popover-preview-container{
+  position:relative;
+  display: inline-block;
+
+  .popover-preview {
+    width: 100%;
+    background: #fff;
+    color: #fff;
+    border-radius: 5px;
+    border: 1px solid #999;
+    .popover-preview-sections-container{
+      overflow: auto;
+      max-height: 700px;
+      padding-top: 10px;
+    }
+    .popover-preview-section {
+      padding-bottom: 10px;
+    }
+  }
+
+  .popover-notification-container {
+    color: black;
+    padding: 14px;
+
+    .popover-notification-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      img.sc-badge {
+        width: 26px;
+        height: 29px;
+        padding: 8px 10px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .popover-inline-notification {
+    border-bottom: 1px solid #999;
+  }
+
+  .popover-notification {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 7px 6px rgb(0 0 0 / 40%);
+    transition: all 2s;
+    border: 1px solid #999;
+    background: white;
+  }
+
+  .battlepass{
+    //margin-top:30px;
+    padding:20px 10px;
+    //background:#fff;
+  }
+
+}
+
+.popover-preview-container.button-type-1 .popover-notification, .popover-preview-container.button-type-1 .popover-preview{
+  top: 70px
+}
+
+.scill-profile-buttons {
+  padding-bottom: 10px;
+}
+
+.scill-profile-buttons-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px 0px;
+}
+
+.scill-profile-button {
+  border: 1px solid #DCDCDC;
+  border-radius: 3px;
+  background-color: #DCDCDC;
+  color: black;
+  padding: 5px;
+  width: 100%;
+  margin-right: 5px;
+  margin-left: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.scill-profile-button:hover {
+  opacity: 0.9;
+}
+
+.scill-profile-button:active {
+  opacity: 0.8;
+}
+
+.scill-profile-button:first-child {
+  margin-left: 0px;
+}
+
+.scill-profile-button:last-child {
+  margin-right: 0px;
+}
+/*
+.header-triangle {
+  width: 23 px;
+  height: 23px;
+  transform: rotate(45deg);
+  background: white;
+  position: absolute;
+  top: -11px;
+  right: 15px;
+  z-index: 2;
+  border-left: 1px solid #999;
+  border-top: 1px solid #999;
+}
+*/
+.header-triangle {
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 14px solid white;
+  position: absolute;
+  top: -11px;
+  right: 15px;
+  z-index: 2;
+}
+
+.header-triangle .header-triangle-inner {
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 14px solid white;
+  position: absolute;
+  top: 0px;
+  left: -14px;
+}
+
+.header-triangle.border-width-1:after {
+  top: 1px;
+}
+
+.header-triangle.border-width-2:after {
+  top: 2px;
+}
+
+.header-triangle.border-width-3:after {
+  top: 3px;
+}
+
+// Define vars we'll be using
+$brand-success: #5cb85c;
+$loader-size: 7em;
+$check-height: 20px;
+$check-width: $check-height/2;
+$check-left: ($loader-size/6 + $loader-size/12);
+$check-thickness: 3px;
+$check-color: $brand-success;
+
+.checkmark {
+  width: $check-height;
+  height: $check-height;
+  position: relative;
+  padding-right: 5px;
+  &.draw:after {
+    animation-duration: 1200ms;
+    animation-timing-function: ease;
+    animation-name: checkmark;
+    transform: scaleX(-1) rotate(135deg);
+  }
+
+  &:after {
+    opacity: 1;
+    height: $check-height;
+    width: $check-width;
+    transform-origin: left top;
+    border-right: $check-thickness solid $check-color;
+    border-top: $check-thickness solid $check-color;
+    content: '';
+    top: $check-width;
+    position: absolute;
+  }
+}
+
+@keyframes checkmark {
+  0% {
+    height: 0;
+    width: 0;
+    opacity: 1;
+  }
+  20% {
+    height: 0;
+    width: $check-width;
+    opacity: 1;
+  }
+  40% {
+    height: $check-height;
+    width: $check-width;
+    opacity: 1;
+  }
+  100% {
+    height: $check-height;
+    width: $check-width;
+    opacity: 1;
+  }
+}

@@ -18,7 +18,7 @@
   </div>
   <div class="task-container" [ngStyle]="{'background':background}">
     <div class="sc-d-flex sc-align-items-center">
-      <div class="sc-badge">
+      <div class="sc-badge" *ngIf="task.challenge_icon">
         <img [src]="task.challenge_icon" alt="">
       </div>
       <div class="task-info-container">

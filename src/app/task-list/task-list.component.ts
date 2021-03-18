@@ -1,21 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {PopoverPreviewComponent} from '../popover-preview/popover-preview.component';
 
 @Component({
   selector: 'scill-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss']
 })
-export class TaskListComponent implements OnInit {
-
-  @Input() battlePassId: string;
-  @Input('access-token') accessToken: string;
-  @Input() appId: string;
-  @Input() userId: string;
-  @Input('api-key') apiKey: string;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+export class TaskListComponent extends PopoverPreviewComponent {
 
 }

@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {Challenge, ChallengeCategory} from '@scillgame/scill-js';
+import {Challenge, ChallengeCategory, SCILLEnvironment} from '@scillgame/scill-js';
 import {buffer, debounceTime, map} from 'rxjs/operators';
 import {SCILLNotification, SCILLService} from '../scill.service';
 import {SCILLBattlePassInfo, SCILLBattlePassService} from '../scillbattle-pass.service';
@@ -46,6 +46,7 @@ const themes: Map<string, Theme> = new Map<string, Theme>([[
 export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('api-key') apiKey: string;
   @Input('app-id') appId: string;
+  @Input('environment') environment: SCILLEnvironment;
   @Input('user-id') userId: string;
   @Input('battle-pass-id') battlePassId: string;
   @Input('access-token') accessToken: string;
@@ -163,7 +164,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.accessToken && changes.accessToken.currentValue) {
-      this.scillService.setAccessToken(changes.accessToken.currentValue);
+      this.scillService.setAccessToken(changes.accessToken.currentValue, this.environment);
     }
   }
 
