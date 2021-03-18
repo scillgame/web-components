@@ -125,8 +125,11 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
 
       // Set default frontend translation language
       // If language attribute provided but value does not exist set default to 'en'
-      this.language =  this.language.length === 0 || this.language !== 'de' ? 'en'  : this.language;
-      this.translate.use(this.language);
+      if(this.language){
+          this.language =  this.language.length === 0 || this.language !== 'de' ? 'en'  : this.language;
+          this.translate.use(this.language);
+      }
+
 
       if (this.battlePassId) {
       this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId, this.language, this.environment).pipe(
