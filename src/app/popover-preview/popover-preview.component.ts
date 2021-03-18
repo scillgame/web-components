@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Challenge, ChallengeCategory, SCILLEnvironment} from '@scillgame/scill-js';
+
 import {buffer, debounceTime, map} from 'rxjs/operators';
 import {SCILLNotification, SCILLService} from '../scill.service';
 import {SCILLBattlePassInfo, SCILLBattlePassService} from '../scillbattle-pass.service';
@@ -104,6 +105,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('theme') theme = 'default';
   @Input('language') language: string;
 
+
   battlePassInfo$: Observable<SCILLBattlePassInfo>;
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
   isPopoverPreviewVisible = true;
@@ -127,7 +129,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
       this.translate.use(this.language);
 
       if (this.battlePassId) {
-      this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId, this.language).pipe(
+      this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId, this.language, this.environment).pipe(
         map(battlePassInfo => {
           return battlePassInfo;
         })
@@ -136,7 +138,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
       this.battlePassInfo$ = of(null);
     }
 
-    this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId, this.language).pipe(
+    this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId, this.language, this.environment).pipe(
       map(personalChallengesInfo => {
         return personalChallengesInfo;
       })
