@@ -231,3 +231,23 @@ $check-color: $brand-success;
     opacity: 1;
   }
 }
+
+// flexbox global rules
+.sc-d-flex{
+  display:flex;
+}
+.sc-flex-column{
+  flex-direction: column;
+}
+.sc-justify-content-center{
+  justify-content: center;
+}
+.sc-justify-content-between{
+  justify-content:space-between;
+}
+.sc-justify-content-end{
+  justify-content: flex-end;
+}
+.sc-align-items-center{
+  align-items:center;
+}
