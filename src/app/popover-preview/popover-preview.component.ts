@@ -108,7 +108,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
 
   battlePassInfo$: Observable<SCILLBattlePassInfo>;
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
-  isPopoverPreviewVisible = true;
+  isPopoverPreviewVisible = false;
 
   currentNotification$: Observable<SCILLNotification>;
 
