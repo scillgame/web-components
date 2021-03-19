@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {
   BattlePassesApi, BattlePassLevel, BattlePassLevelChallenge, Challenge,
-  ChallengesApi,
+  ChallengesApi, EventMetaData, EventsApi,
   getAuthApi,
   getBattlePassApi,
-  getChallengesApi, SCILLEnvironment,
+  SCILLEnvironment,
+  getChallengesApi,
+  getEventsApi,
   startMonitorBattlePassUpdates
 } from '@scillgame/scill-js';
 import {fromPromise} from 'rxjs/internal-compatibility';
-import {filter, map} from 'rxjs/operators';
+import {catchError, filter, map} from 'rxjs/operators';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {SCILLBattlePassInfo} from './scillbattle-pass.service';
 
@@ -39,6 +41,7 @@ export class SCILLService {
   accessToken$ = new BehaviorSubject<string>(null);
   battlePassApi$ = new BehaviorSubject<BattlePassesApi>(null);
   challengesApi$ = new BehaviorSubject<ChallengesApi>(null);
+  eventsApi$ = new BehaviorSubject<EventsApi>(null);
 
   latestNotification$ = new BehaviorSubject<SCILLNotification>(null);
 
@@ -60,6 +63,25 @@ export class SCILLService {
         return getChallengesApi(accessToken, this.environment);
       })
     ).subscribe(this.challengesApi$);
+
+    this.accessToken$.pipe(
+      filter(isNotNullOrUndefined),
+      map(accessToken => {
+        return getEventsApi(accessToken);
+      })
+    ).subscribe(this.eventsApi$);
+  }
+
+  public get eventsApi(): EventsApi {
+    return this.eventsApi$.getValue();
+  }
+
+  public get challengesApi(): ChallengesApi {
+    return this.challengesApi$.getValue();
+  }
+
+  public get battlePassesApi(): BattlePassesApi {
+    return this.battlePassApi$.getValue();
   }
 
   public clearNotifications(): void {
@@ -106,5 +128,26 @@ export class SCILLService {
       this.accessTokenStore.set(apiKey + userId, result.token);
       return result.token;
     }));
+  }
+
+  public sendEvent(eventName: string, sessionId: string, userId: string, metaData: EventMetaData = {}): Observable<boolean> {
+    return fromPromise(this.eventsApi?.sendEvent({
+      event_name: eventName,
+      event_type: 'single',
+      session_id: sessionId,
+      user_id: userId,
+      meta_data: metaData
+    })).pipe(
+      map(response => {
+        if (response && response.status >= 200 && response.status < 300) {
+          return true;
+        } else {
+          return false;
+        }
+      }),
+      catchError(error => {
+        return of(false);
+      })
+    );
   }
 }
