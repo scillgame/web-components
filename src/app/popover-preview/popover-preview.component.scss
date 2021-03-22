@@ -24,9 +24,10 @@ $gold: #F5A622;
   align-items:center;
 }
 .popover-preview-container{
-  position:relative;
   display: inline-block;
   .popover-preview-btn {
+    position:relative;
+    z-index: 2;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -300,4 +301,44 @@ $check-color: $brand-success;
 }
 .sc-align-items-center{
   align-items:center;
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .popover-preview-container{
+    width:100%;
+  }
+  .popover-preview-btn{
+    width:100% !important;
+  }
+  .popover-preview{
+    //margin-top:113px;
+    min-width:unset !important;
+    max-width:unset !important;
+    top:0;
+    .popover-preview-sections-container{
+      max-height:600px;
+    }
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
 }
