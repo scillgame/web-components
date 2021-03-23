@@ -1,0 +1,38 @@
+<div class="scill-leaderboard-container" *ngIf="leaderboardInfo$ | async as leaderboardInfo">
+  <table class="scill-leaderboard">
+    <tr class="scill-leaderboard-header">
+      <td class="scill-leaderboard-rank">
+        Rank
+      </td>
+      <td *ngIf="showAvatarImages === 'true'" class="scill-leaderboard-avatar">
+        Image
+      </td>
+      <td class="scill-leaderboard-name">
+        Name
+      </td>
+      <td class="scill-leaderboard-score">
+        Score
+      </td>
+    </tr>
+    <tr *ngFor="let ranking of memberType === 'user' ? leaderboardInfo.userRankings : leaderboardInfo.teamRankings; trackBy: rankingById">
+      <td class="scill-leaderboard-rank">
+        {{ranking.rank}}
+      </td>
+      <td *ngIf="showAvatarImages === 'true'" class="scill-leaderboard-avatar">
+        <img class="scill-leaderboard-avatar-image" *ngIf="ranking.additional_info?.avatarImage" [src]="avatarUrlPrefix + ranking.additional_info.avatarImage + avatarUrlSuffix">
+      </td>
+      <td class="scill-leaderboard-name">
+        {{ranking.additional_info?.username ? ranking.additional_info.username : ranking.member_id}}
+      </td>
+      <td class="scill-leaderboard-score">
+        {{ranking.score}}
+      </td>
+    </tr>
+  </table>
+  <div *ngIf="pagination === 'true'">
+    <div *ngIf="memberType === 'user' && leaderboardInfo.userRankings.length >= 1">{{leaderboardInfo.userRankings[0].rank}} - {{leaderboardInfo.userRankings[leaderboardInfo.userRankings.length - 1].rank}} of {{leaderboardInfo.numUserRakings}}</div>
+    <div *ngIf="memberType === 'team' && leaderboardInfo.teamRankings.length >= 1">{{leaderboardInfo.teamRankings[0].rank}} - {{leaderboardInfo.teamRankings[leaderboardInfo.teamRankings.length - 1].rank}} of {{leaderboardInfo.numTeamRankings}}</div>
+    <button (click)="prevPage(leaderboardInfo)" [disabled]="(leaderboardInfo.currentPage$ | async) <= 1"> < </button>
+    <button (click)="nextPage(leaderboardInfo)" [disabled]="!((memberType === 'user' ? leaderboardInfo.userRankings : leaderboardInfo.teamRankings).length >= (pageSize|number))"> > </button>
+  </div>
+</div>
