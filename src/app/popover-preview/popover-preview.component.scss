@@ -26,8 +26,6 @@ $gold: #F5A622;
 .popover-preview-container{
   display: inline-block;
   .popover-preview-btn {
-    position:relative;
-    z-index: 2;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -309,9 +307,6 @@ $check-color: $brand-success;
   .popover-preview-container{
     width:100%;
   }
-  .popover-preview-btn{
-    width:100% !important;
-  }
   .popover-preview{
     //margin-top:113px;
     min-width:unset !important;
@@ -319,6 +314,22 @@ $check-color: $brand-success;
     top:0;
     .popover-preview-sections-container{
       max-height:600px;
+    }
+    .close-mobile-btn{
+      left:50%;
+      transform:translate(-50%);
+      padding:0 8px;
+      background: rgba(255, 255, 255, 0.5);
+      position:fixed;
+      bottom:0;
+      font-size:56px;
+      border-top-left-radius:10px;
+      border-top-right-radius:10px;
+      svg{
+        path{
+          stroke: red;
+        } 
+      }
     }
   }
 }
