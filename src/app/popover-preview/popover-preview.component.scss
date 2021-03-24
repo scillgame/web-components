@@ -81,9 +81,11 @@ $gold: #F5A622;
       border-radius: 5px;
       box-shadow: 0 7px 6px rgb(0 0 0 / 40%);
       border: 1px solid #999;
-      overflow-y: scroll;
+      overflow: scroll;
+      height:640px;
       .popover-preview-sections-container{
-        //height: 600x;
+        max-height:500px;
+        overflow-y: scroll;
         padding-top: 10px;
       }
       .popover-preview-section {
