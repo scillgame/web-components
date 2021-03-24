@@ -8,7 +8,7 @@ import {
   SCILLEnvironment,
   getChallengesApi,
   getEventsApi,
-  startMonitorBattlePassUpdates
+  startMonitorBattlePassUpdates, LeaderboardsApi, getLeaderboardsApi
 } from '@scillgame/scill-js';
 import {fromPromise} from 'rxjs/internal-compatibility';
 import {catchError, filter, map} from 'rxjs/operators';
@@ -42,6 +42,7 @@ export class SCILLService {
   battlePassApi$ = new BehaviorSubject<BattlePassesApi>(null);
   challengesApi$ = new BehaviorSubject<ChallengesApi>(null);
   eventsApi$ = new BehaviorSubject<EventsApi>(null);
+  leaderboardsApi$ = new BehaviorSubject<LeaderboardsApi>(null);
 
   latestNotification$ = new BehaviorSubject<SCILLNotification>(null);
 
@@ -67,9 +68,16 @@ export class SCILLService {
     this.accessToken$.pipe(
       filter(isNotNullOrUndefined),
       map(accessToken => {
-        return getEventsApi(accessToken);
+        return getEventsApi(accessToken, this.environment);
       })
     ).subscribe(this.eventsApi$);
+
+    this.accessToken$.pipe(
+      filter(isNotNullOrUndefined),
+      map(accessToken => {
+        return getLeaderboardsApi(accessToken, this.environment);
+      })
+    ).subscribe(this.leaderboardsApi$);
   }
 
   public get eventsApi(): EventsApi {
@@ -82,6 +90,10 @@ export class SCILLService {
 
   public get battlePassesApi(): BattlePassesApi {
     return this.battlePassApi$.getValue();
+  }
+
+  public get leaderboardsApi(): LeaderboardsApi {
+    return this.leaderboardsApi$.getValue();
   }
 
   public clearNotifications(): void {
