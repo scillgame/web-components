@@ -81,8 +81,7 @@ $gold: #F5A622;
       border-radius: 5px;
       box-shadow: 0 7px 6px rgb(0 0 0 / 40%);
       border: 1px solid #999;
-      overflow: scroll;
-      height:640px;
+
       .popover-preview-sections-container{
         max-height:500px;
         overflow-y: scroll;
@@ -316,6 +315,8 @@ $check-color: $brand-success;
     //margin-top:113px;
     min-width:unset !important;
     max-width:unset !important;
+    overflow: scroll;
+    height:640px;
     top:0;
     .popover-preview-sections-container{
       max-height:600px;
