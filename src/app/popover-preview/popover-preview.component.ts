@@ -122,7 +122,6 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-
       // Set default frontend translation language
       // If language attribute provided but value does not exist set default to 'en'
       if(this.language){

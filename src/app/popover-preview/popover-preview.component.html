@@ -116,7 +116,8 @@
           </ng-container>
 
           <!-- Include any outside content -->
-          <ng-content></ng-content>
+            <ng-content></ng-content>
+
 
             <div class="popover-preview-sections-container">
                 <scill-popover-preview-bp-section  [app-id]="appId"
@@ -162,5 +163,19 @@
               </ng-container>
             </div>
 
+            <div class="close-mobile-btn" (click)="togglePopover()">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   xmlns:xlink="http://www.w3.org/1999/xlink"
+                   aria-hidden="true" focusable="false" width="1em" height="1em"
+                   style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg);
+                   transform: rotate(360deg);"
+                   preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+                  <path fill="none" [ngStyle]="{'stroke': btnBackground}"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="56"
+                        d="M112 328l144-144l144 144"/>
+              </svg>
+            </div>
         </div>
 </div>
