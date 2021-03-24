@@ -68,19 +68,22 @@ $gold: #F5A622;
   }
 
     .popover-preview {
-      right: 0px;
+      right: 0  ;
+      //top:0;
+      //bottom:0;
+      left:0;
       min-width: 300px;
       max-width: 350px;
-      position: absolute;
+      position: fixed;
       width: 100%;
       background: #fff;
       color: #fff;
       border-radius: 5px;
       box-shadow: 0 7px 6px rgb(0 0 0 / 40%);
       border: 1px solid #999;
+      overflow-y: scroll;
       .popover-preview-sections-container{
-        overflow: auto;
-        max-height: 700px;
+        //height: 600x;
         padding-top: 10px;
       }
       .popover-preview-section {

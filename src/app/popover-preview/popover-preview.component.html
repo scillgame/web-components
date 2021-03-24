@@ -74,6 +74,7 @@
         </ng-container>
         <div class="popover-preview" [hidden]="!isPopoverPreviewVisible"
              [ngStyle]="{
+         'height':innerHeight + 'px',
          'top':offsetTop > 0 && offsetTop + 'px',
          'right':offsetRight > 0 && offsetRight + 'px',
          'bottom':offsetBottom > 0 && offsetBottom + 'px',
@@ -116,7 +117,8 @@
           </ng-container>
 
           <!-- Include any outside content -->
-          <ng-content></ng-content>
+            <ng-content></ng-content>
+
 
             <div class="popover-preview-sections-container">
                 <scill-popover-preview-bp-section  [app-id]="appId"
