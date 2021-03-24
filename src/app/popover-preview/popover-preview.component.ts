@@ -109,7 +109,6 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   battlePassInfo$: Observable<SCILLBattlePassInfo>;
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
   isPopoverPreviewVisible = false;
-  innerHeight;
 
   currentNotification$: Observable<SCILLNotification>;
 
@@ -123,8 +122,6 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-      console.log('%c HEIGHT', 'color:gold;', window.innerHeight);
-      this.innerHeight = window.innerHeight;
       // Set default frontend translation language
       // If language attribute provided but value does not exist set default to 'en'
       if(this.language){

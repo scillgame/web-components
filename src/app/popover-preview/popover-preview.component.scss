@@ -68,10 +68,7 @@ $gold: #F5A622;
   }
 
     .popover-preview {
-      right: 0  ;
-      //top:0;
-      //bottom:0;
-      left:0;
+      right: 0;
       min-width: 300px;
       max-width: 350px;
       position: fixed;
@@ -83,12 +80,15 @@ $gold: #F5A622;
       border: 1px solid #999;
 
       .popover-preview-sections-container{
-        max-height:500px;
+        max-height:600px;
         overflow-y: scroll;
         padding-top: 10px;
       }
       .popover-preview-section {
         padding-bottom: 10px;
+      }
+      .close-mobile-btn{
+        display:none;
       }
     }
 
@@ -109,6 +109,7 @@ $gold: #F5A622;
       }
     }
   }
+
 
   .popover-inline-notification {
     border-bottom: 1px solid #999;
@@ -318,10 +319,12 @@ $check-color: $brand-success;
     overflow: scroll;
     height:640px;
     top:0;
+    left:0;
     .popover-preview-sections-container{
       max-height:600px;
     }
     .close-mobile-btn{
+      display:block !important;
       left:50%;
       transform:translate(-50%);
       padding:0 8px;
@@ -342,20 +345,28 @@ $check-color: $brand-success;
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-
+  .close-mobile-btn{
+   display:none;
+ }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-
+ .close-mobile-btn{
+   display:none;
+ }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
-
+ .close-mobile-btn{
+   display:none;
+ }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
-
+ .close-mobile-btn{
+   display:none;
+ }
 }
