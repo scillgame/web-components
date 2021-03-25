@@ -24,8 +24,10 @@ $gold: #F5A622;
   align-items:center;
 }
 .popover-preview-container{
+  position:relative;
   display: inline-block;
   .popover-preview-btn {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
