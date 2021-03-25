@@ -128,7 +128,6 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
       if (this.battlePassId) {
       this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId, this.language, this.environment).pipe(
         map(battlePassInfo => {
-          console.log('%c BATTLE PASS', 'color:gold;', battlePassInfo);
           return battlePassInfo;
         })
       );
