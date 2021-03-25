@@ -24,8 +24,10 @@ $gold: #F5A622;
   align-items:center;
 }
 .popover-preview-container{
+  position:relative;
   display: inline-block;
   .popover-preview-btn {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -68,10 +70,10 @@ $gold: #F5A622;
   }
 
     .popover-preview {
-      right: 0;
+      right: 1px;
       min-width: 300px;
       max-width: 350px;
-      position: fixed;
+      position: absolute;
       width: 100%;
       background: #fff;
       color: #fff;
@@ -314,6 +316,7 @@ $check-color: $brand-success;
   }
   .popover-preview{
     //margin-top:113px;
+    position:fixed !important;
     min-width:unset !important;
     max-width:unset !important;
     overflow: scroll;
