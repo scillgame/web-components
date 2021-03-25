@@ -6,7 +6,6 @@ import {buffer, debounceTime, map} from 'rxjs/operators';
 import {SCILLNotification, SCILLService} from '../scill.service';
 import {SCILLBattlePassInfo, SCILLBattlePassService} from '../scillbattle-pass.service';
 import {SCILLPersonalChallengesInfo, SCILLPersonalChallengesService} from '../scillpersonal-challenges.service';
-import { TranslateService } from '@ngx-translate/core';
 
 class Theme {
   primaryColor: string;
@@ -103,7 +102,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('border-color') borderColor = '#999';
   @Input('border-width') borderWidth = '0';
   @Input('theme') theme = 'default';
-  @Input('language') language: string;
+  @Input('language') language = 'en';
 
 
   battlePassInfo$: Observable<SCILLBattlePassInfo>;
@@ -114,20 +113,16 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
 
   constructor(private scillService: SCILLService,
               private scillBattlePassService: SCILLBattlePassService,
-              private scillPersonalChallengesService: SCILLPersonalChallengesService,
-              private translate: TranslateService) {
+              private scillPersonalChallengesService: SCILLPersonalChallengesService) {
     this.setTheme(this.theme);
 
-    translate.setDefaultLang('en');
   }
 
   ngOnInit(): void {
       // Set default frontend translation language
       // If language attribute provided but value does not exist set default to 'en'
-      if(this.language){
-          this.language =  this.language.length === 0 || this.language !== 'de' ? 'en'  : this.language;
-          this.translate.use(this.language);
-      }
+
+    this.language =  this.language.length === 0 || this.language !== 'de' ? 'en'  : this.language;
 
 
       if (this.battlePassId) {
