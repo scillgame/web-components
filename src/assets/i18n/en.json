@@ -3,5 +3,5 @@
   "activate": "Activate",
   "claim": "Claim",
   "cancel": "Cancel",
-  "battle_pass_locked": "{{battle_pass_name}} is locked"
+  "battle_pass_locked": " is locked"
 }

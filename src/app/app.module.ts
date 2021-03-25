@@ -31,6 +31,7 @@ import { UserIconComponent } from './user-icon/user-icon.component';
 import { LockedIconComponent } from './locked-icon/locked-icon.component';
 import { ImageSearchComponent } from './image-search/image-search.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { GetTranslationPipe } from './pipes/get-translation.pipe';
 
 @NgModule({
     declarations   : [
@@ -58,7 +59,8 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
         UserIconComponent,
         LockedIconComponent,
         ImageSearchComponent,
-        LeaderboardComponent
+        LeaderboardComponent,
+        GetTranslationPipe
     ],
     imports        : [
         BrowserModule,
