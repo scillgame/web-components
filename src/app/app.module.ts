@@ -3,8 +3,6 @@ import {Injector, NgModule}              from '@angular/core';
 import {createCustomElement}             from '@angular/elements';
 import {BrowserAnimationsModule}         from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import {HttpLoaderFactory} from './http-loader.factory';
 
 import {PersonalChallengesComponent}     from './personal-challenges/personal-challenges.component';
 import {ActiveTillPipe}                  from './pipes/active-till.pipe';
@@ -31,6 +29,7 @@ import { UserIconComponent } from './user-icon/user-icon.component';
 import { LockedIconComponent } from './locked-icon/locked-icon.component';
 import { ImageSearchComponent } from './image-search/image-search.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { GetTranslationPipe } from './pipes/get-translation.pipe';
 
 @NgModule({
     declarations   : [
@@ -58,19 +57,13 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
         UserIconComponent,
         LockedIconComponent,
         ImageSearchComponent,
-        LeaderboardComponent
+        LeaderboardComponent,
+        GetTranslationPipe
     ],
     imports        : [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        })
     ],
     providers      : [],
     entryComponents: [
