@@ -1,6 +1,6 @@
 <ng-container *ngIf="personalChallengesInfo$ | async as personalChallengesInfo">
   <div class="scill-community-challenge" *ngIf="personalChallengesInfo.challenge" attr.data-challenge-id="{{personalChallengesInfo.challenge.challenge_id}}" attr.data-challenge-type="{{personalChallengesInfo.challenge.type}}" [style.background-image]="personalChallengesInfo.challenge.challenge_icon_hd ? 'url(' + personalChallengesInfo.challenge.challenge_icon_hd + ')': 'none'">
-    <img *ngIf="personalChallengesInfo.challenge.challenge_icon && personalChallengesInfo.challenge.challenge_icon.substr(0,4) === 'http'" class="scill-community-challenge-image" src="{{challenge.challenge_icon}}">
+    <img *ngIf="personalChallengesInfo.challenge.challenge_icon && personalChallengesInfo.challenge.challenge_icon.substr(0,4) === 'http'" class="scill-community-challenge-image" src="{{personalChallengesInfo.challenge.challenge_icon}}">
     <div class="scill-community-challenge-info">
       <h3 class="scill-community-challenge-name" [class.finished]="personalChallengesInfo.challenge.type === 'finished'"> {{personalChallengesInfo.challenge.challenge_name}}</h3>
       <p *ngIf="personalChallengesInfo.challenge.type == 'in-progress'" class="scill-community-challenge-time-remaining">
