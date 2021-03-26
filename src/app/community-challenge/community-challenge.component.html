@@ -4,7 +4,7 @@
     <div class="scill-community-challenge-info">
       <h3 class="scill-community-challenge-name" [class.finished]="personalChallengesInfo.challenge.type === 'finished'"> {{personalChallengesInfo.challenge.challenge_name}}</h3>
       <p *ngIf="personalChallengesInfo.challenge.type == 'in-progress'" class="scill-community-challenge-time-remaining">
-        <span *ngIf="personalChallengesInfo.challenge.type === 'in-progress' && personalChallengesInfo.challenge.challenge_duration_time >=0 "><span class="scill-community-challenge-time-remaining-label">Time remaining: </span><app-time-remaining class="scill-community-challenge-time-remaining-counter" [challenge]="challenge" [style.color]="textColor"></app-time-remaining></span>
+        <span *ngIf="personalChallengesInfo.challenge.type === 'in-progress' && personalChallengesInfo.challenge.challenge_duration_time >=0 "><span class="scill-community-challenge-time-remaining-label">Time remaining: </span><app-time-remaining class="scill-community-challenge-time-remaining-counter" [challenge]="personalChallengesInfo.challenge"></app-time-remaining></span>
       </p>
       <div class="scill-community-challenge-progress" *ngIf="personalChallengesInfo.challenge.type === 'in-progress'">
         <div class="scill-progress-bar-background">
