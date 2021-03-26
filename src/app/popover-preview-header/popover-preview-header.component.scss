@@ -57,3 +57,21 @@ $gold: #F5A622;
   }
 
 }
+
+@media only screen and (max-width: 600px) {
+  .popover-preview-header{
+    //position:fixed;
+    //top:0;
+    //right:0; left:0;
+    //z-index:1;
+    .user{
+      //display:none;
+    }
+    .battlepass-lvl{
+      //display:none;
+    }
+    .battle-pass-stats{
+      margin-top:20px !important;
+    }
+  }
+}

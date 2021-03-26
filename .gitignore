@@ -47,3 +47,5 @@ Thumbs.db
 /elements
 /elements/scill-widgets.js
 /elements/scill-widgets.css
+/dev-elements
+/dev-elements/*

@@ -23,4 +23,5 @@ export class PopoverPreviewHeaderComponent extends BattlePassComponent {
   @Input('unlock-battle-pass-btn-text-color') unlockBattlePassBtnTextColor: string;
   @Input('border-color') borderColor: string;
   @Input('border-width') borderWidth: string;
+  @Input('language') language: string;
 }
