@@ -39,7 +39,7 @@ export class LeaderboardComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.leaderboardInfo$ = this.scillLeaderboardService.getLeaderboardInfo(this.leaderboardId, parseInt(this.pageSize, 10), this.language).pipe(
+    this.leaderboardInfo$ = this.scillLeaderboardService.getLeaderboardInfo(this.leaderboardId, parseInt(this.pageSize, 10), this.language, "development").pipe(
       map(leaderboardInfo => {
         return leaderboardInfo;
       })

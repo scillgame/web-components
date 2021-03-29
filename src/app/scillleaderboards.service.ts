@@ -3,11 +3,19 @@ import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
 import {SCILLService} from './scill.service';
 import {
   Challenge,
-  ChallengeCategory, ChallengesApi,
+  ChallengeCategory,
+  ChallengesApi,
   ChallengeWebhookPayload,
-  getChallengesApi, getLeaderboardsApi, Leaderboard, LeaderboardMemberRanking, LeaderboardRanking, LeaderboardsApi,
+  getChallengesApi,
+  getLeaderboardsApi,
+  Leaderboard,
+  LeaderboardMemberRanking,
+  LeaderboardRanking,
+  LeaderboardsApi, LeaderboardUpdateMonitor,
+  LeaderboardUpdatePayload,
   SCILLEnvironment,
-  startMonitorChallengeUpdates
+  startMonitorChallengeUpdates,
+  startMonitorLeaderboardUpdates
 } from '@scillgame/scill-js';
 import {filter, map, mergeMap} from 'rxjs/operators';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
@@ -24,6 +32,7 @@ export class SCILLLeaderboardInfo {
   userRankings: LeaderboardRanking[];
   teamRankings: LeaderboardRanking[];
   currentPage$ = new BehaviorSubject<number>(1);
+  monitor: LeaderboardUpdateMonitor;
 }
 
 @Injectable({
@@ -49,12 +58,10 @@ export class SCILLLeaderboardsService {
         map(accessToken => {
 
           const leaderboardInfo = new SCILLLeaderboardInfo();
-          /*
-          leaderboardInfo.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
-            this.updateChallenge(leaderboardInfo$, payload);
-            leaderboardInfo$.next(this.calculateStats(leaderboardInfo));
+
+          leaderboardInfo.monitor = startMonitorLeaderboardUpdates(accessToken, leaderboardId, (payload => {
+            this.updateLeaderboard(leaderboardInfo$, payload);
           }), environment);
-           */
 
           leaderboardInfo.accessToken = accessToken;
           leaderboardInfo.leaderboardsApi = getLeaderboardsApi(leaderboardInfo.accessToken, environment);
@@ -62,20 +69,24 @@ export class SCILLLeaderboardsService {
           return leaderboardInfo;
         }),
         mergeMap(leaderboardInfo => {
-          return leaderboardInfo.currentPage$.pipe(
-            mergeMap(currentPage => {
-              if (currentPage >= 1) {
-                return leaderboardInfo.leaderboardsApi?.getLeaderboard(leaderboardId, currentPage, numItems, language).then(leaderboard => {
-                  leaderboardInfo.leaderboardName = leaderboard.name;
-                  leaderboardInfo.userRankings = leaderboard.grouped_by_users;
-                  leaderboardInfo.teamRankings = leaderboard.grouped_by_teams;
-                  leaderboardInfo.numUserRakings = 0; // is leaderboard.num_users once implemented in backend
-                  leaderboardInfo.numTeamRankings = 0; // is leaderboard.num_teams once implemented in backend
-                  return leaderboardInfo;
-                });
-              } else {
-                return of(leaderboardInfo);
-              }
+          return leaderboardInfo.refresh$.pipe(
+            mergeMap(refresh => {
+              return leaderboardInfo.currentPage$.pipe(
+                mergeMap(currentPage => {
+                  if (currentPage >= 1) {
+                    return leaderboardInfo.leaderboardsApi?.getLeaderboard(leaderboardId, currentPage, numItems, language).then(leaderboard => {
+                      leaderboardInfo.leaderboardName = leaderboard.name;
+                      leaderboardInfo.userRankings = leaderboard.grouped_by_users;
+                      leaderboardInfo.teamRankings = leaderboard.grouped_by_teams;
+                      leaderboardInfo.numUserRakings = 0; // is leaderboard.num_users once implemented in backend
+                      leaderboardInfo.numTeamRankings = 0; // is leaderboard.num_teams once implemented in backend
+                      return leaderboardInfo;
+                    });
+                  } else {
+                    return of(leaderboardInfo);
+                  }
+                })
+              );
             })
           );
         }),
@@ -86,6 +97,11 @@ export class SCILLLeaderboardsService {
 
       return leaderboardInfo$.asObservable();
     }
+  }
+
+  public updateLeaderboard(leaderboardInfo$: BehaviorSubject<SCILLLeaderboardInfo>, payload: LeaderboardUpdatePayload): void {
+    const leaderboardInfo = leaderboardInfo$.getValue();
+    leaderboardInfo.refresh$.next(true);
   }
 
   private nextPage(leaderboardInfo): void {
