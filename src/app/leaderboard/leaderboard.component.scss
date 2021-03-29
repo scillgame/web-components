@@ -1,3 +1,47 @@
-.scill-leaderboard {
-  width: 100%;
+.scill-leaderboard-container{
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
+  .scill-leaderboard {
+    background: #fff;
+    width: 100%;
+    border-collapse: collapse;
+    tr.scill-leaderboard-header{
+       border-bottom: 1px solid  rgba(0, 0, 0, 0.12);
+      .scill-leaderboard-cell{
+        padding:20px;
+        text-align:left;
+      }
+    }
+    .scill-leaderboard-row{
+      border-bottom: 1px solid  rgba(0, 0, 0, 0.12);
+      .scill-leaderboard-cell{
+        padding:20px;
+      }
+    }
+    .scill-leaderboard-footer{
+      .disabled-arrow{
+        color:red;
+        svg path{
+          stroke:lightgrey;
+        }
+      }
+      .scill-leaderboard-cell{
+        padding:20px;
+      }
+      .previous-pagination{
+        display:flex;
+        background:transparent;
+        border:0;
+        font-size:24px;
+        cursor:pointer;
+      }
+      .next-pagination{
+        display:flex;
+        background:transparent;
+        border:0;
+        font-size:24px;
+        cursor:pointer;
+      }
+    }
+  }
+
 }

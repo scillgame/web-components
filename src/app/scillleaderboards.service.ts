@@ -2,17 +2,14 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
 import {SCILLService} from './scill.service';
 import {
-  Challenge,
-  ChallengeCategory, ChallengesApi,
-  ChallengeWebhookPayload,
-  getChallengesApi, getLeaderboardsApi, Leaderboard, LeaderboardMemberRanking, LeaderboardRanking, LeaderboardsApi,
+  getLeaderboardsApi,
+  Leaderboard,
+  LeaderboardMemberRanking,
+  LeaderboardRanking, LeaderboardsApi,
   SCILLEnvironment,
-  startMonitorChallengeUpdates
 } from '@scillgame/scill-js';
 import {filter, map, mergeMap} from 'rxjs/operators';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
-import {SCILLPersonalChallengesInfo} from './scillpersonal-challenges.service';
-import {ChallengeUpdateMonitor} from '@scillgame/scill-js/dist/challenge-update-monitor';
 
 export class SCILLLeaderboardInfo {
   leaderboardName: string;
@@ -69,8 +66,8 @@ export class SCILLLeaderboardsService {
                   leaderboardInfo.leaderboardName = leaderboard.name;
                   leaderboardInfo.userRankings = leaderboard.grouped_by_users;
                   leaderboardInfo.teamRankings = leaderboard.grouped_by_teams;
-                  leaderboardInfo.numUserRakings = 0; // is leaderboard.num_users once implemented in backend
-                  leaderboardInfo.numTeamRankings = 0; // is leaderboard.num_teams once implemented in backend
+                  leaderboardInfo.numUserRakings = leaderboard.num_users || 0;
+                  leaderboardInfo.numTeamRankings = leaderboard.num_teams || 0;
                   return leaderboardInfo;
                 });
               } else {

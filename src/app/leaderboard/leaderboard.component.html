@@ -1,38 +1,67 @@
 <div class="scill-leaderboard-container" *ngIf="leaderboardInfo$ | async as leaderboardInfo">
   <table class="scill-leaderboard">
-    <tr class="scill-leaderboard-header">
-      <td class="scill-leaderboard-rank">
-        Rank
-      </td>
-      <td *ngIf="showAvatarImages === 'true'" class="scill-leaderboard-avatar">
-        Image
-      </td>
-      <td class="scill-leaderboard-name">
-        Name
-      </td>
-      <td class="scill-leaderboard-score">
-        Score
-      </td>
-    </tr>
-    <tr *ngFor="let ranking of memberType === 'user' ? leaderboardInfo.userRankings : leaderboardInfo.teamRankings; trackBy: rankingById">
-      <td class="scill-leaderboard-rank">
-        {{ranking.rank}}
-      </td>
-      <td *ngIf="showAvatarImages === 'true'" class="scill-leaderboard-avatar">
-        <img class="scill-leaderboard-avatar-image" *ngIf="ranking.additional_info?.avatarImage" [src]="avatarUrlPrefix + ranking.additional_info.avatarImage + avatarUrlSuffix">
-      </td>
-      <td class="scill-leaderboard-name">
-        {{ranking.additional_info?.username ? ranking.additional_info.username : ranking.member_id}}
-      </td>
-      <td class="scill-leaderboard-score">
-        {{ranking.score}}
-      </td>
-    </tr>
+   <thead>
+     <tr class="scill-leaderboard-header">
+       <th class="scill-leaderboard-rank scill-leaderboard-cell">
+         Rank
+       </th>
+       <th  class="scill-leaderboard-avatar scill-leaderboard-cell">
+         Image
+       </th>
+       <th class="scill-leaderboard-name scill-leaderboard-cell">
+         Name
+       </th>
+       <th class="scill-leaderboard-score scill-leaderboard-cell">
+         Score
+       </th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr *ngFor="let ranking of memberType === 'user' ? leaderboardInfo.userRankings : leaderboardInfo.teamRankings; trackBy: rankingById" class="scill-leaderboard-row">
+       <td class="scill-leaderboard-rank scill-leaderboard-cell">
+         {{ranking.rank}}
+       </td>
+       <td class="scill-leaderboard-avatar">
+         <img class="scill-leaderboard-avatar-image" *ngIf="ranking.additional_info?.avatarImage" [src]="avatarUrlPrefix + ranking.additional_info.avatarImage + avatarUrlSuffix">
+       </td>
+       <td class="scill-leaderboard-name scill-leaderboard-cell">
+         {{ranking.additional_info?.username ? ranking.additional_info.username : ranking.member_id}}
+       </td>
+       <td class="scill-leaderboard-score scill-leaderboard-cell">
+         {{ranking.score}}
+       </td>
+     </tr>
+   </tbody>
+
+    <tfoot class="scill-leaderboard-footer">
+      <tr >
+        <td></td>
+        <td></td>
+        <td class="scill-leaderboard-cell" colspan="3">
+          <div *ngIf="pagination === 'true'" class="sc-d-flex sc-justify-content-end sc-align-items-center">
+            <div *ngIf="memberType === 'user' && leaderboardInfo.userRankings.length >= 1">{{leaderboardInfo.userRankings[0].rank}} - {{leaderboardInfo.userRankings[leaderboardInfo.userRankings.length - 1].rank}} of {{leaderboardInfo.numUserRakings}}</div>
+            <div *ngIf="memberType === 'team' && leaderboardInfo.teamRankings.length >= 1">{{leaderboardInfo.teamRankings[0].rank}} - {{leaderboardInfo.teamRankings[leaderboardInfo.teamRankings.length - 1].rank}} of {{leaderboardInfo.numTeamRankings}}</div>
+            <button (click)="prevPage(leaderboardInfo)" [disabled]="(leaderboardInfo.currentPage$ | async) <= 1" class="previous-pagination" [ngClass]="(leaderboardInfo.currentPage$ | async) <= 1 && 'disabled-arrow'">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path fill="none" stroke="#626262" stroke-linecap="round" stroke-linejoin="round" stroke-width="60" d="M328 112L184 256l144 144"/></svg>
+            </button>
+            <div *ngIf="leaderboardInfo.currentPage$ | async as currentPage">
+              {{currentPage}}
+            </div>
+            <button (click)="nextPage(leaderboardInfo)"
+                    [disabled]="!((memberType === 'user' ? leaderboardInfo.userRankings : leaderboardInfo.teamRankings).length >= (pageSize|number))"
+                    [ngClass]="!((memberType === 'user' ? leaderboardInfo.userRankings : leaderboardInfo.teamRankings).length >= (pageSize|number)) && 'disabled-arrow'"
+                    class="next-pagination"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+                <path fill="none" stroke="#626262" stroke-linecap="round" stroke-linejoin="round" stroke-width="60" d="M184 112l144 144l-144 144"/></svg>
+            </button>
+            <!--<div class="next-pagination">-->
+              <!--<svg viewBox="0 0 24 24" focusable="false" class="mat-paginator-icon" width="1em"><path  d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z" stroke-width="60"></path></svg>-->
+            <!--</div>-->
+          </div>
+        </td>
+      </tr>
+
+    </tfoot>
   </table>
-  <div *ngIf="pagination === 'true'">
-    <div *ngIf="memberType === 'user' && leaderboardInfo.userRankings.length >= 1">{{leaderboardInfo.userRankings[0].rank}} - {{leaderboardInfo.userRankings[leaderboardInfo.userRankings.length - 1].rank}} of {{leaderboardInfo.numUserRakings}}</div>
-    <div *ngIf="memberType === 'team' && leaderboardInfo.teamRankings.length >= 1">{{leaderboardInfo.teamRankings[0].rank}} - {{leaderboardInfo.teamRankings[leaderboardInfo.teamRankings.length - 1].rank}} of {{leaderboardInfo.numTeamRankings}}</div>
-    <button (click)="prevPage(leaderboardInfo)" [disabled]="(leaderboardInfo.currentPage$ | async) <= 1"> < </button>
-    <button (click)="nextPage(leaderboardInfo)" [disabled]="!((memberType === 'user' ? leaderboardInfo.userRankings : leaderboardInfo.teamRankings).length >= (pageSize|number))"> > </button>
-  </div>
 </div>
