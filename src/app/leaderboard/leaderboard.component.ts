@@ -28,7 +28,6 @@ export class LeaderboardComponent implements OnInit, OnChanges {
   @Input('enviroment') evniroment: SCILLEnvironment = 'production';
 
   leaderboardInfo$: Observable<SCILLLeaderboardInfo>;
-  pagesNumber: number;
   private page = 1;
 
   constructor(private scillService: SCILLService, protected scillLeaderboardService: SCILLLeaderboardsService) {
@@ -57,9 +56,6 @@ export class LeaderboardComponent implements OnInit, OnChanges {
 
     // TODO: Add code to determing how many pages are available
     // The Leaderboard response will contain num_users and num_teams that can be used to calculate how many pages we have
-      this.pagesNumber = leaderboardInfo.numUserRakings / 25;
-
-
     leaderboardInfo.currentPage$.next(currentPage + 1);
   }
 
