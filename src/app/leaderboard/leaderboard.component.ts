@@ -1,10 +1,10 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {Observable} from 'rxjs';
-import {SCILLPersonalChallengesInfo, SCILLPersonalChallengesService} from '../scillpersonal-challenges.service';
-import {SCILLService} from '../scill.service';
-import {ChallengesApi, LeaderboardRanking} from '@scillgame/scill-js';
-import {map} from 'rxjs/operators';
-import {SCILLLeaderboardInfo, SCILLLeaderboardsService} from '../scillleaderboards.service';
+import {Observable}                                                            from 'rxjs';
+import {SCILLPersonalChallengesInfo, SCILLPersonalChallengesService}           from '../scillpersonal-challenges.service';
+import {SCILLService}                                                          from '../scill.service';
+import {ChallengesApi, LeaderboardRanking, SCILLEnvironment}                   from '@scillgame/scill-js';
+import {map}                                                                   from 'rxjs/operators';
+import {SCILLLeaderboardInfo, SCILLLeaderboardsService}                        from '../scillleaderboards.service';
 
 @Component({
   selector: 'scill-leaderboard',
@@ -25,6 +25,7 @@ export class LeaderboardComponent implements OnInit, OnChanges {
   @Input('avatar-url-suffix') avatarUrlSuffix = '';
   @Input('avatar-images') showAvatarImages = 'false';
   @Input('pagination') pagination = 'true';
+  @Input('enviroment') evniroment: SCILLEnvironment = 'production';
 
   leaderboardInfo$: Observable<SCILLLeaderboardInfo>;
   private page = 1;
@@ -39,7 +40,7 @@ export class LeaderboardComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.leaderboardInfo$ = this.scillLeaderboardService.getLeaderboardInfo(this.leaderboardId, parseInt(this.pageSize, 10), this.language, "development").pipe(
+    this.leaderboardInfo$ = this.scillLeaderboardService.getLeaderboardInfo(this.leaderboardId, parseInt(this.pageSize, 10), this.language, this.evniroment).pipe(
       map(leaderboardInfo => {
         return leaderboardInfo;
       })
@@ -55,13 +56,11 @@ export class LeaderboardComponent implements OnInit, OnChanges {
 
     // TODO: Add code to determing how many pages are available
     // The Leaderboard response will contain num_users and num_teams that can be used to calculate how many pages we have
-
     leaderboardInfo.currentPage$.next(currentPage + 1);
   }
 
   prevPage(leaderboardInfo: SCILLLeaderboardInfo): void {
     const currentPage = leaderboardInfo.currentPage$.getValue();
-    console.log("HALLO", currentPage);
     if (currentPage > 1) {
       leaderboardInfo.currentPage$.next(currentPage - 1);
     }
