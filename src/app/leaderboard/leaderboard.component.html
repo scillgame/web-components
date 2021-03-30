@@ -35,9 +35,9 @@
 
     <tfoot class="scill-leaderboard-footer"  *ngIf="pagination === 'true'" >
       <tr >
-        <td class="scill-leaderboard-cell"></td>
-        <td class="scill-leaderboard-cell"></td>
-        <td class="scill-leaderboard-cell" colspan="3">
+        <td class="scill-leaderboard-footer-cell"></td>
+        <td class="scill-leaderboard-footer-cell"></td>
+        <td class="scill-leaderboard-footer-cell" colspan="3">
           <div class="sc-d-flex sc-justify-content-end sc-align-items-center">
             <div *ngIf="memberType === 'user' && leaderboardInfo.userRankings.length >= 1">{{leaderboardInfo.userRankings[0].rank}} - {{leaderboardInfo.userRankings[leaderboardInfo.userRankings.length - 1].rank}} of {{leaderboardInfo.numUserRakings}}</div>
             <div *ngIf="memberType === 'team' && leaderboardInfo.teamRankings.length >= 1">{{leaderboardInfo.teamRankings[0].rank}} - {{leaderboardInfo.teamRankings[leaderboardInfo.teamRankings.length - 1].rank}} of {{leaderboardInfo.numTeamRankings}}</div>
