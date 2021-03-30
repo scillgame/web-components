@@ -5,7 +5,7 @@
        <th class="scill-leaderboard-rank scill-leaderboard-header-cell">
          Rank
        </th>
-       <th  class="scill-leaderboard-avatar scill-leaderboard-header-cell">
+       <th  class="scill-leaderboard-avatar scill-leaderboard-header-cell" *ngIf="showAvatarImages === 'true'">
          Image
        </th>
        <th class="scill-leaderboard-name scill-leaderboard-header-cell">
@@ -22,7 +22,7 @@
          {{ranking.rank}}
        </td>
        <td class="scill-leaderboard-avatar scill-leaderboard-cell">
-         <img class="scill-leaderboard-avatar-image" *ngIf="ranking.additional_info?.avatarImage" [src]="avatarUrlPrefix + ranking.additional_info.avatarImage + avatarUrlSuffix">
+         <img class="scill-leaderboard-avatar-image" *ngIf="showAvatarImages === 'true'" [src]="avatarUrlPrefix + ranking.additional_info.avatarImage + avatarUrlSuffix">
        </td>
        <td class="scill-leaderboard-name scill-leaderboard-cell">
          {{ranking.additional_info?.username ? ranking.additional_info.username : ranking.member_id}}
