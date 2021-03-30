@@ -2,16 +2,16 @@
   <table class="scill-leaderboard">
    <thead>
      <tr class="scill-leaderboard-header">
-       <th class="scill-leaderboard-rank scill-leaderboard-cell">
+       <th class="scill-leaderboard-rank scill-leaderboard-header-cell">
          Rank
        </th>
-       <th  class="scill-leaderboard-avatar scill-leaderboard-cell">
+       <th  class="scill-leaderboard-avatar scill-leaderboard-header-cell">
          Image
        </th>
-       <th class="scill-leaderboard-name scill-leaderboard-cell">
+       <th class="scill-leaderboard-name scill-leaderboard-header-cell">
          Name
        </th>
-       <th class="scill-leaderboard-score scill-leaderboard-cell">
+       <th class="scill-leaderboard-score scill-leaderboard-header-cell">
          Score
        </th>
      </tr>
@@ -21,7 +21,7 @@
        <td class="scill-leaderboard-rank scill-leaderboard-cell">
          {{ranking.rank}}
        </td>
-       <td class="scill-leaderboard-avatar">
+       <td class="scill-leaderboard-avatar scill-leaderboard-cell">
          <img class="scill-leaderboard-avatar-image" *ngIf="ranking.additional_info?.avatarImage" [src]="avatarUrlPrefix + ranking.additional_info.avatarImage + avatarUrlSuffix">
        </td>
        <td class="scill-leaderboard-name scill-leaderboard-cell">
@@ -33,12 +33,12 @@
      </tr>
    </tbody>
 
-    <tfoot class="scill-leaderboard-footer">
+    <tfoot class="scill-leaderboard-footer"  *ngIf="pagination === 'true'" >
       <tr >
-        <td></td>
-        <td></td>
+        <td class="scill-leaderboard-cell"></td>
+        <td class="scill-leaderboard-cell"></td>
         <td class="scill-leaderboard-cell" colspan="3">
-          <div *ngIf="pagination === 'true'" class="sc-d-flex sc-justify-content-end sc-align-items-center">
+          <div class="sc-d-flex sc-justify-content-end sc-align-items-center">
             <div *ngIf="memberType === 'user' && leaderboardInfo.userRankings.length >= 1">{{leaderboardInfo.userRankings[0].rank}} - {{leaderboardInfo.userRankings[leaderboardInfo.userRankings.length - 1].rank}} of {{leaderboardInfo.numUserRakings}}</div>
             <div *ngIf="memberType === 'team' && leaderboardInfo.teamRankings.length >= 1">{{leaderboardInfo.teamRankings[0].rank}} - {{leaderboardInfo.teamRankings[leaderboardInfo.teamRankings.length - 1].rank}} of {{leaderboardInfo.numTeamRankings}}</div>
             <button (click)="prevPage(leaderboardInfo)" [disabled]="(leaderboardInfo.currentPage$ | async) <= 1" class="previous-pagination" [ngClass]="(leaderboardInfo.currentPage$ | async) <= 1 && 'disabled-arrow'">
