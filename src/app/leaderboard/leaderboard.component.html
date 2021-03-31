@@ -22,7 +22,7 @@
          {{ranking.rank}}
        </td>
        <td class="scill-leaderboard-avatar scill-leaderboard-cell" *ngIf="showAvatarImages === 'true'">
-         <img class="scill-leaderboard-avatar-image"  [src]="avatarUrlPrefix + ranking.additional_info.avatarImage + avatarUrlSuffix">
+         <img class="scill-leaderboard-avatar-image" *ngIf="ranking.additional_info" [src]="avatarUrlPrefix + ranking.additional_info.avatarImage + avatarUrlSuffix">
        </td>
        <td class="scill-leaderboard-name scill-leaderboard-cell">
          {{ranking.additional_info?.username ? ranking.additional_info.username : ranking.member_id}}
