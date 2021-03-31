@@ -3,16 +3,16 @@
    <thead>
      <tr class="scill-leaderboard-header">
        <th class="scill-leaderboard-rank scill-leaderboard-header-cell">
-         Rank
+         {{'rank' | getTranslation: language}}
        </th>
        <th  class="scill-leaderboard-avatar scill-leaderboard-header-cell" *ngIf="showAvatarImages === 'true'">
-         Image
+         {{'image' | getTranslation: language}}
        </th>
        <th class="scill-leaderboard-name scill-leaderboard-header-cell">
-         Name
+         {{'name' | getTranslation: language}}
        </th>
        <th class="scill-leaderboard-score scill-leaderboard-header-cell">
-         Score
+         {{'score' | getTranslation: language}}
        </th>
      </tr>
    </thead>
@@ -21,8 +21,8 @@
        <td class="scill-leaderboard-rank scill-leaderboard-cell">
          {{ranking.rank}}
        </td>
-       <td class="scill-leaderboard-avatar scill-leaderboard-cell">
-         <img class="scill-leaderboard-avatar-image" *ngIf="showAvatarImages === 'true'" [src]="avatarUrlPrefix + ranking.additional_info.avatarImage + avatarUrlSuffix">
+       <td class="scill-leaderboard-avatar scill-leaderboard-cell" *ngIf="showAvatarImages === 'true'">
+         <img class="scill-leaderboard-avatar-image"  [src]="avatarUrlPrefix + ranking.additional_info.avatarImage + avatarUrlSuffix">
        </td>
        <td class="scill-leaderboard-name scill-leaderboard-cell">
          {{ranking.additional_info?.username ? ranking.additional_info.username : ranking.member_id}}
