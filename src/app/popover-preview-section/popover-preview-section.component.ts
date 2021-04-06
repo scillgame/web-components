@@ -39,4 +39,17 @@ export class PopoverPreviewSectionComponent {
     challengeById(index: number, challenge: Challenge): any {
       return challenge.challenge_id;
     }
+    calculateCompletedChallenges(challenges): number {
+        let counter = 0;
+        if (challenges.length < 1) {
+            return null;
+        }
+        challenges.map(ch => {
+            if (ch.type === 'finished') {
+                counter++;
+            }
+            return ch;
+        });
+        return counter;
+    }
 }
