@@ -1,7 +1,8 @@
-<div *ngIf="image$ | async as imageInfo" class="image-search-image" [style.top]="imageInfo.top + 'px'" [style.left]="imageInfo.left + 'px'">
+<div *ngIf="image$ | async as imageInfo" class="image-search-image" [style.top]="imageInfo.top + 'px'" [style.left]="imageInfo.left + 'px'" [style.width]="(maxImageWidth | number) + 'px'">
   <img src="{{imageInfo.imageUrl}}" (click)="collectImage(imageInfo)">
 </div>
 <div class="notification" *ngIf="notification$ | async as notification">
   <p class="message">{{notification.message}}</p>
   <button (click)="closeNotification()">Close</button>
 </div>
+<div class="image-area" #imageArea></div>

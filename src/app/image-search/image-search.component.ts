@@ -1,4 +1,15 @@
-import {Component, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SCILLPersonalChallengesInfo, SCILLPersonalChallengesService} from '../scillpersonal-challenges.service';
 import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
@@ -47,6 +58,7 @@ export class ImageSearchComponent implements OnInit, OnChanges {
   @Input('minimum-scroll-depth') minimumScrollDepth;
   @Input('display-delay') displayDelay = '0';
   @Input('display-delay-variation') displayDelayVariation = '0';
+  @Input('max-image-width') maxImageWidth = '350';
   config: ImageSearchConfig = imageSearchConfig;
   driverChallengeInfo$: Observable<SCILLPersonalChallengesInfo>;
   challengeInfo$: Observable<SCILLPersonalChallengesInfo>;
@@ -56,6 +68,7 @@ export class ImageSearchComponent implements OnInit, OnChanges {
   firstLaunch = true;
   scrollPositionReached$ = new BehaviorSubject<boolean>(false);
   delay = 0;
+  @ViewChild('imageArea', {static: true}) imageArea: ElementRef;
 
   constructor(private scillService: SCILLService, private scillPersonalChallengesService: SCILLPersonalChallengesService) { }
 
@@ -123,12 +136,19 @@ export class ImageSearchComponent implements OnInit, OnChanges {
                 distinctUntilChanged(),
                 map(scrollPositionReached => {
                   if (scrollPositionReached) {
-                   return {
-                     imageUrl: this.config.images[imageIndex],
-                     top: (Math.random() * 400) + this.getVerticalScrollPosition(),
-                     left: Math.random() * 400,
-                     imageIndex: imageIndex
-                   };
+                    let maxLeftOffset = this.imageArea.nativeElement.clientWidth - parseInt(this.maxImageWidth, 10);
+                    console.log(maxLeftOffset, this.imageArea.nativeElement.clientWidth);
+                    if (maxLeftOffset < 0) {
+                      maxLeftOffset = 0;
+                    }
+
+                    return {
+                      imageUrl: this.config.images[imageIndex],
+                      top: (Math.random() * 400) + this.getVerticalScrollPosition(),
+                      left: Math.random() * maxLeftOffset,
+
+                      imageIndex: imageIndex
+                    };
                   } else {
                    return null;
                   }
