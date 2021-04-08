@@ -37,7 +37,7 @@ const imageSearchConfig: ImageSearchConfig = {
     'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/my22/xc40-electric/xc40-bev-gallery-4-16x9.jpg?h=1300&iar=0',
     'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/pdp/xc60-hybrid/xc60-recharge-gallery-5-16x9.jpg?h=1300&iar=0'
   ],
-  distribution: [1, 8, 13, 20],
+  distribution: [1, 5, 13, 18],
   variance: 2
 };
 
@@ -74,6 +74,7 @@ export class ImageSearchComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.accessToken && changes.accessToken.currentValue) {
+      console.log('SCILL: Got access token', changes.accessToken.currentValue);
       this.scillService.setAccessToken(changes.accessToken.currentValue);
     }
   }
@@ -115,6 +116,8 @@ export class ImageSearchComponent implements OnInit, OnChanges {
       }
     });
 
+    console.log('SCILL: Image distribution calculated', this.distribution);
+
     this.driverChallengeInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.driverChallengeId);
     this.challengeInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.challengeId);
     this.image$ = combineLatest([this.driverChallengeInfo$, this.challengeInfo$]).pipe(
@@ -122,14 +125,18 @@ export class ImageSearchComponent implements OnInit, OnChanges {
       delay(this.delay),
       mergeMap(([driverChallengeInfo, challengeInfo]) => {
         if (driverChallengeInfo && challengeInfo) {
+          console.log('SCILL: Got challenge info', driverChallengeInfo, challengeInfo);
           const imageIndex = this.distribution.findIndex((element) => {
             return element === driverChallengeInfo.challenge.user_challenge_current_score;
           });
+
+          console.log(`SCILL: Image Index calculated (current image counter ${challengeInfo.challenge.user_challenge_current_score}: `, imageIndex);
 
           // Check if we have found an image that the user did not already find
           if (imageIndex >= challengeInfo.challenge.user_challenge_current_score) {
             // Make sure we have this image available
             if (imageIndex >= 0 && imageIndex < this.config.images.length) {
+              console.log('SCILL: Image ready to be displayed, waiting for delay and scroll position', imageIndex);
               // Return a new pipeline that checks if the scroll position is reached and then returns image info
               return this.scrollPositionReached$.pipe(
                 // Make sure this only fires if scroll position reached value changes
@@ -137,18 +144,21 @@ export class ImageSearchComponent implements OnInit, OnChanges {
                 map(scrollPositionReached => {
                   if (scrollPositionReached) {
                     let maxLeftOffset = this.imageArea.nativeElement.clientWidth - parseInt(this.maxImageWidth, 10);
-                    console.log(maxLeftOffset, this.imageArea.nativeElement.clientWidth);
+                    console.log('SCILL: Max left offset and client width', maxLeftOffset, this.imageArea.nativeElement.clientWidth);
                     if (maxLeftOffset < 0) {
                       maxLeftOffset = 0;
                     }
 
-                    return {
+                    const imageInfo = {
                       imageUrl: this.config.images[imageIndex],
                       top: (Math.random() * 400) + this.getVerticalScrollPosition(),
                       left: Math.random() * maxLeftOffset,
-
-                      imageIndex: imageIndex
+                      imageIndex
                     };
+
+                    console.log('SCILL: Image is displayed', imageInfo);
+
+                    return imageInfo;
                   } else {
                    return null;
                   }
