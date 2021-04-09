@@ -21,13 +21,15 @@ export class SCILLNotification {
   action?: string;
   callback: () => void;
   checkmark: boolean;
+  challenge?: Challenge;
 
-  constructor(message: string, imageUrl: string, action?: string, callback?: () => void, checkmark?: boolean) {
+  constructor(message: string, imageUrl: string, action?: string, callback?: () => void, checkmark?: boolean, challenge?: Challenge) {
     this.imageUrl = imageUrl;
     this.message = message;
     this.callback = callback;
     this.action = action;
     this.checkmark = checkmark;
+    this.challenge = challenge;
   }
 }
 
@@ -104,6 +106,13 @@ export class SCILLService {
 
   public showNotification(message: string, imageUrl?: string, action?: string, buttonClicked?: () => void, duration?: number, checkmark?: boolean): void {
     this.latestNotification$.next(new SCILLNotification(message, imageUrl, action, buttonClicked, checkmark));
+    setTimeout(() => {
+      this.latestNotification$.next(null);
+    }, duration ? duration : 5000);
+  }
+
+  public showProgressNotification(message: string, challenge: Challenge, action?: string, buttonClicked?: () => void, duration?: number, checkmark?: boolean): void {
+    this.latestNotification$.next(new SCILLNotification(message, challenge.challenge_icon, action, buttonClicked, checkmark, challenge));
     setTimeout(() => {
       this.latestNotification$.next(null);
     }, duration ? duration : 5000);
