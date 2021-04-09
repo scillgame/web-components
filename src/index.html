@@ -18,6 +18,7 @@
     //const apiKey = "$9SeaUecbCe3N2s[PV1Ts7a@P)09$Ki$i0TY2(H-Ys";
     // const apiKey = "3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,";
     // const apiKey = "4Bh_i8utKogeB99bq07DYcJa7FowRRVbFob6kpDv-cw4EoDeOBMenwzi";
+    window.SCILLEnvironment = 'staging';
 
     const apiKey = "EAwo1wccf6yS_PejrYJyTmhwrb3dIvGkC_L6It4S1nejqhBESQvAWMZp";
     const userId = "1234123";
@@ -25,7 +26,7 @@
 
     let accessToken = null;
 
-    const authApi = SCILL.getAuthApi(apiKey);
+    const authApi = SCILL.getAuthApi(apiKey, window.SCILLEnvironment);
     authApi.generateAccessToken({user_id: userId}).then((response) => {
       const components = document.getElementsByClassName("scill-web-component");
       for (let i=0;i<components.length;i++) {
@@ -37,7 +38,7 @@
     });
 
     function sendPageImpressionEvent() {
-      const eventsApi = SCILL.getEventsApi(accessToken);
+      const eventsApi = SCILL.getEventsApi(accessToken, window.SCILLEnvironment);
       eventsApi.sendEvent({
         event_name: "craft-item",
         event_type: 'single',
@@ -77,6 +78,9 @@
     <p>Every 4-6 page impressions an image will overlay the content. Users need to click that image to collect it. This will trigger another challenge storing
     the number of images found. Images found will be highlighted above, others to be found will be shown transparent.</p>
   </article>
+  <div>
+    <scill-leaderboard app-id="639938110737711114" leaderboard-id="640000955260207115" class="scill-web-component"></scill-leaderboard>
+  </div>
 </main>
 <!--
 <scill-popover app-id="593776232582742019" battle-pass-id="627086321190174723" username="4P|Phillip" avatar-url="https://login.4players.de/images/f9/eb/avatar1485460.gif" progress-fill="red" button-background="white" class="scill-web-component"></scill-popover>
