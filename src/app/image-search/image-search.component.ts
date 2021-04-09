@@ -195,6 +195,11 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
 
     console.log('SCILL: Image distribution calculated', this.distribution);
 
+    // Make sure that automatic challenges are resolved (fixes an issue in the backend for now)
+    this.subscriptions.add(this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId).subscribe(challenges => {
+      console.log("SCILL: Available challenges: ", challenges);
+    }));
+
     this.driverChallengeInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.driverChallengeId);
     this.challengeInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.challengeId);
     this.image$ = combineLatest([this.scrollPositionReached$, this.driverChallengeInfo$, this.challengeInfo$]).pipe(
