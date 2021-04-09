@@ -1,0 +1,4 @@
+<div *ngIf="imageInfo" class="scill-image-search-image" [style.top]="imageInfo.top + 'px'" [style.left]="imageInfo.left + 'px'">
+  <img src="{{imageInfo.imageUrl}}" (click)="collectImage(imageInfo)" [style.max-width]="(maxImageWidth | number) + 'px'">
+</div>
+

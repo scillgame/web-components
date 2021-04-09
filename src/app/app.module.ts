@@ -31,6 +31,7 @@ import { ImageSearchComponent } from './image-search/image-search.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { GetTranslationPipe } from './pipes/get-translation.pipe';
 import { ImageSearchStatusComponent } from './image-search-status/image-search-status.component';
+import { ImageSearchImageComponent } from './image-search-image/image-search-image.component';
 
 @NgModule({
     declarations   : [
@@ -60,7 +61,8 @@ import { ImageSearchStatusComponent } from './image-search-status/image-search-s
         ImageSearchComponent,
         LeaderboardComponent,
         GetTranslationPipe,
-        ImageSearchStatusComponent
+        ImageSearchStatusComponent,
+        ImageSearchImageComponent
     ],
     imports        : [
         BrowserModule,
@@ -78,7 +80,8 @@ import { ImageSearchStatusComponent } from './image-search-status/image-search-s
         TaskListComponent,
         CommunityChallengeComponent,
         ChallengeTeaserComponent,
-        PopoverPreviewComponent
+        PopoverPreviewComponent,
+        ImageSearchImageComponent
     ]
 })
 export class AppModule {

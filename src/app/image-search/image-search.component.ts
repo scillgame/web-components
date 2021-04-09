@@ -1,21 +1,23 @@
 import {
-  Component,
-  ElementRef,
+  ApplicationRef,
+  Component, ComponentFactoryResolver, ComponentRef,
+  ElementRef, EmbeddedViewRef,
   HostBinding,
-  HostListener,
+  HostListener, Injector,
   Input,
-  OnChanges,
-  OnInit,
+  OnChanges, OnDestroy,
+  OnInit, Renderer2, RendererFactory2,
   SimpleChanges,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SCILLPersonalChallengesInfo, SCILLPersonalChallengesService} from '../scillpersonal-challenges.service';
-import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable, of, Subscription} from 'rxjs';
 import {delay, distinctUntilChanged, filter, map, mergeMap, withLatestFrom} from 'rxjs/operators';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {SCILLNotification, SCILLService} from '../scill.service';
+import {ImageSearchImageComponent} from '../image-search-image/image-search-image.component';
 
 export interface ImageSearchConfig {
   images: string[];
@@ -38,7 +40,7 @@ const imageSearchConfig: ImageSearchConfig = {
     'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/pdp/xc60-hybrid/xc60-recharge-gallery-5-16x9.jpg?h=1300&iar=0'
   ],
   distribution: [1, 5, 13, 18],
-  variance: 2
+  variance: 0
 };
 
 @Component({
@@ -47,7 +49,7 @@ const imageSearchConfig: ImageSearchConfig = {
   styleUrls: ['./image-search.component.scss'],
   encapsulation: ViewEncapsulation.ShadowDom
 })
-export class ImageSearchComponent implements OnInit, OnChanges {
+export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input('config-url') configUrl;
   @Input('app-id') appId;
@@ -59,6 +61,7 @@ export class ImageSearchComponent implements OnInit, OnChanges {
   @Input('display-delay') displayDelay = '0';
   @Input('display-delay-variation') displayDelayVariation = '0';
   @Input('max-image-width') maxImageWidth = '350';
+  @Input('container-id') containerId;
   config: ImageSearchConfig = imageSearchConfig;
   driverChallengeInfo$: Observable<SCILLPersonalChallengesInfo>;
   challengeInfo$: Observable<SCILLPersonalChallengesInfo>;
@@ -70,7 +73,18 @@ export class ImageSearchComponent implements OnInit, OnChanges {
   delay = 0;
   @ViewChild('imageArea', {static: true}) imageArea: ElementRef;
 
-  constructor(private scillService: SCILLService, private scillPersonalChallengesService: SCILLPersonalChallengesService) { }
+  renderer: Renderer2;
+  subscriptions = new Subscription();
+  imageRef: ComponentRef<ImageSearchImageComponent>;
+
+  constructor(private scillService: SCILLService,
+              private scillPersonalChallengesService: SCILLPersonalChallengesService,
+              rendererFactory: RendererFactory2,
+              private componentFactoryResolver: ComponentFactoryResolver,
+              private appRef: ApplicationRef,
+              private injector: Injector) {
+    this.renderer = rendererFactory.createRenderer(null, null);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.accessToken && changes.accessToken.currentValue) {
@@ -94,6 +108,49 @@ export class ImageSearchComponent implements OnInit, OnChanges {
     if (verticalOffset >= parseInt(this.minimumScrollDepth, 10)) {
       this.scrollPositionReached$.next(true);
     }
+  }
+
+  showImage(imageInfo): void {
+    if (this.imageRef) {
+      console.log("SCILL: Removing old image");
+      this.imageRef.destroy();
+    }
+
+    if (!imageInfo) {
+      return;
+    }
+
+    console.log("SCILL: Adding image to the DOM in container: ", this.containerId);
+
+    // 1. Setup the image component
+    const componentRef = this.componentFactoryResolver
+      .resolveComponentFactory(ImageSearchImageComponent)
+      .create(this.injector);
+    componentRef.instance.imageInfo = imageInfo;
+    componentRef.instance.userId = this.userId;
+    componentRef.instance.maxImageWidth = this.maxImageWidth;
+    this.imageRef = componentRef;
+
+    // 2. Attach component to the appRef so that it's inside the ng component tree
+    this.appRef.attachView(componentRef.hostView);
+
+    // 3. Get DOM element from component
+    const domElem = (componentRef.hostView as EmbeddedViewRef<any>)
+      .rootNodes[0] as HTMLElement;
+
+    // 4. Change position
+    let container = this.imageArea.nativeElement;
+    if (this.containerId) {
+      container = document.getElementById(this.containerId);
+      if (!container) {
+        console.error(`SCILL: Container ${this.containerId} not found in page`);
+        container = this.imageArea.nativeElement;
+      }
+    }
+    if (!container) {
+      container = document.body;
+    }
+    container.prepend(domElem);
   }
 
   ngOnInit(): void {
@@ -164,9 +221,9 @@ export class ImageSearchComponent implements OnInit, OnChanges {
                   }
                 })
               );
-              }
             }
           }
+        }
         return of(null);
       })
     );
@@ -197,6 +254,15 @@ export class ImageSearchComponent implements OnInit, OnChanges {
       }
     });
      */
+
+    this.subscriptions.add(this.image$.subscribe(imageInfo => {
+      console.log("SCILL: Image info changed: ", imageInfo);
+      this.showImage(imageInfo);
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   collectImage(imageInfo: ImageInfo): void {
