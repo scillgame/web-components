@@ -3,5 +3,9 @@
   "activate": "Aktivieren",
   "claim": "Anspruch",
   "cancel": "Stornieren",
-  "battle_pass_locked": " ist gespert"
+  "battle_pass_locked": " ist gespert",
+  "rank": "Rang",
+  "image": "Bild",
+  "name": "Name",
+  "score": "Ergebnis"
 }

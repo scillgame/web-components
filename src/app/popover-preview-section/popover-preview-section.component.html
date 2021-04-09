@@ -4,7 +4,7 @@
         <div class="sc-d-flex sc-justify-content-between pointer" (click)="isExpanded = !isExpanded">
             <div class="category-title" [ngStyle]="{'color': personalChallengesCategoryTitleColor}">
                 {{popoverPreviewSectionTitle}}
-                {{category.challenges | completedChallenges}} / {{category.challenges.length}}
+                {{calculateCompletedChallenges(category.challenges)}} / {{category.challenges.length}}
             </div>
             <div [ngStyle]="{'fill': personalChallengesCategoryTitleColor}">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" *ngIf="!isExpanded"

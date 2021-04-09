@@ -3,5 +3,9 @@
   "activate": "Activate",
   "claim": "Claim",
   "cancel": "Cancel",
-  "battle_pass_locked": " is locked"
+  "battle_pass_locked": " is locked",
+  "rank": "Rank",
+  "image": "Image",
+  "name": "Name",
+  "score": "Score"
 }
