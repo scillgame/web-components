@@ -104,6 +104,10 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private updateScrollPositionReached(): void {
+    if (this.scrollPositionReached$.getValue()) {
+      return;
+    }
+
     const verticalOffset = this.getVerticalScrollPosition();
     const scrollDepth = this.minimumScrollDepth ? parseInt(this.minimumScrollDepth, 10) : 0;
     if (verticalOffset >= scrollDepth) {
@@ -178,11 +182,11 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
 
     this.driverChallengeInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.driverChallengeId);
     this.challengeInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.challengeId);
-    this.image$ = combineLatest([this.driverChallengeInfo$, this.challengeInfo$]).pipe(
+    this.image$ = combineLatest([this.scrollPositionReached$, this.driverChallengeInfo$, this.challengeInfo$]).pipe(
       // Delay processing any image stuff until the delay is reached
       delay(this.delay),
-      mergeMap(([driverChallengeInfo, challengeInfo]) => {
-        if (driverChallengeInfo && challengeInfo) {
+      map(([scrollPositionReached, driverChallengeInfo, challengeInfo]) => {
+        if (scrollPositionReached && driverChallengeInfo && challengeInfo) {
           console.log('SCILL: Got challenge info', driverChallengeInfo, challengeInfo);
           const imageIndex = this.distribution.findIndex((element) => {
             return element === driverChallengeInfo.challenge.user_challenge_current_score;
@@ -194,38 +198,27 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
           if (imageIndex >= challengeInfo.challenge.user_challenge_current_score) {
             // Make sure we have this image available
             if (imageIndex >= 0 && imageIndex < this.config.images.length) {
-              console.log('SCILL: Image ready to be displayed, waiting for delay and scroll position', imageIndex);
+              console.log('SCILL: Image ready to be displayed', imageIndex);
               // Return a new pipeline that checks if the scroll position is reached and then returns image info
-              return this.scrollPositionReached$.pipe(
-                // Make sure this only fires if scroll position reached value changes
-                distinctUntilChanged(),
-                map(scrollPositionReached => {
-                  if (scrollPositionReached) {
-                    let maxLeftOffset = this.imageArea.nativeElement.clientWidth - parseInt(this.maxImageWidth, 10);
-                    console.log('SCILL: Max left offset and client width', maxLeftOffset, this.imageArea.nativeElement.clientWidth);
-                    if (maxLeftOffset < 0) {
-                      maxLeftOffset = 0;
-                    }
+              let maxLeftOffset = this.imageArea.nativeElement.clientWidth - parseInt(this.maxImageWidth, 10);
+              console.log('SCILL: Max left offset and client width', maxLeftOffset, this.imageArea.nativeElement.clientWidth);
+              if (maxLeftOffset < 0) {
+                maxLeftOffset = 0;
+              }
 
-                    const imageInfo = {
-                      imageUrl: this.config.images[imageIndex],
-                      top: (Math.random() * 400) + this.getVerticalScrollPosition(),
-                      left: Math.random() * maxLeftOffset,
-                      imageIndex
-                    };
+              const imageInfo = {
+                imageUrl: this.config.images[imageIndex],
+                top: (Math.random() * 400) + this.getVerticalScrollPosition(),
+                left: Math.random() * maxLeftOffset,
+                imageIndex
+              };
 
-                    console.log('SCILL: Image is displayed', imageInfo);
-
-                    return imageInfo;
-                  } else {
-                   return null;
-                  }
-                })
-              );
+              console.log('SCILL: Image is displayed', imageInfo);
+              return imageInfo;
             }
           }
         }
-        return of(null);
+        return null;
       })
     );
 
@@ -247,14 +240,6 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
         this.firstLaunch = false;
       }
     });
-
-    /*
-    this.scillService.eventsApi$.subscribe(eventsApi => {
-      if (eventsApi) {
-        this.simulatePageImpression();
-      }
-    });
-     */
 
     this.subscriptions.add(this.image$.subscribe(imageInfo => {
       console.log("SCILL: Image info changed: ", imageInfo);
