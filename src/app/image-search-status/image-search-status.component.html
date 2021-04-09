@@ -1,1 +1,7 @@
-<p>image-search-status works!</p>
+<ng-container *ngIf="personalChallengesInfo$ | async as personalChallengesInfo">
+  <div class="scill-image-search-status-container" *ngIf="config">
+    <div class="scill-image-search-status-image" *ngFor="let image of config.images; let i=index" [class.activated]="i<personalChallengesInfo.challenge?.user_challenge_current_score">
+      <img [src]="image">
+    </div>
+  </div>
+</ng-container>

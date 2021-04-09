@@ -15,11 +15,15 @@
   <script type="text/javascript" src="https://scill-cdn.web.app/scill.js"></script>
   <script type="text/javascript">
     // Please note, this should not be done on client side as it exposes user ids and api keys to the client side
-    const apiKey = "$9SeaUecbCe3N2s[PV1Ts7a@P)09$Ki$i0TY2(H-Ys";
+    //const apiKey = "$9SeaUecbCe3N2s[PV1Ts7a@P)09$Ki$i0TY2(H-Ys";
     // const apiKey = "3:8OZ=I6M~$((bzTB&E&OJRXcLE48S!:'x),F.8I*,";
     // const apiKey = "4Bh_i8utKogeB99bq07DYcJa7FowRRVbFob6kpDv-cw4EoDeOBMenwzi";
+
+    const apiKey = "EAwo1wccf6yS_PejrYJyTmhwrb3dIvGkC_L6It4S1nejqhBESQvAWMZp";
     const userId = "1234123";
     // const userId = "1614678726156";
+
+    let accessToken = null;
 
     const authApi = SCILL.getAuthApi(apiKey);
     authApi.generateAccessToken({user_id: userId}).then((response) => {
@@ -28,10 +32,30 @@
         components[i].setAttribute("access-token", response.token);
         components[i].setAttribute("user-id", userId);
       }
+
+      accessToken = response.token;
     });
+
+    function sendPageImpressionEvent() {
+      const eventsApi = SCILL.getEventsApi(accessToken);
+      eventsApi.sendEvent({
+        event_name: "craft-item",
+        event_type: 'single',
+        session_id: "persistent",
+        user_id: userId,
+        meta_data: {
+          item_type: 'page-impression',
+          amount: 1
+        }
+      }).then(response => {
+        console.log("Page impression event sent");
+      });
+    }
   </script>
 </head>
 <body>
+
+<scill-image-search-status app-id="639938110737711114" challenge-id="639964880380887041" class="scill-web-component"></scill-image-search-status>
 <div style="width:50%">
   <!--<scill-leaderboard class="scill-web-component"-->
                      <!--app-id="632397832778612749"-->
@@ -44,6 +68,16 @@
                      <!--language="de"-->
   <!--&gt;</scill-leaderboard>-->
 </div>
+<main>
+  <button onclick="sendPageImpressionEvent()">Send Page Impression Event</button>
+  <article style="width: 800px; position: relative">
+    <scill-image-search app-id="639938110737711114" driver-challenge-id="639951911993638926" challenge-id="639964880380887041" class="scill-web-component" minimum-scroll-depth="0" display-delay="1" display-delay-variation="0" max-image-width="350"></scill-image-search>
+    <h2>Dummy page</h2>
+    <p>Pressing the "Send Page Impression Event" button will simulate page impressions. Those will drive a challenge counter going from 0 to 20.</p>
+    <p>Every 4-6 page impressions an image will overlay the content. Users need to click that image to collect it. This will trigger another challenge storing
+    the number of images found. Images found will be highlighted above, others to be found will be shown transparent.</p>
+  </article>
+</main>
 <!--
 <scill-popover app-id="593776232582742019" battle-pass-id="627086321190174723" username="4P|Phillip" avatar-url="https://login.4players.de/images/f9/eb/avatar1485460.gif" progress-fill="red" button-background="white" class="scill-web-component"></scill-popover>
 -->
@@ -60,7 +94,7 @@
                             user-id="1234"
                             username="franjoeric"
                             battle-pass-id="627086321190174723" class="scill-web-component"></scill-battle-pass-status>-->
-
+<!--
 <div class="sc-d-flex sc-justify-content-end">
   <scill-popover-preview class="scill-web-component" id="my-widget"
                          username="franj0"
@@ -78,7 +112,7 @@
     </div>
   </scill-popover-preview>
 </div>
-
+-->
   <!--<scill-community-challenge app-id="593776232582742019"-->
                    <!--challenge-id="628421695795232771"-->
                    <!--text-color="black"-->

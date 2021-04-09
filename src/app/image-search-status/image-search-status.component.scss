@@ -1,0 +1,14 @@
+.scill-image-search-status-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.scill-image-search-status-image img {
+  width: 200px;
+  opacity: 0.2;
+}
+
+.scill-image-search-status-image.activated img {
+  width: 200px;
+  opacity: 1;
+}

@@ -17,13 +17,13 @@ import {delay, distinctUntilChanged, filter, map, mergeMap, withLatestFrom} from
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {SCILLNotification, SCILLService} from '../scill.service';
 
-export class ImageSearchConfig {
+export interface ImageSearchConfig {
   images: string[];
   distribution: number[];
   variance: number;
 }
 
-class ImageInfo {
+export interface ImageInfo {
   imageIndex: number;
   imageUrl: string;
   top: number;

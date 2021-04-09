@@ -146,5 +146,10 @@ export class AppModule {
         const leaderboard = createCustomElement(LeaderboardComponent, {injector: this.injector});
         customElements.define('scill-leaderboard', leaderboard);
       }
+
+      if (!customElements.get('scill-image-search-status')){
+        const imageSearchStatus = createCustomElement(ImageSearchStatusComponent, {injector: this.injector});
+        customElements.define('scill-image-search-status', imageSearchStatus);
+      }
     }
 }
