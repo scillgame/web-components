@@ -57,7 +57,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   @Input('driver-challenge-id') driverChallengeId;
   @Input('challenge-id') challengeId;
   @Input('access-token') accessToken;
-  @Input('minimum-scroll-depth') minimumScrollDepth;
+  @Input('minimum-scroll-depth') minimumScrollDepth = '0';
   @Input('display-delay') displayDelay = '0';
   @Input('display-delay-variation') displayDelayVariation = '0';
   @Input('max-image-width') maxImageWidth = '350';
