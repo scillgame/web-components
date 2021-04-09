@@ -30,6 +30,7 @@ import { LockedIconComponent } from './locked-icon/locked-icon.component';
 import { ImageSearchComponent } from './image-search/image-search.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { GetTranslationPipe } from './pipes/get-translation.pipe';
+import { ImageSearchStatusComponent } from './image-search-status/image-search-status.component';
 
 @NgModule({
     declarations   : [
@@ -58,7 +59,8 @@ import { GetTranslationPipe } from './pipes/get-translation.pipe';
         LockedIconComponent,
         ImageSearchComponent,
         LeaderboardComponent,
-        GetTranslationPipe
+        GetTranslationPipe,
+        ImageSearchStatusComponent
     ],
     imports        : [
         BrowserModule,
