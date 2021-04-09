@@ -25,7 +25,6 @@ export class LeaderboardComponent implements OnInit, OnChanges {
   @Input('avatar-url-suffix') avatarUrlSuffix = '';
   @Input('avatar-images') showAvatarImages = 'false';
   @Input('pagination') pagination = 'true';
-  @Input('enviroment') enviroment: SCILLEnvironment = 'production';
 
   leaderboardInfo$: Observable<SCILLLeaderboardInfo>;
   private page = 1;
@@ -40,7 +39,7 @@ export class LeaderboardComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.leaderboardInfo$ = this.scillLeaderboardService.getLeaderboardInfo(this.leaderboardId, parseInt(this.pageSize, 10), this.language, this.enviroment).pipe(
+    this.leaderboardInfo$ = this.scillLeaderboardService.getLeaderboardInfo(this.leaderboardId, parseInt(this.pageSize, 10), this.language).pipe(
       map(leaderboardInfo => {
         return leaderboardInfo;
       })

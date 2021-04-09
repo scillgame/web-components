@@ -46,7 +46,9 @@ export class SCILLService {
 
   latestNotification$ = new BehaviorSubject<SCILLNotification>(null);
 
-  environment: SCILLEnvironment = 'production';
+  public get environment(): SCILLEnvironment {
+    return window['SCILLEnvironment'] ? window['SCILLEnvironment'] as SCILLEnvironment : 'production' as SCILLEnvironment;
+  }
 
   constructor() {
     // Setup Battle Pass Api
@@ -119,9 +121,8 @@ export class SCILLService {
     this.showNotification("Congratulations, you are now on level " + level.level_priority + 1);
   }
 
-  public setAccessToken(accessToken: string, environment?: SCILLEnvironment): void {
-    this.environment = environment;
-    if (this.accessToken$.getValue() !== accessToken || this.environment !== environment) {
+  public setAccessToken(accessToken: string): void {
+    if (this.accessToken$.getValue() !== accessToken) {
       this.accessToken$.next(accessToken);
     }
   }

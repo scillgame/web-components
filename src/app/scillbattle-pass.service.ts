@@ -40,6 +40,10 @@ export class SCILLBattlePassService {
 
   }
 
+  public get environment(): SCILLEnvironment {
+    return window['SCILLEnvironment'] ? window['SCILLEnvironment'] as SCILLEnvironment : 'production' as SCILLEnvironment;
+  }
+
   reloadBattlePass(battlePassId: string): void {
     if (!this.storage.has(battlePassId)) {
       return;
@@ -51,7 +55,7 @@ export class SCILLBattlePassService {
     }
   }
 
-  getBattlePassInfo(appId: string, battlePassId: string, language: string, environment?: SCILLEnvironment): Observable<SCILLBattlePassInfo> {
+  getBattlePassInfo(appId: string, battlePassId: string, language: string): Observable<SCILLBattlePassInfo> {
     if (this.storage.has(battlePassId)) {
       return this.storage.get(battlePassId).asObservable();
     } else {
@@ -73,10 +77,10 @@ export class SCILLBattlePassService {
               }
             }
             battlePassInfo.refresh$.next(true);
-          }), environment);
+          }), this.environment);
 
           battlePassInfo.accessToken = accessToken;
-          battlePassInfo.battlePassApi = getBattlePassApi(battlePassInfo.accessToken, environment);
+          battlePassInfo.battlePassApi = getBattlePassApi(battlePassInfo.accessToken, this.environment);
 
           return battlePassInfo;
         }),

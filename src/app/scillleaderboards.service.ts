@@ -44,7 +44,11 @@ export class SCILLLeaderboardsService {
   constructor(private scillService: SCILLService) {
   }
 
-  getLeaderboardInfo(leaderboardId, numItems = 25, language = 'en', environment?: SCILLEnvironment): Observable<SCILLLeaderboardInfo> {
+  public get environment(): SCILLEnvironment {
+    return window['SCILLEnvironment'] ? window['SCILLEnvironment'] as SCILLEnvironment : 'production' as SCILLEnvironment;
+  }
+
+  getLeaderboardInfo(leaderboardId, numItems = 25, language = 'en'): Observable<SCILLLeaderboardInfo> {
     if (this.storage.has(leaderboardId)) {
       return this.storage.get(leaderboardId).asObservable();
     } else {
@@ -59,10 +63,10 @@ export class SCILLLeaderboardsService {
 
           leaderboardInfo.monitor = startMonitorLeaderboardUpdates(accessToken, leaderboardId, (payload => {
             this.updateLeaderboard(leaderboardInfo$, payload);
-          }), environment);
+          }), this.environment);
 
           leaderboardInfo.accessToken = accessToken;
-          leaderboardInfo.leaderboardsApi = getLeaderboardsApi(leaderboardInfo.accessToken, environment);
+          leaderboardInfo.leaderboardsApi = getLeaderboardsApi(leaderboardInfo.accessToken, this.environment);
 
           return leaderboardInfo;
         }),

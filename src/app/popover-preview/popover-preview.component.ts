@@ -46,7 +46,6 @@ const themes: Map<string, Theme> = new Map<string, Theme>([[
 export class PopoverPreviewComponent implements OnInit, OnChanges {
   @Input('api-key') apiKey: string;
   @Input('app-id') appId: string;
-  @Input('environment') environment: SCILLEnvironment;
   @Input('user-id') userId: string;
   @Input('battle-pass-id') battlePassId: string;
   @Input('access-token') accessToken: string;
@@ -126,7 +125,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
 
 
       if (this.battlePassId) {
-      this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId, this.language, this.environment).pipe(
+      this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId, this.language).pipe(
         map(battlePassInfo => {
           return battlePassInfo;
         })
@@ -135,7 +134,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
       this.battlePassInfo$ = of(null);
     }
 
-    this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId, this.language, this.environment).pipe(
+    this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId, this.language).pipe(
       map(personalChallengesInfo => {
         return personalChallengesInfo;
       })
@@ -163,7 +162,7 @@ export class PopoverPreviewComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.accessToken && changes.accessToken.currentValue) {
-      this.scillService.setAccessToken(changes.accessToken.currentValue, this.environment);
+      this.scillService.setAccessToken(changes.accessToken.currentValue);
     }
   }
 

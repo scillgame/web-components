@@ -18,7 +18,6 @@ export class BattlePassComponent implements OnInit, OnChanges {
   @Input('app-id') appId: string;
   @Input('user-id') userId: string;
   @Input('access-token') accessToken: string;
-  @Input('environment') environment: SCILLEnvironment;
   @Input('type-in-progress-color') typeInProgressColor: string;
   @Input('type-finished-color') typeFinishedColor: string;
   @Input('type-border-color') typeBorderColor: string;
@@ -41,7 +40,7 @@ export class BattlePassComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId, this.language, this.environment).pipe(
+    this.battlePassInfo$ = this.scillBattlePassService.getBattlePassInfo(this.appId, this.battlePassId, this.language).pipe(
       map(battlePassInfo => {
         return battlePassInfo;
       })

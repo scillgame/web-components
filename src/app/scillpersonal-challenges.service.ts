@@ -33,7 +33,11 @@ export class SCILLPersonalChallengesService {
 
   constructor(private scillService: SCILLService) { }
 
-  getPersonalChallengesInfo(appId, language = 'en', environment?: SCILLEnvironment): Observable<SCILLPersonalChallengesInfo> {
+  public get environment(): SCILLEnvironment {
+    return window['SCILLEnvironment'] ? window['SCILLEnvironment'] as SCILLEnvironment : 'production' as SCILLEnvironment;
+  }
+
+  getPersonalChallengesInfo(appId, language = 'en'): Observable<SCILLPersonalChallengesInfo> {
     if (this.storage.has(appId)) {
       return this.storage.get(appId).asObservable();
     } else {
@@ -48,10 +52,10 @@ export class SCILLPersonalChallengesService {
           personalChallengesInfo.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
             this.updateChallenge(personalChallengesInfo$, payload);
             personalChallengesInfo$.next(this.calculateStats(personalChallengesInfo));
-          }), environment);
+          }), this.environment);
 
           personalChallengesInfo.accessToken = accessToken;
-          personalChallengesInfo.challengesApi = getChallengesApi(personalChallengesInfo.accessToken, environment);
+          personalChallengesInfo.challengesApi = getChallengesApi(personalChallengesInfo.accessToken, this.environment);
 
           return personalChallengesInfo;
         }),
@@ -89,7 +93,7 @@ export class SCILLPersonalChallengesService {
     return personalChallengesInfo;
   }
 
-  getPersonalChallengeInfo(appId, challengeId, environment?: SCILLEnvironment): Observable<SCILLPersonalChallengesInfo> {
+  getPersonalChallengeInfo(appId, challengeId): Observable<SCILLPersonalChallengesInfo> {
     const key = `${appId}_${challengeId}`;
     if (this.storage.has(key)) {
       return this.storage.get(key).asObservable();
@@ -103,10 +107,10 @@ export class SCILLPersonalChallengesService {
           const personalChallengesInfo = new SCILLPersonalChallengesInfo();
           personalChallengesInfo.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
             this.updateChallenge(personalChallengesInfo$, payload);
-          }), environment);
+          }), this.environment);
 
           personalChallengesInfo.accessToken = accessToken;
-          personalChallengesInfo.challengesApi = getChallengesApi(personalChallengesInfo.accessToken, environment);
+          personalChallengesInfo.challengesApi = getChallengesApi(personalChallengesInfo.accessToken, this.environment);
 
           return personalChallengesInfo;
         }),
