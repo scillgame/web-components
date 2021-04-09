@@ -105,7 +105,8 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   private updateScrollPositionReached(): void {
     const verticalOffset = this.getVerticalScrollPosition();
-    if (verticalOffset >= parseInt(this.minimumScrollDepth, 10)) {
+    const scrollDepth = this.minimumScrollDepth ? parseInt(this.minimumScrollDepth, 10) : 0;
+    if (verticalOffset >= scrollDepth) {
       this.scrollPositionReached$.next(true);
     }
   }
