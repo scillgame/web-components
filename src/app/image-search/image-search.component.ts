@@ -61,7 +61,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   @Input('display-delay') displayDelay = '0';
   @Input('display-delay-variation') displayDelayVariation = '0';
   @Input('max-image-width') maxImageWidth = '350';
-  @Input('container-id') containerId;
+  @Input('container') containerSelector;
   config: ImageSearchConfig = imageSearchConfig;
   driverChallengeInfo$: Observable<SCILLPersonalChallengesInfo>;
   challengeInfo$: Observable<SCILLPersonalChallengesInfo>;
@@ -125,7 +125,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    console.log("SCILL: Adding image to the DOM in container: ", this.containerId);
+    console.log("SCILL: Adding image to the DOM in container: ", this.containerSelector);
 
     // 1. Setup the image component
     const componentRef = this.componentFactoryResolver
@@ -144,18 +144,33 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
       .rootNodes[0] as HTMLElement;
 
     // 4. Change position
+    const container = this.getContainer();
+    container.prepend(domElem);
+  }
+
+  getContainer(): HTMLElement {
     let container = this.imageArea.nativeElement;
-    if (this.containerId) {
-      container = document.getElementById(this.containerId);
+    if (this.containerSelector) {
+      container = document.querySelector(this.containerSelector);
       if (!container) {
-        console.error(`SCILL: Container ${this.containerId} not found in page`);
+        console.error(`SCILL: Container ${this.containerSelector} not found in page`);
         container = this.imageArea.nativeElement;
       }
     }
     if (!container) {
       container = document.body;
     }
-    container.prepend(domElem);
+    return container;
+  }
+
+  calculateMaxLeftOffset(): number {
+    const container = this.getContainer();
+    let maxLeftOffset = container.clientWidth - parseInt(this.maxImageWidth, 10);
+    console.log('SCILL: Max left offset and client width', maxLeftOffset, this.imageArea.nativeElement.clientWidth);
+    if (maxLeftOffset < 0) {
+      maxLeftOffset = 0;
+    }
+    return maxLeftOffset;
   }
 
   ngOnInit(): void {
@@ -200,16 +215,10 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
             if (imageIndex >= 0 && imageIndex < this.config.images.length) {
               console.log('SCILL: Image ready to be displayed', imageIndex);
               // Return a new pipeline that checks if the scroll position is reached and then returns image info
-              let maxLeftOffset = this.imageArea.nativeElement.clientWidth - parseInt(this.maxImageWidth, 10);
-              console.log('SCILL: Max left offset and client width', maxLeftOffset, this.imageArea.nativeElement.clientWidth);
-              if (maxLeftOffset < 0) {
-                maxLeftOffset = 0;
-              }
-
               const imageInfo = {
                 imageUrl: this.config.images[imageIndex],
                 top: (Math.random() * 400) + this.getVerticalScrollPosition(),
-                left: Math.random() * maxLeftOffset,
+                left: Math.random() * this.calculateMaxLeftOffset(),
                 imageIndex
               };
 
