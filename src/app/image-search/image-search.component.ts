@@ -215,17 +215,11 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
                                 console.log('SCILL: Image ready to be displayed', imageIndex);
                                 // Return a new pipeline that checks if the scroll position is reached and then returns image info
                                 const imageInfo = {
-                                    imageUrl: this.config.images[imageIndex],
-                                    top     : (Math.random() * 400) + this.getVerticalScrollPosition(),
-                                    left    : Math.random() * this.calculateMaxLeftOffset(),
-                                    imageIndex
+                                    imageUrl: this.config.images[challengeInfo.challenge.user_challenge_current_score],
+                                    top: (Math.random() * 400) + this.getVerticalScrollPosition(),
+                                    left: Math.random() * this.calculateMaxLeftOffset(),
+                                    imageIndex: challengeInfo.challenge.user_challenge_current_score
                                 };
-                                // const imageInfo = {
-                                //     imageUrl: this.config.images[challengeInfo.challenge.user_challenge_current_score],
-                                //     top: (Math.random() * 400) + this.getVerticalScrollPosition(),
-                                //     left: Math.random() * this.calculateMaxLeftOffset(),
-                                //     imageIndex: challengeInfo.challenge.user_challenge_current_score
-                                // };
                                 console.log('SCILL: Image is displayed', imageInfo);
                                 return imageInfo;
                             }
