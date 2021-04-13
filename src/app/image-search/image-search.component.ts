@@ -225,7 +225,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
               const verticalRandomScale = parseInt(this.maxVerticalOffset, 10) - parseInt(this.minVerticalOffset, 10);
               const imageInfo = {
                 imageUrl: this.config.images[imageIndex],
-                top: (Math.random() * verticalRandomScale) + this.getVerticalScrollPosition() + this.minVerticalOffset,
+                top: (Math.random() * verticalRandomScale) + this.getVerticalScrollPosition() + parseInt(this.minVerticalOffset, 10),
                 left: Math.random() * this.calculateMaxLeftOffset(),
                 imageIndex
               };
