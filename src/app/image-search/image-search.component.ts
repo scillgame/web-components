@@ -33,14 +33,14 @@ export interface ImageInfo {
 }
 
 const imageSearchConfig: ImageSearchConfig = {
-    images      : [
-        'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/recharge/charging_entry_point_4_3.jpg?iar=0&w=1920',
-        'https://assets.volvocars.com/de/~/media/shared-assets/master/images/pages/why-volvo/human-innovation/electrification/pure-electric/itemslist_1b.jpg?w=820',
-        'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/my22/xc40-electric/xc40-bev-gallery-4-16x9.jpg?h=1300&iar=0',
-        'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/pdp/xc60-hybrid/xc60-recharge-gallery-5-16x9.jpg?h=1300&iar=0'
-    ],
-    distribution: [1, 3, 5, 7],
-    variance    : 0
+  images: [
+    'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/recharge/charging_entry_point_4_3.jpg?iar=0&w=1920',
+    'https://assets.volvocars.com/de/~/media/shared-assets/master/images/pages/why-volvo/human-innovation/electrification/pure-electric/itemslist_1b.jpg?w=820',
+    'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/my22/xc40-electric/xc40-bev-gallery-4-16x9.jpg?h=1300&iar=0',
+    'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/pdp/xc60-hybrid/xc60-recharge-gallery-5-16x9.jpg?h=1300&iar=0'
+  ],
+  distribution: [1, 3, 5, 7],
+  variance: 0
 };
 
 @Component({
@@ -51,27 +51,29 @@ const imageSearchConfig: ImageSearchConfig = {
 })
 export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
 
-    @Input('config-url') configUrl;
-    @Input('app-id') appId;
-    @Input('user-id') userId;
-    @Input('driver-challenge-id') driverChallengeId;
-    @Input('challenge-id') challengeId;
-    @Input('access-token') accessToken;
-    @Input('minimum-scroll-depth') minimumScrollDepth       = '0';
-    @Input('display-delay') displayDelay                    = '0';
-    @Input('display-delay-variation') displayDelayVariation = '0';
-    @Input('max-image-width') maxImageWidth                 = '350';
-    @Input('container') containerSelector;
-                         config: ImageSearchConfig          = imageSearchConfig;
-                         driverChallengeInfo$: Observable<SCILLPersonalChallengesInfo>;
-                         challengeInfo$: Observable<SCILLPersonalChallengesInfo>;
-                         distribution: number[];
-                         image$: Observable<ImageInfo>;
-                         notification$                      = new BehaviorSubject<SCILLNotification>(null);
-                         firstLaunch                        = true;
-                         scrollPositionReached$             = new BehaviorSubject<boolean>(false);
-                         delay                              = 0;
-    @ViewChild('imageArea', {static: true}) imageArea: ElementRef;
+  @Input('config-url') configUrl;
+  @Input('app-id') appId;
+  @Input('user-id') userId;
+  @Input('driver-challenge-id') driverChallengeId;
+  @Input('challenge-id') challengeId;
+  @Input('access-token') accessToken;
+  @Input('minimum-scroll-depth') minimumScrollDepth = '0';
+  @Input('display-delay') displayDelay = '0';
+  @Input('display-delay-variation') displayDelayVariation = '0';
+  @Input('max-image-width') maxImageWidth = '350';
+  @Input('container') containerSelector;
+  @Input('min-vertical-offset') minVerticalOffset = '0';
+  @Input('max-vertical-offset') maxVerticalOffset = '400';
+  config: ImageSearchConfig = imageSearchConfig;
+  driverChallengeInfo$: Observable<SCILLPersonalChallengesInfo>;
+  challengeInfo$: Observable<SCILLPersonalChallengesInfo>;
+  distribution: number[];
+  image$: Observable<ImageInfo>;
+  notification$ = new BehaviorSubject<SCILLNotification>(null);
+  firstLaunch = true;
+  scrollPositionReached$ = new BehaviorSubject<boolean>(false);
+  delay = 0;
+  @ViewChild('imageArea', {static: true}) imageArea: ElementRef;
 
     renderer: Renderer2;
     subscriptions = new Subscription();
@@ -192,43 +194,47 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
 
         console.log('SCILL: Image distribution calculated', this.distribution);
 
-        // Make sure that automatic challenges are resolved (fixes an issue in the backend for now)
-        this.subscriptions.add(this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId).subscribe(challenges => {
-            console.log('SCILL: Available challenges: ', challenges);
-        }));
+    // Make sure that automatic challenges are resolved (fixes an issue in the backend for now)
+    this.scillPersonalChallengesService.getPersonalChallenges(this.appId).subscribe(categories => {
+      console.log('SCILL: Available challenges: ', categories);
+    });
 
-        this.driverChallengeInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.driverChallengeId);
-        this.challengeInfo$       = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.challengeId);
-        this.image$               = combineLatest([this.scrollPositionReached$, this.driverChallengeInfo$, this.challengeInfo$]).pipe(
-            // Delay processing any image stuff until the delay is reached
-            delay(this.delay),
-            map(([scrollPositionReached, driverChallengeInfo, challengeInfo]) => {
-                if (scrollPositionReached && driverChallengeInfo && challengeInfo) {
-                    if (true) {
-                        const imageIndex = this.distribution.findIndex((element) => {
-                            return element === driverChallengeInfo.challenge.user_challenge_current_score;
-                        });
-                        // Check if we have found an image that the user did not already find
-                        if (imageIndex >= challengeInfo.challenge.user_challenge_current_score) {
-                            // Make sure we have this image available
-                            if (imageIndex >= 0 && imageIndex < this.config.images.length) {
-                                console.log('SCILL: Image ready to be displayed', imageIndex);
-                                // Return a new pipeline that checks if the scroll position is reached and then returns image info
-                                const imageInfo = {
-                                    imageUrl: this.config.images[challengeInfo.challenge.user_challenge_current_score],
-                                    top: (Math.random() * 400) + this.getVerticalScrollPosition(),
-                                    left: Math.random() * this.calculateMaxLeftOffset(),
-                                    imageIndex: challengeInfo.challenge.user_challenge_current_score
-                                };
-                                console.log('SCILL: Image is displayed', imageInfo);
-                                return imageInfo;
-                            }
-                        }
-                    }
-                }
-                return null;
-            })
-        );
+    this.driverChallengeInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.driverChallengeId);
+    this.challengeInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.challengeId);
+    this.image$ = combineLatest([this.scrollPositionReached$, this.driverChallengeInfo$, this.challengeInfo$]).pipe(
+      // Delay processing any image stuff until the delay is reached
+      delay(this.delay),
+      map(([scrollPositionReached, driverChallengeInfo, challengeInfo]) => {
+        if (scrollPositionReached && driverChallengeInfo && challengeInfo) {
+          console.log('SCILL: Got challenge info', driverChallengeInfo, challengeInfo);
+          const imageIndex = this.distribution.findIndex((element) => {
+            return element === driverChallengeInfo.challenge.user_challenge_current_score;
+          });
+
+          console.log(`SCILL: Image Index calculated (current image counter ${challengeInfo.challenge.user_challenge_current_score}: `, imageIndex);
+
+          // Check if we have found an image that the user did not already find
+          if (imageIndex >= challengeInfo.challenge.user_challenge_current_score) {
+            // Make sure we have this image available
+            if (imageIndex >= 0 && imageIndex < this.config.images.length) {
+              console.log('SCILL: Image ready to be displayed', imageIndex);
+              // Return a new pipeline that checks if the scroll position is reached and then returns image info
+              const verticalRandomScale = parseInt(this.maxVerticalOffset, 10) - parseInt(this.minVerticalOffset, 10);
+              const imageInfo = {
+                imageUrl: this.config.images[challengeInfo.challenge.user_challenge_current_score],
+                top: (Math.random() * verticalRandomScale) + this.getVerticalScrollPosition() + parseInt(this.minVerticalOffset, 10),
+                left: Math.random() * this.calculateMaxLeftOffset(),
+                imageIndex
+              };
+
+              console.log('SCILL: Image is displayed', imageInfo);
+              return imageInfo;
+            }
+          }
+        }
+        return null;
+      })
+    );
 
         this.challengeInfo$.subscribe(challengeInfo => {
             if (challengeInfo && challengeInfo.challenge) {

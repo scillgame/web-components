@@ -12,6 +12,7 @@ import {SCILLBattlePassInfo} from './scillbattle-pass.service';
 import {filter, map, mergeMap} from 'rxjs/operators';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {SCILLService} from './scill.service';
+import {fromPromise} from 'rxjs/internal-compatibility';
 
 export class SCILLPersonalChallengesInfo {
   categories?: ChallengeCategory[] = [];
@@ -91,6 +92,15 @@ export class SCILLPersonalChallengesService {
       personalChallengesInfo.stats = `${personalChallengesInfo.challenge.user_challenge_current_score} / ${personalChallengesInfo.challenge.challenge_goal}`;
     }
     return personalChallengesInfo;
+  }
+
+  getPersonalChallenges(appId): Observable<ChallengeCategory[]> {
+    return this.scillService.challengesApi$.pipe(
+      filter(isNotNullOrUndefined),
+      mergeMap(challengesApi => {
+        return fromPromise(challengesApi.getPersonalChallenges(appId));
+      })
+    );
   }
 
   getPersonalChallengeInfo(appId, challengeId): Observable<SCILLPersonalChallengesInfo> {
