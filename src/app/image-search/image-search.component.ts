@@ -39,7 +39,7 @@ const imageSearchConfig: ImageSearchConfig = {
         'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/my22/xc40-electric/xc40-bev-gallery-4-16x9.jpg?h=1300&iar=0',
         'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/pdp/xc60-hybrid/xc60-recharge-gallery-5-16x9.jpg?h=1300&iar=0'
     ],
-    distribution: [1, 5, 13, 18],
+    distribution: [1, 3, 5, 7],
     variance    : 0
 };
 
@@ -116,10 +116,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     showImage(imageInfo): void {
-        if (this.imageRef) {
-            console.log('SCILL: Removing old image');
-            this.imageRef.destroy();
-        }
+        this.removeImage();
 
         if (!imageInfo) {
             return;
@@ -223,6 +220,12 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
                                     left    : Math.random() * this.calculateMaxLeftOffset(),
                                     imageIndex
                                 };
+                                // const imageInfo = {
+                                //     imageUrl: this.config.images[challengeInfo.challenge.user_challenge_current_score],
+                                //     top: (Math.random() * 400) + this.getVerticalScrollPosition(),
+                                //     left: Math.random() * this.calculateMaxLeftOffset(),
+                                //     imageIndex: challengeInfo.challenge.user_challenge_current_score
+                                // };
                                 console.log('SCILL: Image is displayed', imageInfo);
                                 return imageInfo;
                             }
@@ -253,13 +256,25 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
         });
 
         this.subscriptions.add(this.image$.subscribe(imageInfo => {
-            console.log('SCILL: Image info changed: ', imageInfo);
-            this.showImage(imageInfo);
+            // console.log('SCILL: Image info changed: ', imageInfo);
+            this.challengeInfo$.subscribe(challengeInfo => {
+                if (challengeInfo.challenge.type !== 'finished'){
+                    this.showImage(imageInfo);
+                }else{
+                    this.removeImage();
+                }
+            });
         }));
     }
 
     ngOnDestroy(): void {
         this.subscriptions.unsubscribe();
+    }
+
+    removeImage(): void {
+        if (this.imageRef) {
+            this.imageRef.destroy();
+        }
     }
 
     collectImage(imageInfo: ImageInfo): void {
