@@ -269,6 +269,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   collectImage(imageInfo: ImageInfo): void {
+    this.showImage(null);
     this.scillService.sendEvent('collect-item', this.userId, this.userId, {
       item_type: 'image',
       amount: 1
