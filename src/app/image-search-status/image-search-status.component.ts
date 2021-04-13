@@ -23,6 +23,7 @@ export class ImageSearchStatusComponent implements OnInit, OnChanges {
   @Input('access-token') accessToken: string;
   @Input('language') language: string;
   @Input('challenge-id') challengeId: string;
+  @Input('title') title: string;
 
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
   config: ImageSearchConfig;
