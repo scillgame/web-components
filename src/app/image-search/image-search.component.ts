@@ -62,6 +62,8 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   @Input('display-delay-variation') displayDelayVariation = '0';
   @Input('max-image-width') maxImageWidth = '350';
   @Input('container') containerSelector;
+  @Input('min-vertical-offset') minVerticalOffset = '0';
+  @Input('max-vertical-offset') maxVerticalOffset = '400';
   config: ImageSearchConfig = imageSearchConfig;
   driverChallengeInfo$: Observable<SCILLPersonalChallengesInfo>;
   challengeInfo$: Observable<SCILLPersonalChallengesInfo>;
@@ -196,9 +198,9 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
     console.log('SCILL: Image distribution calculated', this.distribution);
 
     // Make sure that automatic challenges are resolved (fixes an issue in the backend for now)
-    this.subscriptions.add(this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId).subscribe(challenges => {
-      console.log("SCILL: Available challenges: ", challenges);
-    }));
+    this.scillPersonalChallengesService.getPersonalChallenges(this.appId).subscribe(categories => {
+      console.log('SCILL: Available challenges: ', categories);
+    });
 
     this.driverChallengeInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.driverChallengeId);
     this.challengeInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.challengeId);
@@ -220,9 +222,10 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
             if (imageIndex >= 0 && imageIndex < this.config.images.length) {
               console.log('SCILL: Image ready to be displayed', imageIndex);
               // Return a new pipeline that checks if the scroll position is reached and then returns image info
+              const verticalRandomScale = parseInt(this.maxVerticalOffset, 10) - parseInt(this.minVerticalOffset, 10);
               const imageInfo = {
                 imageUrl: this.config.images[imageIndex],
-                top: (Math.random() * 400) + this.getVerticalScrollPosition(),
+                top: (Math.random() * verticalRandomScale) + this.getVerticalScrollPosition() + this.minVerticalOffset,
                 left: Math.random() * this.calculateMaxLeftOffset(),
                 imageIndex
               };
