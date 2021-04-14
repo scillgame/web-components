@@ -50,7 +50,7 @@ export class ImageSearchStatusComponent implements OnInit, OnChanges {
       })
     );
 
-    this.http.get(this.dataUrl).subscribe(config => {
+    this.http.get('assets/image-search.json').subscribe(config => {
       this.config = config as ImageSearchConfig;
     });
   }
