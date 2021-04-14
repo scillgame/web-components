@@ -19,6 +19,7 @@ export class ImageSearchImageComponent implements OnInit {
   }
 
   collectImage(imageInfo: ImageInfo): void {
+    this.imageInfo = null;
     this.scillService.sendEvent('collect-item', this.userId, this.userId, {
       item_type: 'image',
       amount: 1
