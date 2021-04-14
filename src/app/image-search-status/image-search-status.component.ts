@@ -23,6 +23,8 @@ export class ImageSearchStatusComponent implements OnInit, OnChanges {
   @Input('access-token') accessToken: string;
   @Input('language') language: string;
   @Input('challenge-id') challengeId: string;
+  @Input('title') title: string;
+  @Input('data-url') dataUrl: any;
 
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
   config: ImageSearchConfig;
@@ -48,7 +50,7 @@ export class ImageSearchStatusComponent implements OnInit, OnChanges {
       })
     );
 
-    this.http.get("assets/image-search.json").subscribe(config => {
+    this.http.get(this.dataUrl).subscribe(config => {
       this.config = config as ImageSearchConfig;
     });
   }
