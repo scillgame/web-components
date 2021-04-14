@@ -32,6 +32,7 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { GetTranslationPipe } from './pipes/get-translation.pipe';
 import { ImageSearchStatusComponent } from './image-search-status/image-search-status.component';
 import { ImageSearchImageComponent } from './image-search-image/image-search-image.component';
+import { ChallengeProgressComponent } from './challenge-progress/challenge-progress.component';
 
 @NgModule({
     declarations   : [
@@ -62,7 +63,8 @@ import { ImageSearchImageComponent } from './image-search-image/image-search-ima
         LeaderboardComponent,
         GetTranslationPipe,
         ImageSearchStatusComponent,
-        ImageSearchImageComponent
+        ImageSearchImageComponent,
+        ChallengeProgressComponent
     ],
     imports        : [
         BrowserModule,
@@ -81,7 +83,8 @@ import { ImageSearchImageComponent } from './image-search-image/image-search-ima
         CommunityChallengeComponent,
         ChallengeTeaserComponent,
         PopoverPreviewComponent,
-        ImageSearchImageComponent
+        ImageSearchImageComponent,
+        ChallengeProgressComponent
     ]
 })
 export class AppModule {
@@ -153,6 +156,11 @@ export class AppModule {
       if (!customElements.get('scill-image-search-status')){
         const imageSearchStatus = createCustomElement(ImageSearchStatusComponent, {injector: this.injector});
         customElements.define('scill-image-search-status', imageSearchStatus);
+      }
+
+      if (!customElements.get('scill-challenge-progress')){
+        const challengeProgress = createCustomElement(ChallengeProgressComponent, {injector: this.injector});
+        customElements.define('scill-challenge-progress', challengeProgress);
       }
     }
 }
