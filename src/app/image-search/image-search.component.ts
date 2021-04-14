@@ -30,15 +30,6 @@ export interface ImageInfo {
   left: number;
 }
 
-const imageSearchConfig: ImageSearchConfig = {
-  images: [
-    'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/recharge/charging_entry_point_4_3.jpg?iar=0&w=1920',
-    'https://assets.volvocars.com/de/~/media/shared-assets/master/images/pages/why-volvo/human-innovation/electrification/pure-electric/itemslist_1b.jpg?w=820',
-    'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/my22/xc40-electric/xc40-bev-gallery-4-16x9.jpg?h=1300&iar=0',
-    'https://www.volvocars.com/images/v/de/v/-/media/project/contentplatform/data/media/pdp/xc60-hybrid/xc60-recharge-gallery-5-16x9.jpg?h=1300&iar=0'
-  ]
-};
-
 @Component({
   selector: 'scill-image-search',
   templateUrl: './image-search.component.html',
@@ -61,7 +52,6 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   @Input('max-vertical-offset') maxVerticalOffset = '400';
   @Input('random-value') randomValue = '4';
   @Input('random-stretch') randomStretch = '1.0';
-  config: ImageSearchConfig = imageSearchConfig;
   driverChallengeInfo$: Observable<SCILLPersonalChallengesInfo>;
   challengeInfo$: Observable<SCILLPersonalChallengesInfo>;
   image$: Observable<ImageInfo>;
@@ -76,12 +66,16 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   subscriptions = new Subscription();
   imageRef: ComponentRef<ImageSearchImageComponent>;
 
+  config$: Observable<ImageSearchConfig>;
+  lastRandomValue = -1;
+
   constructor(private scillService: SCILLService,
               private scillPersonalChallengesService: SCILLPersonalChallengesService,
               rendererFactory: RendererFactory2,
               private componentFactoryResolver: ComponentFactoryResolver,
               private appRef: ApplicationRef,
-              private injector: Injector) {
+              private injector: Injector,
+              private http: HttpClient) {
     this.renderer = rendererFactory.createRenderer(null, null);
   }
 
@@ -178,17 +172,24 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
     // Create an image distribution
     this.updateScrollPositionReached();
 
+    // Load config
+    this.config$ = this.http.get('assets/image-search.json').pipe(
+      map(response => {
+        return response as ImageSearchConfig;
+      })
+    );
+
     // Make sure that automatic challenges are resolved (fixes an issue in the backend for now)
     this.scillPersonalChallengesService.getPersonalChallenges(this.appId).subscribe(categories => {
       console.log('SCILL: Available challenges: ', categories);
     });
 
     this.challengeInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.challengeId);
-    this.image$ = combineLatest([this.scrollPositionReached$, this.refresh$, this.challengeInfo$]).pipe(
+    this.image$ = combineLatest([this.scrollPositionReached$, this.config$, this.refresh$, this.challengeInfo$]).pipe(
       // Delay processing any image stuff until the delay is reached
       delay(this.delay),
-      map(([scrollPositionReached, refresh, challengeInfo]) => {
-        if (scrollPositionReached && challengeInfo) {
+      map(([scrollPositionReached, config, refresh, challengeInfo]) => {
+        if (scrollPositionReached && challengeInfo && config) {
           console.log('SCILL: Got challenge info', challengeInfo);
 
           // The image to be shown corresponds to the images found so far.
@@ -198,17 +199,23 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
           const randomValue = Math.round(Math.random() * (maxRandomValue));
           console.log('SCILL: Random value: ', randomValue, maxRandomValue);
 
+          if (randomValue === this.lastRandomValue) {
+            // Prevent the same number right after the other
+            return null;
+          }
+          this.lastRandomValue = randomValue;
+
           if (randomValue !== 1) {
             return null;
           }
 
           // Make sure we have this image available
-          if (imageIndexToBeShown >= 0 && imageIndexToBeShown < this.config.images.length) {
+          if (imageIndexToBeShown >= 0 && imageIndexToBeShown < config.images.length) {
             console.log(`SCILL: Image with id ${imageIndexToBeShown} ready to be displayed`);
             // Return a new pipeline that checks if the scroll position is reached and then returns image info
             const verticalRandomScale = parseInt(this.maxVerticalOffset, 10) - parseInt(this.minVerticalOffset, 10);
             const imageInfo = {
-              imageUrl: this.config.images[imageIndexToBeShown],
+              imageUrl: config.images[imageIndexToBeShown],
               top: (Math.random() * verticalRandomScale) + this.getVerticalScrollPosition() + parseInt(this.minVerticalOffset, 10),
               left: Math.random() * this.calculateMaxLeftOffset(),
               imageIndex: imageIndexToBeShown
