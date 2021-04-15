@@ -38,7 +38,7 @@ export interface ImageInfo {
 })
 export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
 
-  @Input('config-url') configUrl;
+  @Input('config-url') configUrl = 'https://cdn.scillgame.com/image-search.json';
   @Input('app-id') appId;
   @Input('user-id') userId;
   @Input('challenge-id') challengeId;
@@ -173,7 +173,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
     this.updateScrollPositionReached();
 
     // Load config
-    this.config$ = this.http.get('assets/image-search.json').pipe(
+    this.config$ = this.http.get(this.configUrl).pipe(
       map(response => {
         return response as ImageSearchConfig;
       })

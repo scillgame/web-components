@@ -24,7 +24,7 @@ export class ImageSearchStatusComponent implements OnInit, OnChanges {
   @Input('language') language: string;
   @Input('challenge-id') challengeId: string;
   @Input('title') title: string;
-  @Input('data-url') dataUrl: any;
+  @Input('config-url') configUrl: any;
 
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
   config: ImageSearchConfig;
@@ -50,7 +50,7 @@ export class ImageSearchStatusComponent implements OnInit, OnChanges {
       })
     );
 
-    this.http.get(this.dataUrl).subscribe(config => {
+    this.http.get(this.configUrl).subscribe(config => {
       this.config = config as ImageSearchConfig;
     });
   }
