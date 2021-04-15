@@ -172,4 +172,25 @@ export class SCILLService {
       })
     );
   }
+
+  public sendGroupEvent(eventName: string, sessionId: string, userId: string, metaData: EventMetaData = {}): Observable<boolean> {
+    return fromPromise(this.eventsApi?.sendEvent({
+      event_name: eventName,
+      event_type: 'group',
+      session_id: sessionId,
+      user_id: userId,
+      meta_data: metaData
+    })).pipe(
+      map(response => {
+        if (response && response.status >= 200 && response.status < 300) {
+          return true;
+        } else {
+          return false;
+        }
+      }),
+      catchError(error => {
+        return of(false);
+      })
+    );
+  }
 }

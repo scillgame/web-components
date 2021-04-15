@@ -9,7 +9,7 @@ import {
   startMonitorChallengeUpdates
 } from '@scillgame/scill-js';
 import {SCILLBattlePassInfo} from './scillbattle-pass.service';
-import {filter, map, mergeMap} from 'rxjs/operators';
+import {filter, map, mergeMap, share} from 'rxjs/operators';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {SCILLService} from './scill.service';
 import {fromPromise} from 'rxjs/internal-compatibility';
@@ -23,6 +23,18 @@ export class SCILLPersonalChallengesInfo {
   challengesApi: ChallengesApi;
   progress: number;
   stats: string;
+  lastChallengeChanged?: Challenge;
+
+  getChallengeById(challengeId: string): Challenge|null {
+    for (const category of this.categories) {
+      for (const challenge of category.challenges) {
+        if (challenge.challenge_id === challengeId) {
+          return challenge;
+        }
+      }
+    }
+    return null;
+  }
 }
 
 @Injectable({
@@ -125,8 +137,15 @@ export class SCILLPersonalChallengesService {
           return personalChallengesInfo;
         }),
         mergeMap(personalChallengesInfo => {
-          return personalChallengesInfo.challengesApi?.getPersonalChallengeById(appId, challengeId).then(challenge => {
-            personalChallengesInfo.challenge = challenge;
+          return personalChallengesInfo.challengesApi?.getAllPersonalChallenges(appId).then(categories => {
+            for (const category of categories) {
+              for (const challenge of category.challenges) {
+                if (challenge.challenge_id === challengeId) {
+                  personalChallengesInfo.challenge = challenge;
+                  return personalChallengesInfo;
+                }
+              }
+            }
             return personalChallengesInfo;
           });
         }),
@@ -163,6 +182,7 @@ export class SCILLPersonalChallengesService {
             if (payload.old_challenge.type === 'in-progress' && payload.new_challenge.type === 'unclaimed') {
               this.scillService.showChallengeCompleteNotification(updatedChallenge);
             }
+            personalChallengesInfo.lastChallengeChanged = updatedChallenge;
             personalChallengesInfo$.next(this.calculateStats(personalChallengesInfo));
             break;
           }
