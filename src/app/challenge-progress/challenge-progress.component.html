@@ -1,9 +1,10 @@
-<ng-container *ngIf="personalChallengesInfo$ | async as personalChallengesInfo">
-<scill-progress-bar *ngIf="personalChallengesInfo.challenge"
-                    class="progress-bar"
-                    [background]="progressBackground"
-                    [fill-background]="progressFillBackground"
-                    [height]="height + 'px'"
-                    [border-radius]="borderRadius + 'px'"
-                    [progress]="personalChallengesInfo.challenge | progress"></scill-progress-bar>
-</ng-container>
+<div *ngIf="personalChallengesInfo$ | async as personalChallengesInfo" class="scill-challenge-progress">
+  <div class="scill-challenge-progress-title" *ngIf="title">{{title}} {{personalChallengesInfo.challenge?.user_challenge_current_score}}/{{personalChallengesInfo.challenge?.challenge_goal}}</div>
+  <scill-progress-bar *ngIf="personalChallengesInfo.challenge"
+                      class="progress-bar"
+                      [background]="progressBackground"
+                      [fill-background]="progressFillBackground"
+                      [height]="height + 'px'"
+                      [border-radius]="borderRadius + 'px'"
+                      [progress]="personalChallengesInfo.challenge | progress"></scill-progress-bar>
+</div>

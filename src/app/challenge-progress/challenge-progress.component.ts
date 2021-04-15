@@ -23,6 +23,7 @@ export class ChallengeProgressComponent implements OnInit, OnChanges {
   @Input('background') progressBackground = 'black';
   @Input('fill-background') progressFillBackground = 'red';
   @Input('border-radius') borderRadius = '0';
+  @Input('title') title: string;
 
   personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
   config: ImageSearchConfig;
