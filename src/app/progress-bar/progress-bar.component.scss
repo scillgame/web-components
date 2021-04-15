@@ -2,11 +2,12 @@
     height: 4px;
     padding: 0px;
     background: #07DDEC;
+    border-radius:inherit;
+    overflow: hidden;
     .progress-bar-fill {
       width: 0;
       height: 100%;
       background: #009BED;
-      border-radius:inherit;
       max-width: 100%;
       transition: all 2s;
     }
