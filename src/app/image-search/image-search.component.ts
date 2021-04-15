@@ -42,6 +42,8 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   @Input('app-id') appId;
   @Input('user-id') userId;
   @Input('challenge-id') challengeId;
+  @Input('driver-challenge-id') driverChallengeId;
+  @Input('event-challenge-id') eventChallengeId;
   @Input('access-token') accessToken;
   @Input('minimum-scroll-depth') minimumScrollDepth = '0';
   @Input('display-delay') displayDelay = '0';
@@ -52,8 +54,10 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   @Input('max-vertical-offset') maxVerticalOffset = '400';
   @Input('random-value') randomValue = '4';
   @Input('random-stretch') randomStretch = '1.0';
+  @Input('first-image-always') firstImageAlways = 'true';
   driverChallengeInfo$: Observable<SCILLPersonalChallengesInfo>;
   challengeInfo$: Observable<SCILLPersonalChallengesInfo>;
+  challengesInfo$: Observable<SCILLPersonalChallengesInfo>;
   image$: Observable<ImageInfo>;
   notification$ = new BehaviorSubject<SCILLNotification>(null);
   firstLaunch = true;
@@ -179,34 +183,53 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
       })
     );
 
-    // Make sure that automatic challenges are resolved (fixes an issue in the backend for now)
-    this.scillPersonalChallengesService.getPersonalChallenges(this.appId).subscribe(categories => {
-      console.log('SCILL: Available challenges: ', categories);
-    });
-
-    this.challengeInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.challengeId);
-    this.image$ = combineLatest([this.scrollPositionReached$, this.config$, this.refresh$, this.challengeInfo$]).pipe(
+    this.challengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId);
+    this.image$ = combineLatest([this.scrollPositionReached$, this.config$, this.challengesInfo$]).pipe(
       // Delay processing any image stuff until the delay is reached
       delay(this.delay),
-      map(([scrollPositionReached, config, refresh, challengeInfo]) => {
-        if (scrollPositionReached && challengeInfo && config) {
-          console.log('SCILL: Got challenge info', challengeInfo);
+      map(([scrollPositionReached, config, challengesInfo]) => {
+        if (scrollPositionReached && challengesInfo && config) {
+          console.log('SCILL: Got challenge info', challengesInfo);
 
-          // The image to be shown corresponds to the images found so far.
-          const imageIndexToBeShown = challengeInfo.challenge.user_challenge_current_score;
-
-          const maxRandomValue = parseInt(this.randomValue, 10) + (imageIndexToBeShown * parseFloat(this.randomStretch));
-          const randomValue = Math.round(Math.random() * (maxRandomValue));
-          console.log('SCILL: Random value: ', randomValue, maxRandomValue);
-
-          if (randomValue === this.lastRandomValue) {
-            // Prevent the same number right after the other
+          if (challengesInfo.lastChallengeChanged != null && challengesInfo.lastChallengeChanged.challenge_id !== this.driverChallengeId) {
+            console.log('SCILL: We are only interested in page impression events');
+            // Image has been collected, do nothing
             return null;
           }
-          this.lastRandomValue = randomValue;
 
-          if (randomValue !== 1) {
+          const imageChallenge = challengesInfo.getChallengeById(this.challengeId);
+          const driverChallenge = challengesInfo.getChallengeById(this.driverChallengeId);
+
+          if (!imageChallenge) {
+            console.warn('SCILL: Challenge with ID not found', this.challengeId, challengesInfo);
             return null;
+          }
+
+          if (!driverChallenge) {
+            console.warn('SCILL: Driver challenge with ID not found', this.driverChallengeId, challengesInfo);
+            return null;
+          }
+
+          if (imageChallenge.type !== 'in-progress') {
+            console.log('SCILL: Nothing to show, challenge not in progress', imageChallenge);
+            return null;
+          }
+
+          // The image to be shown corresponds to the images found so far.
+          const imageIndexToBeShown = imageChallenge.user_challenge_current_score;
+
+          const maxRandomValue = parseInt(this.randomValue, 10) + (imageIndexToBeShown * parseFloat(this.randomStretch));
+          console.log(`SCILL: Counter (${driverChallenge.user_challenge_current_score}) must be dividable by ${maxRandomValue}`);
+
+          if (driverChallenge.user_challenge_current_score % maxRandomValue !== 0) {
+            if (imageIndexToBeShown > 1) {
+              return null;
+            }
+            if (this.firstImageAlways?.toLowerCase() === 'true' && driverChallenge.user_challenge_current_score <= 1 && imageIndexToBeShown <= 0) {
+              console.log('SCILL: First image should be always shown');
+            } else {
+              return null;
+            }
           }
 
           // Make sure we have this image available
@@ -230,15 +253,15 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
       })
     );
 
-    this.challengeInfo$.subscribe(challengeInfo => {
-      if (challengeInfo && challengeInfo.challenge) {
+    this.challengesInfo$.subscribe(challengesInfo => {
+      if (challengesInfo && challengesInfo.lastChallengeChanged && challengesInfo.lastChallengeChanged.challenge_id === this.challengeId) {
         if (this.firstLaunch) {
-          if (challengeInfo.challenge.type === 'in-progress') {
-            this.scillService.showProgressNotification(`Wahnsinn! Super gemacht. Echt toll. Du hast schon ${challengeInfo.challenge.user_challenge_current_score} von ${challengeInfo.challenge.challenge_goal} der heutigen Bilder gefunden! Die Chancen stehen gut dass Du heute alle Bilder findest. Surf einfach noch ein bisschen herum!`, challengeInfo.challenge);
+          if (challengesInfo.lastChallengeChanged.type === 'in-progress') {
+            this.scillService.showProgressNotification(`Wahnsinn! Super gemacht. Echt toll. Du hast schon ${challengesInfo.lastChallengeChanged.user_challenge_current_score} von ${challengesInfo.lastChallengeChanged.challenge_goal} der heutigen Bilder gefunden! Die Chancen stehen gut dass Du heute alle Bilder findest. Surf einfach noch ein bisschen herum!`, challengesInfo.lastChallengeChanged);
           }
         } else {
-          if (challengeInfo.challenge.type === 'in-progress') {
-            this.notification$.next(new SCILLNotification(`Wahnsinn! Super gemacht. Echt toll. Du hast schon ${challengeInfo.challenge.user_challenge_current_score} von ${challengeInfo.challenge.challenge_goal} der heutigen Bilder gefunden! Die Chancen stehen gut dass Du heute alle Bilder findest. Surf einfach noch ein bisschen herum!`, null, null, null, false, challengeInfo.challenge));
+          if (challengesInfo.lastChallengeChanged.type === 'in-progress') {
+            this.notification$.next(new SCILLNotification(`Wahnsinn! Super gemacht. Echt toll. Du hast schon ${challengesInfo.lastChallengeChanged.user_challenge_current_score} von ${challengesInfo.lastChallengeChanged.challenge_goal} der heutigen Bilder gefunden! Die Chancen stehen gut dass Du heute alle Bilder findest. Surf einfach noch ein bisschen herum!`, null, null, null, false, challengesInfo.lastChallengeChanged));
             this.sendPoints(1);
           } else {
             this.notification$.next(new SCILLNotification(`JUCHU! Alle Bilder für heute gefunden! Bis morgen!`, null));
@@ -250,8 +273,8 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     this.subscriptions.add(this.image$.subscribe(imageInfo => {
-      console.log('GOT IMAGE INFO: ', imageInfo);
       if (imageInfo) {
+        console.log('SCILL: show image: ', imageInfo);
         // console.log('SCILL: Image info changed: ', imageInfo);
         this.showImage(imageInfo);
       } else {
@@ -265,20 +288,11 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   removeImage(): void {
-    console.log('REMOVING IMAGE: ', this.imageRef);
     if (this.imageRef) {
+      console.log('SCILL: removing image: ', this.imageRef);
       this.imageRef.destroy();
       this.imageRef = null;
     }
-  }
-
-  collectImage(imageInfo: ImageInfo): void {
-    this.scillService.sendEvent('collect-item', this.userId, this.userId, {
-      item_type: 'image',
-      amount: 1
-    }).subscribe(result => {
-      console.log('Image Collected', result);
-    });
   }
 
   sendPoints(amount: number): void {
@@ -291,7 +305,12 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   simulatePageImpression(): void {
-    this.refresh$.next(true);
+    this.scillService.sendEvent('craft-item', this.userId, this.userId, {
+      item_type: 'page-impression',
+      amount   : 1
+    }).subscribe(result => {
+      console.log('Page Impression Collected', result);
+    });
   }
 
   closeNotification(): void {
