@@ -26,5 +26,16 @@ export class ImageSearchImageComponent implements OnInit {
     }).subscribe(result => {
       console.log("Image Collected", result);
     });
+
+    this.resetPageImpressions();
+  }
+
+  resetPageImpressions(): void {
+    this.scillService.sendGroupEvent('craft-item', this.userId, this.userId, {
+      item_type: 'page-impression',
+      amount   : 1
+    }).subscribe(result => {
+      console.log('Reset Page Impressions', result);
+    });
   }
 }
