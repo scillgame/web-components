@@ -18,6 +18,7 @@ import {delay, distinctUntilChanged, filter, map, mergeMap, withLatestFrom} from
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {SCILLNotification, SCILLService} from '../scill.service';
 import {ImageSearchImageComponent} from '../image-search-image/image-search-image.component';
+import {Challenge} from '@scillgame/scill-js';
 
 export interface ImageSearchConfig {
   images: string[];
@@ -58,6 +59,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   driverChallengeInfo$: Observable<SCILLPersonalChallengesInfo>;
   challengeInfo$: Observable<SCILLPersonalChallengesInfo>;
   challengesInfo$: Observable<SCILLPersonalChallengesInfo>;
+  eventChallenge: Challenge;
   image$: Observable<ImageInfo>;
   notification$ = new BehaviorSubject<SCILLNotification>(null);
   firstLaunch = true;
@@ -188,6 +190,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
       // Delay processing any image stuff until the delay is reached
       delay(this.delay),
       map(([scrollPositionReached, config, challengesInfo]) => {
+        console.log('SCILL: Pipeline triggered', scrollPositionReached, config, challengesInfo);
         if (scrollPositionReached && challengesInfo && config) {
           console.log('SCILL: Got challenge info', challengesInfo);
 
@@ -197,16 +200,16 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
             return null;
           }
 
-          const imageChallenge = challengesInfo.getChallengeById(this.challengeId);
-          const driverChallenge = challengesInfo.getChallengeById(this.driverChallengeId);
+          const imageChallenge = this.challengeId ? challengesInfo.getChallengeById(this.challengeId): null;
+          const driverChallenge = this.driverChallengeId ? challengesInfo.getChallengeById(this.driverChallengeId) : null;
 
           if (!imageChallenge) {
-            console.warn('SCILL: Challenge with ID not found', this.challengeId, challengesInfo);
+            console.warn('SCILL: Challenge with ID not found or not set', this.challengeId, challengesInfo);
             return null;
           }
 
           if (!driverChallenge) {
-            console.warn('SCILL: Driver challenge with ID not found', this.driverChallengeId, challengesInfo);
+            console.warn('SCILL: Driver challenge with ID not found or not set', this.driverChallengeId, challengesInfo);
             return null;
           }
 
@@ -253,15 +256,22 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
       })
     );
 
-    this.challengesInfo$.subscribe(challengesInfo => {
+    this.subscriptions.add(this.challengesInfo$.subscribe(challengesInfo => {
+      console.log("CHALLENGES INFO: ", challengesInfo);
+      if (!challengesInfo) {
+        return;
+      }
+
       if (challengesInfo && challengesInfo.lastChallengeChanged && challengesInfo.lastChallengeChanged.challenge_id === this.challengeId) {
-        if (this.firstLaunch) {
-          if (challengesInfo.lastChallengeChanged.type === 'in-progress') {
-            this.scillService.showProgressNotification(`Wahnsinn! Super gemacht. Echt toll. Du hast schon ${challengesInfo.lastChallengeChanged.user_challenge_current_score} von ${challengesInfo.lastChallengeChanged.challenge_goal} der heutigen Bilder gefunden! Die Chancen stehen gut dass Du heute alle Bilder findest. Surf einfach noch ein bisschen herum!`, challengesInfo.lastChallengeChanged);
-          }
+        const eventChallenge = this.eventChallengeId ? challengesInfo.getChallengeById(this.eventChallengeId) : null;
+        // We need to add +1 here, because the total goal is incremented later
+        const eventInfoText = eventChallenge ? ` und insgesamt ${eventChallenge.user_challenge_current_score + 1} Stück. Für die Teilnahme an der Hauptpreis-Verlosung brauchst du mindestens 10 gesammelte Bilder! ` : '! ';
+
+        if (challengesInfo.lastChallengeChanged.user_challenge_current_score === 0) {
+          this.scillService.showProgressNotification(`Wahnsinn! Super gemacht. Echt toll. Du hast schon ${challengesInfo.lastChallengeChanged.user_challenge_current_score} von ${challengesInfo.lastChallengeChanged.challenge_goal} der heutigen Bilder gefunden${eventInfoText} Die Chancen stehen gut dass Du heute alle Bilder findest. Surf einfach noch ein bisschen herum!`, challengesInfo.lastChallengeChanged);
         } else {
           if (challengesInfo.lastChallengeChanged.type === 'in-progress') {
-            this.notification$.next(new SCILLNotification(`Wahnsinn! Super gemacht. Echt toll. Du hast schon ${challengesInfo.lastChallengeChanged.user_challenge_current_score} von ${challengesInfo.lastChallengeChanged.challenge_goal} der heutigen Bilder gefunden! Die Chancen stehen gut dass Du heute alle Bilder findest. Surf einfach noch ein bisschen herum!`, null, null, null, false, challengesInfo.lastChallengeChanged));
+            this.notification$.next(new SCILLNotification(`Wahnsinn! Super gemacht. Echt toll. Du hast schon ${challengesInfo.lastChallengeChanged.user_challenge_current_score} von ${challengesInfo.lastChallengeChanged.challenge_goal} der heutigen Bilder gefunden${eventInfoText}! Die Chancen stehen gut dass Du heute alle Bilder findest. Surf einfach noch ein bisschen herum!`, null, null, null, false, challengesInfo.lastChallengeChanged));
             this.sendPoints(1);
           } else {
             this.notification$.next(new SCILLNotification(`JUCHU! Alle Bilder für heute gefunden! Bis morgen!`, null));
@@ -270,7 +280,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
         }
         this.firstLaunch = false;
       }
-    });
+    }));
 
     this.subscriptions.add(this.image$.subscribe(imageInfo => {
       if (imageInfo) {

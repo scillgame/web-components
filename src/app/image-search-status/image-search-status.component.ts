@@ -26,7 +26,7 @@ export class ImageSearchStatusComponent implements OnInit, OnChanges {
   @Input('title') title: string;
   @Input('config-url') configUrl: any;
 
-  personalChallengesInfo$: Observable<SCILLPersonalChallengesInfo>;
+  challenge$: Observable<Challenge>;
   config: ImageSearchConfig;
 
   constructor(private scillService: SCILLService, protected scillPersonalChallengesService: SCILLPersonalChallengesService, private http: HttpClient) {
@@ -43,10 +43,13 @@ export class ImageSearchStatusComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.personalChallengesInfo$ = this.scillPersonalChallengesService.getPersonalChallengeInfo(this.appId, this.challengeId).pipe(
+    this.challenge$ = this.scillPersonalChallengesService.getPersonalChallengesInfo(this.appId).pipe(
       map(personalChallengesInfo => {
-        console.log(personalChallengesInfo);
-        return personalChallengesInfo;
+        if (personalChallengesInfo) {
+          return personalChallengesInfo.getChallengeById(this.challengeId);
+        } else {
+          return null;
+        }
       })
     );
 

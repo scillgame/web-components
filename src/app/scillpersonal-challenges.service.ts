@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ChallengeUpdateMonitor} from '@scillgame/scill-js/dist/challenge-update-monitor';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import {
   Challenge,
   ChallengeCategory,
@@ -17,7 +17,7 @@ import {fromPromise} from 'rxjs/internal-compatibility';
 export class SCILLPersonalChallengesInfo {
   categories?: ChallengeCategory[] = [];
   challenge?: Challenge;
-  monitor: ChallengeUpdateMonitor;
+  monitor: Subscription;
   refresh$ = new BehaviorSubject<boolean>(false);
   accessToken: string;
   challengesApi: ChallengesApi;
@@ -37,23 +37,46 @@ export class SCILLPersonalChallengesInfo {
   }
 }
 
+export class SCILLMonitorChallenges {
+  monitor: ChallengeUpdateMonitor;
+  messages$ = new Subject<ChallengeWebhookPayload>(null);
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class SCILLPersonalChallengesService {
   storage = new Map<string, BehaviorSubject<SCILLPersonalChallengesInfo>>();
+  monitors = new Map<string, SCILLMonitorChallenges>();
   subscriptions = new Subscription();
 
   constructor(private scillService: SCILLService) { }
 
   public get environment(): SCILLEnvironment {
-    return window['SCILLEnvironment'] ? window['SCILLEnvironment'] as SCILLEnvironment : 'production' as SCILLEnvironment;
+    return window.SCILLEnvironment ? window.SCILLEnvironment as SCILLEnvironment : 'production' as SCILLEnvironment;
+  }
+
+  createMonitor(appId: string, accessToken: string): SCILLMonitorChallenges {
+    if (this.monitors.has(appId)) {
+      console.log('SCILL: Using monitor cache for app id: ', appId);
+      return this.monitors.get(appId);
+    } else {
+      console.log('SCILL: Creating realtime updates monitor for app id: ', appId);
+      const challengeMonitor = new SCILLMonitorChallenges();
+      challengeMonitor.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
+        challengeMonitor.messages$.next(payload);
+      }), this.environment);
+      this.monitors.set(appId, challengeMonitor);
+      return challengeMonitor;
+    }
   }
 
   getPersonalChallengesInfo(appId, language = 'en'): Observable<SCILLPersonalChallengesInfo> {
     if (this.storage.has(appId)) {
+      console.log('SCILL: Using personal challenges cache for app id: ', appId);
       return this.storage.get(appId).asObservable();
     } else {
+      console.log('SCILL: Loading personal challenges for app id: ', appId);
       const personalChallengesInfo$ = new BehaviorSubject<SCILLPersonalChallengesInfo>(null);
       this.storage.set(appId, personalChallengesInfo$);
 
@@ -62,10 +85,10 @@ export class SCILLPersonalChallengesService {
         map(accessToken => {
 
           const personalChallengesInfo = new SCILLPersonalChallengesInfo();
-          personalChallengesInfo.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
+          const monitor = this.createMonitor(appId, accessToken);
+          personalChallengesInfo.monitor = monitor.messages$.subscribe(payload => {
             this.updateChallenge(personalChallengesInfo$, payload);
-            personalChallengesInfo$.next(this.calculateStats(personalChallengesInfo));
-          }), this.environment);
+          });
 
           personalChallengesInfo.accessToken = accessToken;
           personalChallengesInfo.challengesApi = getChallengesApi(personalChallengesInfo.accessToken, this.environment);
@@ -127,9 +150,11 @@ export class SCILLPersonalChallengesService {
         filter(isNotNullOrUndefined),
         map(accessToken => {
           const personalChallengesInfo = new SCILLPersonalChallengesInfo();
-          personalChallengesInfo.monitor = startMonitorChallengeUpdates(accessToken, (payload => {
+
+          const monitor = this.createMonitor(appId, accessToken);
+          personalChallengesInfo.monitor = monitor.messages$.subscribe(payload => {
             this.updateChallenge(personalChallengesInfo$, payload);
-          }), this.environment);
+          });
 
           personalChallengesInfo.accessToken = accessToken;
           personalChallengesInfo.challengesApi = getChallengesApi(personalChallengesInfo.accessToken, this.environment);

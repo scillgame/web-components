@@ -1,10 +1,10 @@
-<div *ngIf="personalChallengesInfo$ | async as personalChallengesInfo" class="scill-challenge-progress">
-  <div class="scill-challenge-progress-title" *ngIf="title">{{title}} {{personalChallengesInfo.challenge?.user_challenge_current_score}}/{{personalChallengesInfo.challenge?.challenge_goal}}</div>
-  <scill-progress-bar *ngIf="personalChallengesInfo.challenge"
+<div *ngIf="challenge$ | async as challenge" class="scill-challenge-progress">
+  <div class="scill-challenge-progress-title" *ngIf="title">{{title}} {{challenge?.user_challenge_current_score}}/{{challenge?.challenge_goal}}</div>
+  <scill-progress-bar *ngIf="challenge"
                       class="progress-bar"
                       [background]="progressBackground"
                       [fill-background]="progressFillBackground"
                       [height]="height + 'px'"
                       [border-radius]="borderRadius + 'px'"
-                      [progress]="personalChallengesInfo.challenge | progress"></scill-progress-bar>
+                      [progress]="challenge | progress"></scill-progress-bar>
 </div>
