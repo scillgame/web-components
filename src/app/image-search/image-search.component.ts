@@ -170,6 +170,23 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
     return maxLeftOffset;
   }
 
+  calculateDetermisticRandomValue(userId: string): number {
+    // Calculate a number based on the current day of week and day of month
+    const date = new Date();
+    const id = parseInt(userId, 10) + date.getDay() + date.getDate();
+
+    // Take the last number
+    let letter = parseInt(id.toString().substr(-1, 1), 10);
+
+    // Number is between 0 and 9, now move to -5 and 4
+    letter -= 5;
+
+    // Scale number to be between -2 and 2
+    letter *= 0.4;
+
+    return Math.round(letter);
+  }
+
   ngOnInit(): void {
     // Calculate image display delay
     this.delay = parseInt(this.displayDelay, 10) * 1000;
@@ -221,7 +238,14 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
           // The image to be shown corresponds to the images found so far.
           const imageIndexToBeShown = imageChallenge.user_challenge_current_score;
 
-          const maxRandomValue = parseInt(this.randomValue, 10) + (imageIndexToBeShown * parseFloat(this.randomStretch));
+          // Calculate the "next" page impression value where we show the image
+          let maxRandomValue = parseInt(this.randomValue, 10) + (imageIndexToBeShown * parseFloat(this.randomStretch));
+
+          // Move this value around by a deterministic random value, it must be deterministic so we can validate the data in the backend
+          if (this.userId) {
+            maxRandomValue += this.calculateDetermisticRandomValue(this.userId);
+          }
+
           console.log(`SCILL: Counter (${driverChallenge.user_challenge_current_score}) must be dividable by ${maxRandomValue}`);
 
           if (driverChallenge.user_challenge_current_score % maxRandomValue !== 0) {
