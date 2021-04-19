@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, EventEmitter, Output} from '@angular/core';
 import {ImageInfo} from '../image-search/image-search.component';
 import {SCILLService} from '../scill.service';
 
@@ -10,8 +10,8 @@ import {SCILLService} from '../scill.service';
 export class ImageSearchImageComponent implements OnInit {
 
   @Input() imageInfo: ImageInfo;
-  @Input() userId: string;
   @Input() maxImageWidth: string;
+  @Output() imageClicked = new EventEmitter<ImageInfo>();
 
   constructor(private scillService: SCILLService) { }
 
@@ -19,23 +19,6 @@ export class ImageSearchImageComponent implements OnInit {
   }
 
   collectImage(imageInfo: ImageInfo): void {
-    this.imageInfo = null;
-    this.scillService.sendEvent('collect-item', this.userId, this.userId, {
-      item_type: 'image',
-      amount: 1
-    }).subscribe(result => {
-      console.log("Image Collected", result);
-    });
-
-    this.resetPageImpressions();
-  }
-
-  resetPageImpressions(): void {
-    this.scillService.sendGroupEvent('craft-item', this.userId, this.userId, {
-      item_type: 'page-impression',
-      amount   : 1
-    }).subscribe(result => {
-      console.log('Reset Page Impressions', result);
-    });
+    this.imageClicked.emit(imageInfo);
   }
 }

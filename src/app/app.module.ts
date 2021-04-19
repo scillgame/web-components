@@ -33,6 +33,8 @@ import { GetTranslationPipe } from './pipes/get-translation.pipe';
 import { ImageSearchStatusComponent } from './image-search-status/image-search-status.component';
 import { ImageSearchImageComponent } from './image-search-image/image-search-image.component';
 import { ChallengeProgressComponent } from './challenge-progress/challenge-progress.component';
+import {OverlayModule} from '@angular/cdk/overlay';
+import { ImageSearchNotificationComponent } from './image-search-notification/image-search-notification.component';
 
 @NgModule({
     declarations   : [
@@ -64,12 +66,14 @@ import { ChallengeProgressComponent } from './challenge-progress/challenge-progr
         GetTranslationPipe,
         ImageSearchStatusComponent,
         ImageSearchImageComponent,
-        ChallengeProgressComponent
+        ChallengeProgressComponent,
+        ImageSearchNotificationComponent
     ],
     imports        : [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
+        OverlayModule,
     ],
     providers      : [],
     entryComponents: [
@@ -84,7 +88,8 @@ import { ChallengeProgressComponent } from './challenge-progress/challenge-progr
         ChallengeTeaserComponent,
         PopoverPreviewComponent,
         ImageSearchImageComponent,
-        ChallengeProgressComponent
+        ChallengeProgressComponent,
+        ImageSearchNotificationComponent
     ]
 })
 export class AppModule {

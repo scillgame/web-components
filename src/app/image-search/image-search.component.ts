@@ -19,6 +19,9 @@ import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {SCILLNotification, SCILLService} from '../scill.service';
 import {ImageSearchImageComponent} from '../image-search-image/image-search-image.component';
 import {Challenge} from '@scillgame/scill-js';
+import {Overlay, OverlayRef} from '@angular/cdk/overlay';
+import {ComponentPortal} from '@angular/cdk/portal';
+import {ImageSearchNotificationComponent} from '../image-search-notification/image-search-notification.component';
 
 export interface ImageSearchConfig {
   images: string[];
@@ -27,8 +30,6 @@ export interface ImageSearchConfig {
 export interface ImageInfo {
   imageIndex: number;
   imageUrl: string;
-  top: number;
-  left: number;
 }
 
 @Component({
@@ -50,9 +51,6 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   @Input('display-delay') displayDelay = '0';
   @Input('display-delay-variation') displayDelayVariation = '0';
   @Input('max-image-width') maxImageWidth = '350';
-  @Input('container') containerSelector;
-  @Input('min-vertical-offset') minVerticalOffset = '0';
-  @Input('max-vertical-offset') maxVerticalOffset = '400';
   @Input('random-value') randomValue = '4';
   @Input('random-stretch') randomStretch = '1.0';
   @Input('first-image-always') firstImageAlways = 'true';
@@ -70,7 +68,8 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   renderer: Renderer2;
   subscriptions = new Subscription();
-  imageRef: ComponentRef<ImageSearchImageComponent>;
+  imageRef: OverlayRef;
+  notificationRef: OverlayRef;
 
   config$: Observable<ImageSearchConfig>;
   lastRandomValue = -1;
@@ -81,7 +80,8 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
               private componentFactoryResolver: ComponentFactoryResolver,
               private appRef: ApplicationRef,
               private injector: Injector,
-              private http: HttpClient) {
+              private http: HttpClient,
+              private overlay: Overlay) {
     this.renderer = rendererFactory.createRenderer(null, null);
   }
 
@@ -115,59 +115,96 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   showImage(imageInfo): void {
-    console.log('SHOWING IMAGE INFO: ', imageInfo);
-    this.removeImage();
-
-    if (!imageInfo) {
-      return;
+    if (this.imageRef) {
+      this.imageRef.detach();
+      this.imageRef = null;
     }
 
-    console.log('SCILL: Adding image to the DOM in container: ', this.containerSelector);
+    const positionStrategy = this.overlay.position()
+      .global()
+      .centerHorizontally()
+      .centerVertically();
 
-    // 1. Setup the image component
-    const componentRef = this.componentFactoryResolver
-      .resolveComponentFactory(ImageSearchImageComponent)
-      .create(this.injector);
-    componentRef.instance.imageInfo = imageInfo;
-    componentRef.instance.userId = this.userId;
-    componentRef.instance.maxImageWidth = this.maxImageWidth;
-    this.imageRef = componentRef;
+    const overlayRef = this.overlay.create({
+      hasBackdrop: true,
+      backdropClass: 'scill-overlay-backdrop',
+      panelClass: 'scill-overlay-panel',
+      scrollStrategy: this.overlay.scrollStrategies.block(),
+      positionStrategy
+    });
 
-    // 2. Attach component to the appRef so that it's inside the ng component tree
-    this.appRef.attachView(componentRef.hostView);
-
-    // 3. Get DOM element from component
-    const domElem = (componentRef.hostView as EmbeddedViewRef<any>)
-      .rootNodes[0] as HTMLElement;
-
-    // 4. Change position
-    const container = this.getContainer();
-    container.prepend(domElem);
-  }
-
-  getContainer(): HTMLElement {
-    let container = this.imageArea.nativeElement;
-    if (this.containerSelector) {
-      container = document.querySelector(this.containerSelector);
-      if (!container) {
-        console.error(`SCILL: Container ${this.containerSelector} not found in page`);
-        container = this.imageArea.nativeElement;
+    const imagePortal = new ComponentPortal(ImageSearchImageComponent);
+    const ref = overlayRef.attach(imagePortal);
+    ref.instance.imageInfo = imageInfo;
+    ref.instance.maxImageWidth = this.maxImageWidth;
+    ref.instance.imageClicked.subscribe(info => {
+      if (this.imageRef) {
+        this.collectImage(info);
+        this.imageRef.detach();
+        this.imageRef = null;
       }
-    }
-    if (!container) {
-      container = document.body;
-    }
-    return container;
+    });
+
+    this.imageRef = overlayRef;
   }
 
-  calculateMaxLeftOffset(): number {
-    const container = this.getContainer();
-    let maxLeftOffset = container.clientWidth - parseInt(this.maxImageWidth, 10);
-    console.log('SCILL: Max left offset and client width', maxLeftOffset, this.imageArea.nativeElement.clientWidth);
-    if (maxLeftOffset < 0) {
-      maxLeftOffset = 0;
+  showNotification(notification: SCILLNotification): void {
+    if (this.notificationRef) {
+      this.notificationRef.detach();
+      this.notificationRef = null;
     }
-    return maxLeftOffset;
+
+    const positionStrategy = this.overlay.position()
+      .global()
+      .centerHorizontally()
+      .centerVertically();
+
+    const overlayRef = this.overlay.create({
+      hasBackdrop: true,
+      backdropClass: 'scill-overlay-backdrop',
+      panelClass: 'scill-overlay-panel',
+      scrollStrategy: this.overlay.scrollStrategies.block(),
+      positionStrategy
+    });
+
+    const imagePortal = new ComponentPortal(ImageSearchNotificationComponent);
+    const ref = overlayRef.attach(imagePortal);
+    ref.instance.notification = notification;
+    ref.instance.onClose.subscribe(() => {
+      if (this.notificationRef) {
+        this.notificationRef.detach();
+        this.notificationRef = null;
+      }
+    });
+
+    this.subscriptions.add(overlayRef.backdropClick().subscribe(() => {
+      if (this.notificationRef) {
+        this.notificationRef.detach();
+        this.notificationRef = null;
+      }
+    }));
+
+    this.notificationRef = overlayRef;
+  }
+
+  collectImage(imageInfo: ImageInfo): void {
+    this.scillService.sendEvent('collect-item', this.userId, this.userId, {
+      item_type: 'image',
+      amount: 1
+    }).subscribe(result => {
+      console.log("Image Collected", result);
+    });
+
+    this.resetPageImpressions();
+  }
+
+  resetPageImpressions(): void {
+    this.scillService.sendGroupEvent('craft-item', this.userId, this.userId, {
+      item_type: 'page-impression',
+      amount   : 1
+    }).subscribe(result => {
+      console.log('Reset Page Impressions', result);
+    });
   }
 
   calculateDetermisticRandomValue(userId: string): number {
@@ -262,12 +299,9 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
           // Make sure we have this image available
           if (imageIndexToBeShown >= 0 && imageIndexToBeShown < config.images.length) {
             console.log(`SCILL: Image with id ${imageIndexToBeShown} ready to be displayed`);
-            // Return a new pipeline that checks if the scroll position is reached and then returns image info
-            const verticalRandomScale = parseInt(this.maxVerticalOffset, 10) - parseInt(this.minVerticalOffset, 10);
+            // Return image info which will be used to show the overlay
             const imageInfo = {
               imageUrl: config.images[imageIndexToBeShown],
-              top: (Math.random() * verticalRandomScale) + this.getVerticalScrollPosition() + parseInt(this.minVerticalOffset, 10),
-              left: Math.random() * this.calculateMaxLeftOffset(),
               imageIndex: imageIndexToBeShown
             };
 
@@ -281,7 +315,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
     );
 
     this.subscriptions.add(this.challengesInfo$.subscribe(challengesInfo => {
-      console.log("CHALLENGES INFO: ", challengesInfo);
+      console.log("SCILL: Challenges Info: ", challengesInfo);
       if (!challengesInfo) {
         return;
       }
@@ -311,22 +345,18 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
         console.log('SCILL: show image: ', imageInfo);
         // console.log('SCILL: Image info changed: ', imageInfo);
         this.showImage(imageInfo);
-      } else {
-        this.removeImage();
+      }
+    }));
+
+    this.subscriptions.add(this.notification$.subscribe(notification => {
+      if (notification) {
+        this.showNotification(notification);
       }
     }));
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
-  }
-
-  removeImage(): void {
-    if (this.imageRef) {
-      console.log('SCILL: removing image: ', this.imageRef);
-      this.imageRef.destroy();
-      this.imageRef = null;
-    }
   }
 
   sendPoints(amount: number): void {
