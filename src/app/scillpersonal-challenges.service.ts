@@ -39,7 +39,7 @@ export class SCILLPersonalChallengesInfo {
 
 export class SCILLMonitorChallenges {
   monitor: ChallengeUpdateMonitor;
-  messages$ = new Subject<ChallengeWebhookPayload>(null);
+  messages$ = new Subject<ChallengeWebhookPayload>();
 }
 
 @Injectable({
@@ -53,7 +53,7 @@ export class SCILLPersonalChallengesService {
   constructor(private scillService: SCILLService) { }
 
   public get environment(): SCILLEnvironment {
-    return window.SCILLEnvironment ? window.SCILLEnvironment as SCILLEnvironment : 'production' as SCILLEnvironment;
+    return window['SCILLEnvironment'] ? window['SCILLEnvironment'] as SCILLEnvironment : 'production' as SCILLEnvironment;
   }
 
   createMonitor(appId: string, accessToken: string): SCILLMonitorChallenges {
