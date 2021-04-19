@@ -173,7 +173,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   calculateDetermisticRandomValue(userId: string): number {
     // Calculate a number based on the current day of week and day of month
     const date = new Date();
-    const id = parseInt(userId, 10) + date.getDay() + date.getDate();
+    const id = parseInt(userId, 10) + date.getDay() + date.getDate() + date.getHours();
 
     // Take the last number
     let letter = parseInt(id.toString().substr(-1, 1), 10);
