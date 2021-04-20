@@ -323,7 +323,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
       if (challengesInfo && challengesInfo.lastChallengeChanged && challengesInfo.lastChallengeChanged.challenge_id === this.challengeId) {
         const eventChallenge = this.eventChallengeId ? challengesInfo.getChallengeById(this.eventChallengeId) : null;
         // We need to add +1 here, because the total goal is incremented later
-        const eventInfoText = eventChallenge ? ` und insgesamt ${eventChallenge.user_challenge_current_score + 1} Stück. Für die Teilnahme an der Hauptpreis-Verlosung brauchst du mindestens 10 gesammelte Bilder! ` : '! ';
+        const eventInfoText = eventChallenge ? ` und insgesamt ${eventChallenge.user_challenge_current_score} Stück. Für die Teilnahme an der Hauptpreis-Verlosung brauchst du mindestens 10 gesammelte Bilder! ` : '! ';
 
         if (challengesInfo.lastChallengeChanged.user_challenge_current_score === 0) {
           this.scillService.showProgressNotification(`Wahnsinn! Super gemacht. Echt toll. Du hast schon ${challengesInfo.lastChallengeChanged.user_challenge_current_score} von ${challengesInfo.lastChallengeChanged.challenge_goal} der heutigen Bilder gefunden${eventInfoText} Die Chancen stehen gut dass Du heute alle Bilder findest. Surf einfach noch ein bisschen herum!`, challengesInfo.lastChallengeChanged);
