@@ -280,7 +280,8 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
 
           // Move this value around by a deterministic random value, it must be deterministic so we can validate the data in the backend
           if (this.userId) {
-            maxRandomValue += this.calculateDetermisticRandomValue(this.userId);
+            // Disabled for now as the page impression stretch is too narrow
+            // maxRandomValue += this.calculateDetermisticRandomValue(this.userId);
           }
 
           console.log(`SCILL: Counter (${driverChallenge.user_challenge_current_score}) must be dividable by ${maxRandomValue}`);
