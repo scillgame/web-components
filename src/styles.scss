@@ -95,4 +95,13 @@ main section {
 
 .scill-overlay-backdrop {
   background-color: rgba(0,0,0,0.7);
+  z-index: 1003;
+}
+
+.cdk-global-overlay-wrapper {
+  z-index: 1003;
+}
+
+.scill-overlay-panel {
+  z-index: 1004;
 }
