@@ -276,7 +276,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
           const imageIndexToBeShown = imageChallenge.user_challenge_current_score;
 
           // Calculate the "next" page impression value where we show the image
-          let maxRandomValue = parseInt(this.randomValue, 10) + (imageIndexToBeShown * parseFloat(this.randomStretch));
+          const maxRandomValue = Math.round(parseInt(this.randomValue, 10) + (imageIndexToBeShown * parseFloat(this.randomStretch)));
 
           // Move this value around by a deterministic random value, it must be deterministic so we can validate the data in the backend
           if (this.userId) {
