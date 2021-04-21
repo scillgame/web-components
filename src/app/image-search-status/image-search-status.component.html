@@ -4,9 +4,6 @@
       <div class="scill-image-search-status-inner-container" *ngIf="config">
         <div class="scill-image-search-status-image" *ngFor="let image of config.images; let i=index" [class.activated]="i<challenge?.user_challenge_current_score">
           <img [src]="image" *ngIf="i<challenge?.user_challenge_current_score">
-          <div class="scill-image-search-status-footer" [class.activated]="i<challenge?.user_challenge_current_score">
-            Image {{i+1}}
-          </div>
           <div class="completed-badge" [class.activated]="i<challenge?.user_challenge_current_score" >
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                  aria-hidden="true"
