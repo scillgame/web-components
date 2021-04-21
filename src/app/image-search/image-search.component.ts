@@ -254,7 +254,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
             return null;
           }
 
-          const imageChallenge = this.challengeId ? challengesInfo.getChallengeById(this.challengeId): null;
+          const imageChallenge = this.challengeId ? challengesInfo.getChallengeById(this.challengeId) : null;
           const driverChallenge = this.driverChallengeId ? challengesInfo.getChallengeById(this.driverChallengeId) : null;
 
           if (!imageChallenge) {
