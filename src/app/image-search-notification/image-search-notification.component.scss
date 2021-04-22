@@ -5,5 +5,26 @@
   height: auto;
   border-radius: 10px;
   padding: 20px;
-  background-color: white;
+  background-color: black;
+  box-shadow: 0px 0px 2px white;
+  color: white;
+  text-align: center;
+}
+
+.notification-header-image {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.notification button {
+  background-color: #E9E600;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  color: black;
+  border-radius: 2px;
+  border: 0px;
+  padding: 5px 10px;
 }
