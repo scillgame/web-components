@@ -324,16 +324,25 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
       if (challengesInfo && challengesInfo.lastChallengeChanged && challengesInfo.lastChallengeChanged.challenge_id === this.challengeId) {
         const eventChallenge = this.eventChallengeId ? challengesInfo.getChallengeById(this.eventChallengeId) : null;
         // We need to add +1 here, because the total goal is incremented later
-        const eventInfoText = eventChallenge ? ` und insgesamt ${eventChallenge.user_challenge_current_score} Stück. Für die Teilnahme an der Hauptpreis-Verlosung brauchst du mindestens 10 gesammelte Bilder! ` : '! ';
+        let eventInfoText = '. ';
+        if (eventChallenge) {
+          if (eventChallenge.user_challenge_current_score == 1) {
+            eventInfoText = ` und insgesamt ${eventChallenge.user_challenge_current_score} Bild eingesammelt. `;
+          } else {
+            eventInfoText = ` und insgesamt ${eventChallenge.user_challenge_current_score} Bilder eingesammelt. `;
+          }
+        }
 
         if (challengesInfo.lastChallengeChanged.user_challenge_current_score === 0) {
-          this.scillService.showProgressNotification(`Wahnsinn! Super gemacht. Echt toll. Du hast schon ${challengesInfo.lastChallengeChanged.user_challenge_current_score} von ${challengesInfo.lastChallengeChanged.challenge_goal} der heutigen Bilder gefunden${eventInfoText} Die Chancen stehen gut dass Du heute alle Bilder findest. Surf einfach noch ein bisschen herum!`, challengesInfo.lastChallengeChanged);
+          const text = `Glückwunsch! Du hast ${challengesInfo.lastChallengeChanged.user_challenge_current_score} von ${challengesInfo.lastChallengeChanged.challenge_goal} Bilder der heutigen Schatzsuche gefunden${eventInfoText}`;
+          this.scillService.showProgressNotification(text, challengesInfo.lastChallengeChanged);
         } else {
           if (challengesInfo.lastChallengeChanged.type === 'in-progress') {
-            this.notification$.next(new SCILLNotification(`Wahnsinn! Super gemacht. Echt toll. Du hast schon ${challengesInfo.lastChallengeChanged.user_challenge_current_score} von ${challengesInfo.lastChallengeChanged.challenge_goal} der heutigen Bilder gefunden${eventInfoText}! Die Chancen stehen gut dass Du heute alle Bilder findest. Surf einfach noch ein bisschen herum!`, null, null, null, false, challengesInfo.lastChallengeChanged));
+            const text = `Glückwunsch! Du hast ${challengesInfo.lastChallengeChanged.user_challenge_current_score} von ${challengesInfo.lastChallengeChanged.challenge_goal} Bilder der heutigen Schatzsuche gefunden${eventInfoText}`;
+            this.notification$.next(new SCILLNotification(text, null, null, null, false, challengesInfo.lastChallengeChanged));
             this.sendPoints(1);
           } else {
-            this.notification$.next(new SCILLNotification(`JUCHU! Alle Bilder für heute gefunden! Bis morgen!`, null));
+            this.notification$.next(new SCILLNotification(`Großartig! Du hast alle Bilder für heute gefunden und dir somit eine Chance auf den Tagespreis erspielt. Sei auch morgen bei der Schatzsuche dabei!`, null));
             this.sendPoints(1);
           }
         }
