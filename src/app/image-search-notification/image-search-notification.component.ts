@@ -10,6 +10,7 @@ export class ImageSearchNotificationComponent implements OnInit {
 
   @Input() notification: SCILLNotification;
   @Output() onClose = new EventEmitter();
+  @Input() imageUrl;
 
   constructor() { }
 

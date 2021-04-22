@@ -54,6 +54,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   @Input('random-value') randomValue = '4';
   @Input('random-stretch') randomStretch = '1.0';
   @Input('first-image-always') firstImageAlways = 'true';
+  @Input('notification-image-url') notificationImageUrl = null;
   driverChallengeInfo$: Observable<SCILLPersonalChallengesInfo>;
   challengeInfo$: Observable<SCILLPersonalChallengesInfo>;
   challengesInfo$: Observable<SCILLPersonalChallengesInfo>;
@@ -170,6 +171,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
     const imagePortal = new ComponentPortal(ImageSearchNotificationComponent);
     const ref = overlayRef.attach(imagePortal);
     ref.instance.notification = notification;
+    ref.instance.imageUrl = this.notificationImageUrl;
     ref.instance.onClose.subscribe(() => {
       if (this.notificationRef) {
         this.notificationRef.detach();
