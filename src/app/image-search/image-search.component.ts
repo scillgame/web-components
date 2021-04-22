@@ -195,6 +195,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
       amount: 1
     }).subscribe(result => {
       console.log('Image Collected', result);
+      this.sendPoints(1);
     });
 
     this.resetPageImpressions();
@@ -351,10 +352,8 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
           if (challengesInfo.lastChallengeChanged.type === 'in-progress') {
             const text = `Glückwunsch! Du hast ${challengesInfo.lastChallengeChanged.user_challenge_current_score} von ${challengesInfo.lastChallengeChanged.challenge_goal} Bilder der heutigen Schatzsuche gefunden${eventInfoText}`;
             this.notification$.next(new SCILLNotification(text, null, null, null, false, challengesInfo.lastChallengeChanged));
-            this.sendPoints(1);
           } else {
             this.notification$.next(new SCILLNotification(`Großartig! Du hast alle Bilder für heute gefunden und dir somit eine Chance auf den Tagespreis erspielt. Sei auch morgen bei der Schatzsuche dabei!`, null));
-            this.sendPoints(1);
           }
         }
         this.firstLaunch = false;
