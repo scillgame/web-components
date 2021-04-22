@@ -58,7 +58,6 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
   driverChallengeInfo$: Observable<SCILLPersonalChallengesInfo>;
   challengeInfo$: Observable<SCILLPersonalChallengesInfo>;
   challengesInfo$: Observable<SCILLPersonalChallengesInfo>;
-  eventChallenge: Challenge;
   image$: Observable<ImageInfo>;
   notification$ = new BehaviorSubject<SCILLNotification>(null);
   firstLaunch = true;
@@ -74,6 +73,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   config$: Observable<ImageSearchConfig>;
   lastRandomValue = -1;
+  eventChallengeCounter;
 
   constructor(private scillService: SCILLService,
               private scillPersonalChallengesService: SCILLPersonalChallengesService,
@@ -194,7 +194,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
       item_type: 'image',
       amount: 1
     }).subscribe(result => {
-      console.log("Image Collected", result);
+      console.log('Image Collected', result);
     });
 
     this.resetPageImpressions();
@@ -318,20 +318,29 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
     );
 
     this.subscriptions.add(this.challengesInfo$.subscribe(challengesInfo => {
-      console.log("SCILL: Challenges Info: ", challengesInfo);
+      console.log('SCILL: Challenges Info: ', challengesInfo);
       if (!challengesInfo) {
         return;
       }
 
-      if (challengesInfo && challengesInfo.lastChallengeChanged && challengesInfo.lastChallengeChanged.challenge_id === this.challengeId) {
+      if (!this.eventChallengeCounter) {
         const eventChallenge = this.eventChallengeId ? challengesInfo.getChallengeById(this.eventChallengeId) : null;
-        // We need to add +1 here, because the total goal is incremented later
-        let eventInfoText = '. ';
         if (eventChallenge) {
-          if (eventChallenge.user_challenge_current_score == 1) {
-            eventInfoText = ` und insgesamt ${eventChallenge.user_challenge_current_score} Bild eingesammelt. `;
+          this.eventChallengeCounter = eventChallenge.user_challenge_current_score;
+        } else {
+          this.eventChallengeCounter = 0;
+        }
+      }
+
+      if (challengesInfo && challengesInfo.lastChallengeChanged && challengesInfo.lastChallengeChanged.challenge_id === this.challengeId) {
+        // We need to add +1 here, because the total goal is incremented later
+        this.eventChallengeCounter += 1;
+        let eventInfoText = '. ';
+        if (this.eventChallengeId) {
+          if (this.eventChallengeCounter === 1) {
+            eventInfoText = ` und insgesamt ${this.eventChallengeCounter} Bild eingesammelt. `;
           } else {
-            eventInfoText = ` und insgesamt ${eventChallenge.user_challenge_current_score} Bilder eingesammelt. `;
+            eventInfoText = ` und insgesamt ${this.eventChallengeCounter} Bilder eingesammelt. `;
           }
         }
 
