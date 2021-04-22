@@ -1,11 +1,4 @@
 <div class="notification">
   <p class="message">{{notification.message}}</p>
-  <scill-progress-bar *ngIf="notification.challenge"
-                      class="progress-bar"
-                      background="black"
-                      fill-background="red"
-                      height="20"
-                      [progress]="notification.challenge | progress">
-  </scill-progress-bar>
-  <button (click)="closeNotification()">Close</button>
+  <button (click)="closeNotification()">SCHLIESSEN</button>
 </div>
