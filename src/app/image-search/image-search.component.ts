@@ -117,7 +117,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   showImage(imageInfo): void {
     if (this.imageRef) {
-      this.imageRef.detach();
+      this.imageRef.dispose();
       this.imageRef = null;
     }
 
@@ -141,7 +141,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
     ref.instance.imageClicked.subscribe(info => {
       if (this.imageRef) {
         this.collectImage(info);
-        this.imageRef.detach();
+        this.imageRef.dispose();
         this.imageRef = null;
       }
     });
@@ -151,7 +151,7 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   showNotification(notification: SCILLNotification): void {
     if (this.notificationRef) {
-      this.notificationRef.detach();
+      this.notificationRef.dispose();
       this.notificationRef = null;
     }
 
@@ -174,14 +174,14 @@ export class ImageSearchComponent implements OnInit, OnChanges, OnDestroy {
     ref.instance.imageUrl = this.notificationImageUrl;
     ref.instance.onClose.subscribe(() => {
       if (this.notificationRef) {
-        this.notificationRef.detach();
+        this.notificationRef.dispose();
         this.notificationRef = null;
       }
     });
 
     this.subscriptions.add(overlayRef.backdropClick().subscribe(() => {
       if (this.notificationRef) {
-        this.notificationRef.detach();
+        this.notificationRef.dispose();
         this.notificationRef = null;
       }
     }));
